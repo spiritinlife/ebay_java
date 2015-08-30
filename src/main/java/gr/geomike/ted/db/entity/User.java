@@ -1,7 +1,6 @@
 package gr.geomike.ted.db.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
@@ -14,23 +13,14 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User  {
     private static final long serialVersionUID = 1L;
-
-    @Column(name = "USERNAME")
-    private String username;
-
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(name = "FIRST_NAME")
     private String firstName;
-
-    @Column(name = "LAST_NAME")
     private String lastName;
-
-    @Column(name = "PASSWORD")
     private String password;
+    private String username;
+
 
 
 

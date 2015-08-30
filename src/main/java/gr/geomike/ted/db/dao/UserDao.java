@@ -6,6 +6,7 @@ import gr.geomike.ted.db.entity.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 /**
 * Created by spiritinlife on 8/30/15.
@@ -50,6 +51,21 @@ public class UserDao {
 
 
         return user;
+    }
+
+    public static List<User> findAll() {
+
+        EntityManager em =  JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+       List<User> users = em.createNamedQuery("User.findAll", User.class).getResultList();
+
+        tx.commit();
+        em.close();
+
+
+        return users;
     }
 
 
