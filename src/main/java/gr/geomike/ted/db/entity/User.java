@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User  {
-    
+
     private String username;
 
     @Id @GeneratedValue
