@@ -16,7 +16,7 @@ public class UserService {
     @POST
     @Produces("application/json")
     public String postUser() {
-        User user = new User(1,"DWDW","DWDWDW","DWDWDW","DWDWDW");
+        User user = new User("DWDW","DWDWDW","DWDWDW","DWDWDW");
         UserDao.insert(user);
 
         return JSON.toJson(user);
