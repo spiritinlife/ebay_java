@@ -2,32 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c928b7f4-9db5-403c-9e43-f89d97c90235" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-cookies.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-cookies.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-loader.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-loader.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-resource.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-resource.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-sanitize.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular-sanitize.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/lib/angular/angular.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/css/app.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/js/controllers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/js/directives.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/js/filters.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/css/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/js/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/partials/partial1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/partials/partial2.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/js/routes.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/store/js/services.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/ted4_war_exploded/index.jsp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web/index.jsp" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/db/entity/User.java" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/db/entity/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/index.css" afterPath="$PROJECT_DIR$/web/css/index.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/index.html" afterPath="$PROJECT_DIR$/web/index.html" />
     </list>
     <ignored path="ted4.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48582995" vertical-offset="0" max-vertical-offset="2760">
-              <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+            <state vertical-scroll-proportion="-15.625" vertical-offset="1065" max-vertical-offset="2865">
+              <caret line="96" column="51" selection-start-line="96" selection-start-column="51" selection-end-line="96" selection-end-column="51" />
               <folding>
                 <element signature="n#style#0;n#span#1;n#button#0;n#div#0;n#nav#0;n#section#0;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#2;n#button#0;n#div#0;n#nav#0;n#section#0;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -121,10 +97,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/css/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="652" max-vertical-offset="2160">
+            <state vertical-scroll-proportion="1.7374518" vertical-offset="0" max-vertical-offset="2160">
               <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
               <folding />
             </state>
@@ -300,6 +276,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ted4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ebay_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -921,7 +915,7 @@
       <updated>1440854737327</updated>
       <workItem from="1440854744295" duration="373000" />
       <workItem from="1440940130248" duration="3525000" />
-      <workItem from="1440957841473" duration="4892000" />
+      <workItem from="1440957841473" duration="5146000" />
     </task>
     <task id="LOCAL-00001" summary="Add correct libraries to maven for databases and json .&#10;Use Jpa and eclipselink for database entities.&#10;Use jackson for json.&#10;Add persistence.xml and create tables automatically.">
       <created>1440948423714</created>
@@ -941,11 +935,17 @@
       <option name="project" value="LOCAL" />
       <updated>1440960537487</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Move angular main site under store directory&#10;Make some barebones for welcome page">
+      <created>1440966471863</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1440966471863</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8790000" />
+    <option name="totallyTimeSpent" value="9044000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -1003,7 +1003,8 @@
     <MESSAGE value="Add correct libraries to maven for databases and json .&#10;Use Jpa and eclipselink for database entities.&#10;Use jackson for json.&#10;Add persistence.xml and create tables automatically." />
     <MESSAGE value="Remove unused columns&#10;Add a find all users method" />
     <MESSAGE value="Add a find all users method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add a find all users method" />
+    <MESSAGE value="Move angular main site under store directory&#10;Make some barebones for welcome page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move angular main site under store directory&#10;Make some barebones for welcome page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1292,14 +1293,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="652" max-vertical-offset="2160">
-          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23166023" vertical-offset="0" max-vertical-offset="518">
@@ -1310,15 +1303,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/images/market.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/images/bags.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48582995" vertical-offset="0" max-vertical-offset="2760">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        <state vertical-scroll-proportion="-15.625" vertical-offset="1065" max-vertical-offset="2865">
+          <caret line="96" column="51" selection-start-line="96" selection-start-column="51" selection-end-line="96" selection-end-column="51" />
           <folding>
             <element signature="n#style#0;n#span#1;n#button#0;n#div#0;n#nav#0;n#section#0;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#2;n#button#0;n#div#0;n#nav#0;n#section#0;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#3;n#button#0;n#div#0;n#nav#0;n#section#0;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7374518" vertical-offset="0" max-vertical-offset="2160">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
