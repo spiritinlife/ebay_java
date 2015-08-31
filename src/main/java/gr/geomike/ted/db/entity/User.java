@@ -1,76 +1,36 @@
 package gr.geomike.ted.db.entity;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 
-
+/**
+ * Created by potis on 31-Aug-15.
+ */
 @Entity
-@Table(name = "USER")
-@NamedQueries({
-        @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-        @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-        @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-        @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
-        @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
-        @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
-public class User  {
-
-    private String username;
-
-    @Id @GeneratedValue
-    @Column(name = "ID")
-    private Integer id;
-
-    @Column(name = "FIRST_NAME")
+public class User {
+    private int id;
     private String firstName;
-
-    @Column(name = "LAST_NAME")
     private String lastName;
-
-    @Column(name = "PASSWORD")
+    private String username;
     private String password;
+    private String email;
+    private String socialSecurityNumber;
+    private String address;
+    private String phoneNumber;
+    private Bidder bidderById;
+    private Seller sellerById;
 
-
-
-
-    public User() {
-    }
-
-    public User(Integer id) {
-        this.id = id;
-    }
-
-    public User(Integer id, String username, String firstName, String lastName, String password) {
-        this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-    }
-
-    public User(String username, String firstName, String lastName, String password) {
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Integer getId() {
+    @Id
+    @Column(name = "ID")
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "FIRST_NAME")
     public String getFirstName() {
         return firstName;
     }
@@ -79,6 +39,8 @@ public class User  {
         this.firstName = firstName;
     }
 
+    @Basic
+    @Column(name = "LAST_NAME")
     public String getLastName() {
         return lastName;
     }
@@ -87,6 +49,18 @@ public class User  {
         this.lastName = lastName;
     }
 
+    @Basic
+    @Column(name = "USERNAME")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "PASSWORD")
     public String getPassword() {
         return password;
     }
@@ -95,30 +69,96 @@ public class User  {
         this.password = password;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    @Basic
+    @Column(name = "EMAIL")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "SOCIAL_SECURITY_NUMBER")
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
+
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
+    }
+
+    @Basic
+    @Column(name = "ADDRESS")
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Basic
+    @Column(name = "PHONE_NUMBER")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (socialSecurityNumber != null ? !socialSecurityNumber.equals(user.socialSecurityNumber) : user.socialSecurityNumber != null)
             return false;
-        }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+
         return true;
     }
 
     @Override
-    public String toString() {
-        return "entities.User[ id=" + id + " ]";
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (socialSecurityNumber != null ? socialSecurityNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        return result;
     }
 
+    @OneToOne(mappedBy = "userByUserId")
+    public Bidder getBidderById() {
+        return bidderById;
+    }
 
+    public void setBidderById(Bidder bidderById) {
+        this.bidderById = bidderById;
+    }
+
+    @OneToOne(mappedBy = "userByUserId")
+    public Seller getSellerById() {
+        return sellerById;
+    }
+
+    public void setSellerById(Seller sellerById) {
+        this.sellerById = sellerById;
+    }
 }
