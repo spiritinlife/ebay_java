@@ -1,6 +1,9 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
+//import org.codehaus.jackson.annotate.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -8,6 +11,7 @@ import java.util.Collection;
 
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 @XmlRootElement
 public class Seller {
     private int userId;
@@ -58,7 +62,7 @@ public class Seller {
     }
 
     @OneToMany(mappedBy = "seller")
-    @JsonBackReference
+    //@JsonBackReference(value="bid-seller")
     public Collection<Bid> getBidsByUserId() {
         return bids;
     }
@@ -68,7 +72,7 @@ public class Seller {
     }
 
     @OneToOne
-    @JsonBackReference
+    //@JsonBackReference(value="user-bidder")
     @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
     public User getUser() {
         return user;
