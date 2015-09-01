@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c928b7f4-9db5-403c-9e43-f89d97c90235" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Bid.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Bid.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Bidder.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Bidder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Category.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Category.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/CategoryDao.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/CategoryDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/CategoryService.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/CategoryService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Item.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Item.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/ItemDao.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/ItemDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/ItemService.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/ItemService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/JPAResource.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/JPAResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/JSON.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/JSON.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Location.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Location.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Seller.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Seller.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/User.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/UserDao.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/dao/UserDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/model/UserModel.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/model/UserModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/UserService.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/UserService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/src/META-INF/persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ted4.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -85,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="486">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -971,7 +955,7 @@
       <workItem from="1441070359233" duration="43487000" />
       <workItem from="1441120639506" duration="410000" />
       <workItem from="1441121504872" duration="10492000" />
-      <workItem from="1441133326532" duration="1152000" />
+      <workItem from="1441133326532" duration="1302000" />
     </task>
     <task id="LOCAL-00001" summary="Add correct libraries to maven for databases and json .&#10;Use Jpa and eclipselink for database entities.&#10;Use jackson for json.&#10;Add persistence.xml and create tables automatically.">
       <created>1440948423714</created>
@@ -1013,7 +997,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95834000" />
+    <option name="totallyTimeSpent" value="95984000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1534,7 +1518,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="486">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
