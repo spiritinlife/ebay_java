@@ -5,7 +5,7 @@
     <title>E-bid</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <link rel="stylesheet" type="text/css" href="/css/animations.css">
+    <!--<link rel="stylesheet" type="text/css" href="/css/animations.css">-->
 </head>
 
 <header>
@@ -28,11 +28,13 @@
                 <!-- SEARCH BAR -->
                 <form class="navbar-form navbar-left" role="search" style="margin-left: 24%;">
                     <div class="input-group">
-                        <input type="text"  class="form-control" placeholder="Search..." style="width:500px;">
+                        <input type="text" class="form-control" placeholder="Search..." style="width:500px;">
 
                         <div class="input-group-btn" ng-init="categoryFilter = 'All'">
-                           <a href="#store"><button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
-                            </button></a>
+                            <a href="#store">
+                                <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </a>
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 <span class="caret"></span>
@@ -53,25 +55,25 @@
                 <!-- SORT OPTIONS -->
                 <ul class="nav navbar-nav">
                     <li class="dropdown" ng-init="sort = 'name'">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        <a class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true"
                            aria-expanded="false">Sort By: {{sort}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href ng-click="sort = 'name'">Name<i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <li><a ng-click="sort = 'name'">Name<i class="glyphicon glyphicon-arrow-up"></i></a>
                             </li>
-                            <li><a href ng-click="sort = '-name'">Name<i class="glyphicon glyphicon-arrow-down"></i></a>
+                            <li><a ng-click="sort = '-name'">Name<i class="glyphicon glyphicon-arrow-down"></i></a>
                             </li>
 
-                            <li><a href ng-click="sort = 'currently'">Current Bid<i
+                            <li><a ng-click="sort = 'currently'">Current Bid<i
                                     class="glyphicon glyphicon-arrow-up"></i></a></li>
-                            <li><a href ng-click="sort = '-currently'">Current Bid<i
+                            <li><a ng-click="sort = '-currently'">Current Bid<i
                                     class="glyphicon glyphicon-arrow-down"></i></a></li>
 
-                            <li><a href ng-click="sort = 'description'">Description</a></li>
-                            <li><a href ng-click="sort = 'category'">Category</a></li>
+                            <li><a ng-click="sort = 'description'">Description</a></li>
+                            <li><a ng-click="sort = 'category'">Category</a></li>
                         </ul>
                     </li>
                 </ul>
-                <!-- ACOUNT CONTROLS -->
+                <!-- SIGN CONTROLS -->
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
                     <li><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
