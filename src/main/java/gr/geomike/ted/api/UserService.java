@@ -12,20 +12,9 @@ import javax.ws.rs.Produces;
 
 @Path("/users")
 public class UserService {
-
-    @POST
-    @Produces("application/json")
-    public String postUser() {
-        User user = new User("DWDW","DWDWDW","DWDWDW","DWDWDW");
-        UserDao.insert(user);
-
-        return JSON.toJson(user);
-    }
-
     @GET
     @Produces("application/json")
     public String getUser() {
         return JSON.toJson(UserDao.findAll());
     }
-
 }

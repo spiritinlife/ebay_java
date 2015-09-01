@@ -1,22 +1,23 @@
 package gr.geomike.ted.db.entity;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
 public class Bid {
     private int id;
     private int itemId;
     private int sellerId;
     private int bidderId;
+
     private Timestamp time;
     private Integer amount;
-    private Bidder bidderByBidderId;
-    private Item itemByItemId;
-    private Seller sellerBySellerId;
+
+    private Bidder bidder;
+    private Item item;
+    private Seller seller;
 
     @Id
     @Column(name = "ID")
@@ -107,32 +108,35 @@ public class Bid {
     }
 
     @ManyToOne
-    @JoinColumn(name = "BIDDER_ID", referencedColumnName = "USER_ID", nullable = false)
-    public Bidder getBidderByBidderId() {
-        return bidderByBidderId;
+    @JsonBackReference
+    @JoinColumn(name = "BIDDER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
+    public Bidder getBidder() {
+        return bidder;
     }
 
-    public void setBidderByBidderId(Bidder bidderByBidderId) {
-        this.bidderByBidderId = bidderByBidderId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID", nullable = false)
-    public Item getItemByItemId() {
-        return itemByItemId;
-    }
-
-    public void setItemByItemId(Item itemByItemId) {
-        this.itemByItemId = itemByItemId;
+    public void setBidder(Bidder bidder) {
+        this.bidder = bidder;
     }
 
     @ManyToOne
-    @JoinColumn(name = "SELLER_ID", referencedColumnName = "USER_ID", nullable = false)
-    public Seller getSellerBySellerId() {
-        return sellerBySellerId;
+    @JsonBackReference
+    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
+    public Item getItem() {
+        return item;
     }
 
-    public void setSellerBySellerId(Seller sellerBySellerId) {
-        this.sellerBySellerId = sellerBySellerId;
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "SELLER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 }

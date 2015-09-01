@@ -1,18 +1,19 @@
 package gr.geomike.ted.db.entity;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
 public class Bidder {
     private int userId;
+
     private Integer rating;
     private String location;
-    private Collection<Bid> bidsByUserId;
-    private User userByUserId;
+
+    private Collection<Bid> bids;
+    private User user;
 
     @Id
     @Column(name = "USER_ID")
@@ -66,22 +67,24 @@ public class Bidder {
         return result;
     }
 
-    @OneToMany(mappedBy = "bidderByBidderId")
-    public Collection<Bid> getBidsByUserId() {
-        return bidsByUserId;
+    @OneToMany(mappedBy = "bidder")
+    @JsonBackReference
+    public Collection<Bid> getBids() {
+        return bids;
     }
 
-    public void setBidsByUserId(Collection<Bid> bidsByUserId) {
-        this.bidsByUserId = bidsByUserId;
+    public void setBids(Collection<Bid> bids) {
+        this.bids = bids;
     }
 
     @OneToOne
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", nullable = false)
-    public User getUserByUserId() {
-        return userByUserId;
+    @JsonBackReference
+    @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    public User getUser() {
+        return user;
     }
 
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
+    public void setUser(User userByUserId) {
+        this.user = userByUserId;
     }
 }

@@ -1,15 +1,23 @@
 package gr.geomike.ted.db.entity;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
+@Table(name = "ITEM")
+@NamedQueries({
+        @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item  i")/*,
+        @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
+        @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+        @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+        @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+        @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
 public class Item {
     private int id;
+
     private String name;
     private Integer currently;
     private Integer buyPrice;
@@ -19,8 +27,9 @@ public class Item {
     private Timestamp started;
     private Timestamp ends;
     private String description;
-    private Collection<Bid> bidsById;
-    private Collection<ItemHasCategory> itemHasCategoriesById;
+
+    private Collection<Bid> bids;
+    private Collection<Category> categories;
     private Location locationById;
 
     @Id
@@ -159,25 +168,32 @@ public class Item {
         return result;
     }
 
-    @OneToMany(mappedBy = "itemByItemId")
-    public Collection<Bid> getBidsById() {
-        return bidsById;
+    @OneToMany(mappedBy = "item")
+    @JsonManagedReference
+    public Collection<Bid> getBids() {
+        return bids;
     }
 
-    public void setBidsById(Collection<Bid> bidsById) {
-        this.bidsById = bidsById;
+    public void setBids(Collection<Bid> bids) {
+        this.bids = bids;
     }
 
-    @OneToMany(mappedBy = "itemByItemId")
-    public Collection<ItemHasCategory> getItemHasCategoriesById() {
-        return itemHasCategoriesById;
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(name="ITEM_HAS_CATEGORY",
+            joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")}
+    )
+    public Collection<Category> getCategories() {
+        return categories;
     }
 
-    public void setItemHasCategoriesById(Collection<ItemHasCategory> itemHasCategoriesById) {
-        this.itemHasCategoriesById = itemHasCategoriesById;
+    public void setCategories(Collection<Category> categories) {
+        this.categories = categories;
     }
 
-    @OneToOne(mappedBy = "itemByItemId")
+    @OneToOne(mappedBy = "item")
+    @JsonManagedReference
     public Location getLocationById() {
         return locationById;
     }

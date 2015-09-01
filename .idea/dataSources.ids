@@ -1,19 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - ebay_ted@localhost" uuid="8fe7a73b-f164-43d5-ae15-f33d31d340ac">
-    <database-info product="MySQL" version="5.5.5-10.0.16-MariaDB" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+  <data-source name="MySQL - ebay_ted@localhost" uuid="42bb3fca-1162-4f5e-be1d-1e37d800184e">
+    <database-info product="MySQL" version="5.6.26-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
-    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="ebay_ted"/>
-    <table name="USER" schema="" catalog="ebay_ted" type="TABLE">
+    <table name="bid" schema="" catalog="ebay_ted" type="TABLE">
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="FIRST_NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="LAST_NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="PASSWORD" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="USERNAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ITEM_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="SELLER_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="BIDDER_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="TIME" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="AMOUNT" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="ID"/>
+      <foreign-key name="fk_BID_BIDDER1" columns="BIDDER_ID" ref-table="bidder" ref-schema="" ref-catalog="ebay_ted" ref-columns="USER_ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_BID_ITEM1" columns="ITEM_ID" ref-table="item" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_BID_SELLER1" columns="SELLER_ID" ref-table="seller" ref-schema="" ref-catalog="ebay_ted" ref-columns="USER_ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_BID_BIDDER1_idx" unique="false" columns="BIDDER_ID"/>
+      <index name="fk_BID_ITEM1_idx" unique="false" columns="ITEM_ID"/>
+      <index name="fk_BID_SELLER1_idx" unique="false" columns="SELLER_ID"/>
+    </table>
+    <table name="bidder" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="USER_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="RATING" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="LOCATION" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="USER_ID"/>
+      <foreign-key name="fk_BIDDER_USER1" columns="USER_ID" ref-table="user" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_BID_BIDDER1" table="bid" schema="" catalog="ebay_ted" columns="BIDDER_ID"/>
+    </table>
+    <table name="category" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="NAME"/>
+      <exported-key name="fk_ITEM_has_CATEGORY_CATEGORY1" table="item_has_category" schema="" catalog="ebay_ted" columns="CATEGORY_NAME"/>
+    </table>
+    <table name="item" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="CURRENTLY" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="BUY_PRICE" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="FIRST_BID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="NUMBER_OF_BIDS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="COUNTRY" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="STARTED" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="ENDS" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="DESCRIPTION" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ID"/>
+      <exported-key name="fk_BID_ITEM1" table="bid" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
+      <exported-key name="fk_ITEM_has_CATEGORY_ITEM" table="item_has_category" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
+      <exported-key name="fk_LOCATION_ITEM1" table="location" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
+    </table>
+    <table name="item_has_category" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="ITEM_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CATEGORY_NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ITEM_ID,CATEGORY_NAME"/>
+      <foreign-key name="fk_ITEM_has_CATEGORY_CATEGORY1" columns="CATEGORY_NAME" ref-table="category" ref-schema="" ref-catalog="ebay_ted" ref-columns="NAME" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_ITEM_has_CATEGORY_ITEM" columns="ITEM_ID" ref-table="item" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_ITEM_has_CATEGORY_CATEGORY1_idx" unique="false" columns="CATEGORY_NAME"/>
+      <index name="fk_ITEM_has_CATEGORY_ITEM_idx" unique="false" columns="ITEM_ID"/>
+    </table>
+    <table name="location" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="ITEM_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="LONGITUDE" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="LATITUDE" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="ITEM_ID"/>
+      <foreign-key name="fk_LOCATION_ITEM1" columns="ITEM_ID" ref-table="item" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="seller" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="USER_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="RATING" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="USER_ID"/>
+      <foreign-key name="fk_SELLER_USER1" columns="USER_ID" ref-table="user" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_BID_SELLER1" table="bid" schema="" catalog="ebay_ted" columns="SELLER_ID"/>
+    </table>
+    <table name="user" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="FIRST_NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="LAST_NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="USERNAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="PASSWORD" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="EMAIL" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="SOCIAL_SECURITY_NUMBER" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ADDRESS" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="PHONE_NUMBER" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ID"/>
+      <exported-key name="fk_BIDDER_USER1" table="bidder" schema="" catalog="ebay_ted" columns="USER_ID"/>
+      <exported-key name="fk_SELLER_USER1" table="seller" schema="" catalog="ebay_ted" columns="USER_ID"/>
+    </table>
+  </data-source>
+  <data-source name="MySQL - work@localhost" uuid="33bc279c-927e-4284-8972-a26cfca73f17">
+    <database-info product="MySQL" version="5.6.26-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="work"/>
+    <table name="company" schema="" catalog="work" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_company_has_country_company1" table="company_has_country" schema="" catalog="work" columns="company_id"/>
+      <exported-key name="fk_employee_company" table="employee" schema="" catalog="work" columns="company_id"/>
+    </table>
+    <table name="company_has_country" schema="" catalog="work" type="TABLE">
+      <column name="company_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="country_name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="company_id,country_name"/>
+      <foreign-key name="fk_company_has_country_company1" columns="company_id" ref-table="company" ref-schema="" ref-catalog="work" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_company_has_country_country1" columns="country_name" ref-table="country" ref-schema="" ref-catalog="work" ref-columns="name" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_company_has_country_company1_idx" unique="false" columns="company_id"/>
+      <index name="fk_company_has_country_country1_idx" unique="false" columns="country_name"/>
+    </table>
+    <table name="country" schema="" catalog="work" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="name"/>
+      <exported-key name="fk_company_has_country_country1" table="company_has_country" schema="" catalog="work" columns="country_name"/>
+    </table>
+    <table name="employee" schema="" catalog="work" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="company_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_employee_company" columns="company_id" ref-table="company" ref-schema="" ref-catalog="work" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_employee_company_idx" unique="false" columns="company_id"/>
     </table>
   </data-source>
 </component>

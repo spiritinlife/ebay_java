@@ -1,18 +1,22 @@
 package gr.geomike.ted.db.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import org.codehaus.jackson.annotate.JsonBackReference;
+
+import javax.persistence.*;
 import java.util.Collection;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
+@Table(name = "CATEGORY")
+@NamedQueries({
+        @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")/*,
+        @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
+        @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+        @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+        @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+        @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
 public class Category {
     private String name;
-    private Collection<ItemHasCategory> itemHasCategoriesByName;
+    private Collection<Item> items;
 
     @Id
     @Column(name = "NAME")
@@ -41,12 +45,13 @@ public class Category {
         return name != null ? name.hashCode() : 0;
     }
 
-    @OneToMany(mappedBy = "categoryByCategoryName")
-    public Collection<ItemHasCategory> getItemHasCategoriesByName() {
-        return itemHasCategoriesByName;
+    @ManyToMany(mappedBy="categories")
+    @JsonBackReference
+    public Collection<Item> getItems(){
+        return items;
     }
 
-    public void setItemHasCategoriesByName(Collection<ItemHasCategory> itemHasCategoriesByName) {
-        this.itemHasCategoriesByName = itemHasCategoriesByName;
+    public void setItems( Collection<Item> items){
+        this.items = items;
     }
 }

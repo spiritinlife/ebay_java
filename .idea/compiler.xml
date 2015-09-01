@@ -26,5 +26,8 @@
         <module name="ted4" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ted4" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

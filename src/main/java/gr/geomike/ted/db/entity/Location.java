@@ -1,17 +1,17 @@
 package gr.geomike.ted.db.entity;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
 public class Location {
     private int itemId;
+
     private String name;
     private Float longitude;
     private Float latitude;
-    private Item itemByItemId;
+    private Item item;
 
     @Id
     @Column(name = "ITEM_ID")
@@ -78,12 +78,13 @@ public class Location {
     }
 
     @OneToOne
-    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID", nullable = false)
-    public Item getItemByItemId() {
-        return itemByItemId;
+    @JsonBackReference
+    @PrimaryKeyJoinColumn(name = "ITEM_ID", referencedColumnName = "ID")
+    public Item getItem() {
+        return item;
     }
 
-    public void setItemByItemId(Item itemByItemId) {
-        this.itemByItemId = itemByItemId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

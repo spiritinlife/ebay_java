@@ -1,13 +1,13 @@
 package gr.geomike.ted.db.entity;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 
-/**
- * Created by potis on 31-Aug-15.
- */
 @Entity
 public class User {
     private int id;
+
     private String firstName;
     private String lastName;
     private String username;
@@ -16,8 +16,9 @@ public class User {
     private String socialSecurityNumber;
     private String address;
     private String phoneNumber;
-    private Bidder bidderById;
-    private Seller sellerById;
+
+    private Bidder bidder;
+    private Seller seller;
 
     @Id
     @Column(name = "ID")
@@ -144,21 +145,23 @@ public class User {
         return result;
     }
 
-    @OneToOne(mappedBy = "userByUserId")
-    public Bidder getBidderById() {
-        return bidderById;
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    public Bidder getBidder() {
+        return bidder;
     }
 
-    public void setBidderById(Bidder bidderById) {
-        this.bidderById = bidderById;
+    public void setBidder(Bidder bidder) {
+        this.bidder = bidder;
     }
 
-    @OneToOne(mappedBy = "userByUserId")
-    public Seller getSellerById() {
-        return sellerById;
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference
+    public Seller getSeller() {
+        return seller;
     }
 
-    public void setSellerById(Seller sellerById) {
-        this.sellerById = sellerById;
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 }
