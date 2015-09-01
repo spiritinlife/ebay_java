@@ -1,11 +1,15 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
+//import org.codehaus.jackson.annotate.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="itemId")
 @XmlRootElement
 public class Location {
     private int itemId;
@@ -80,7 +84,7 @@ public class Location {
     }
 
     @OneToOne
-    @JsonBackReference
+    //@JsonBackReference(value = "item-location")
     @PrimaryKeyJoinColumn(name = "ITEM_ID", referencedColumnName = "ID")
     public Item getItem() {
         return item;

@@ -1,6 +1,7 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
+//import org.codehaus.jackson.annotate.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -196,7 +197,7 @@ public class User implements Serializable {
     }
 
     @OneToOne(mappedBy = "user")
-    @JsonManagedReference
+    //@JsonManagedReference(value="user-bidder")
     public Bidder getBidder() {
         return bidder;
     }
@@ -206,7 +207,7 @@ public class User implements Serializable {
     }
 
     @OneToOne(mappedBy = "user")
-    @JsonManagedReference
+    //@JsonManagedReference(value="user-seller")
     public Seller getSeller() {
         return seller;
     }

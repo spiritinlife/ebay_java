@@ -1,13 +1,18 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
+//import org.codehaus.jackson.annotate.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "ITEM")
 @XmlRootElement
 @NamedQueries({
@@ -17,7 +22,10 @@ import java.util.Collection;
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
-public class Item {
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="categories")
+public class Item implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private int id;
 
     private String name;
@@ -32,7 +40,27 @@ public class Item {
 
     private Collection<Bid> bids;
     private Collection<Category> categories;
-    private Location locationById;
+    private Location location;
+
+    public Item() {
+    }
+
+    public Item(int id, String name, Integer currently, Integer buyPrice, Integer firstBid, Integer numberOfBids, String country
+            , Timestamp started, Timestamp ends, String description, Collection<Bid> bids, Collection<Category> categories, Location location) {
+        this.id = id;
+        this.name = name;
+        this.currently = currently;
+        this.buyPrice = buyPrice;
+        this.firstBid = firstBid;
+        this.numberOfBids = numberOfBids;
+        this.country = country;
+        this.started = started;
+        this.ends = ends;
+        this.description = description;
+        this.bids = bids;
+        this.categories = categories;
+        this.location = location;
+    }
 
     @Id
     @Column(name = "ID")
@@ -171,7 +199,7 @@ public class Item {
     }
 
     @OneToMany(mappedBy = "item")
-    @JsonManagedReference
+    //@JsonManagedReference(value = "item-bid")
     public Collection<Bid> getBids() {
         return bids;
     }
@@ -181,7 +209,7 @@ public class Item {
     }
 
     @ManyToMany
-    @JsonManagedReference
+    //@JsonManagedReference(value = "item-category")
     @JoinTable(name="ITEM_HAS_CATEGORY",
             joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")}
@@ -195,12 +223,12 @@ public class Item {
     }
 
     @OneToOne(mappedBy = "item")
-    @JsonManagedReference
-    public Location getLocationById() {
-        return locationById;
+    //@JsonManagedReference(value = "item-location")
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationById(Location locationById) {
-        this.locationById = locationById;
+    public void setLocation(Location locationById) {
+        this.location = locationById;
     }
 }

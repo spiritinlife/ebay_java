@@ -1,12 +1,17 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
+//import org.codehaus.jackson.annotate.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="name")
 @Table(name = "CATEGORY")
 @XmlRootElement
 @NamedQueries({
@@ -16,7 +21,10 @@ import java.util.Collection;
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
-public class Category {
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="categories")
+public class Category implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private Collection<Item> items;
 
@@ -28,6 +36,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Category() {
+    }
+
+    public Category(String name, Collection<Item> items) {
+        this.name = name;
+        this.items = items;
     }
 
     @Override
@@ -48,7 +64,7 @@ public class Category {
     }
 
     @ManyToMany(mappedBy="categories")
-    @JsonBackReference
+    //@JsonBackReference(value = "item-category")
     //@XmlInverseReference
     public Collection<Item> getItems(){
         return items;

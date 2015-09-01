@@ -1,15 +1,20 @@
 package gr.geomike.ted.api.db.entity;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
+//import org.codehaus.jackson.annotate.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @XmlRootElement
 public class Bid {
     private int id;
+
     private int itemId;
     private int sellerId;
     private int bidderId;
@@ -110,7 +115,7 @@ public class Bid {
     }
 
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference(value="bidder-bid")
     @JoinColumn(name = "BIDDER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
     public Bidder getBidder() {
         return bidder;
@@ -121,7 +126,7 @@ public class Bid {
     }
 
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference(value="item-bid")
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
     public Item getItem() {
         return item;
@@ -132,7 +137,7 @@ public class Bid {
     }
 
     @ManyToOne
-    @JsonBackReference
+    //@JsonBackReference(value="seller-bid")
     @JoinColumn(name = "SELLER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
     public Seller getSeller() {
         return seller;
