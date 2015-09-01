@@ -1,3 +1,19 @@
-<div class="container-fluid">
-    <h1>Welcome welcome</h1>
+<div class="container-fluid centered">
+    <link rel="stylesheet" href="/css/welcome.css">
+    <div class="col-sm-12" style="padding: 30px;">
+        <li class="divider" style="width: 100%"></li>
+        <p style="text-align: center;"><h3>Latest Auctions</h3></p>
+        <li class="divider" style="width: 100%"></li>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="item in items | orderBy:sort">
+        <div class="grid-item">
+            <div class="grid-item-up">
+                <img src="/images/market.jpg" class="pull-left">
+                <span class="pull-right"><h3>{{item.name}}</h3><h4>{{item.currently | currency}}</h4></span>
+            </div>
+            <div class="grid-item-down">
+               <button class="btn btn-lg">Bid</button>
+            </div>
+        </div>
+    </div>
 </div>
