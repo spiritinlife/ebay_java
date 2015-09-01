@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="MySQL - ebay_ted@localhost" uuid="42bb3fca-1162-4f5e-be1d-1e37d800184e">
-    <database-info product="MySQL" version="5.6.26-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+    <database-info product="MySQL" version="5.6.22" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
     <schema name="" catalog="ebay_ted"/>
     <table name="bid" schema="" catalog="ebay_ted" type="TABLE">
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -88,43 +88,6 @@
       <primary-key name="PRIMARY" columns="ID"/>
       <exported-key name="fk_BIDDER_USER1" table="bidder" schema="" catalog="ebay_ted" columns="USER_ID"/>
       <exported-key name="fk_SELLER_USER1" table="seller" schema="" catalog="ebay_ted" columns="USER_ID"/>
-    </table>
-  </data-source>
-  <data-source name="MySQL - work@localhost" uuid="33bc279c-927e-4284-8972-a26cfca73f17">
-    <database-info product="MySQL" version="5.6.26-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
-      <extra-name-characters>#@</extra-name-characters>
-      <identifier-quote-string>`</identifier-quote-string>
-    </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
-    <schema name="" catalog="work"/>
-    <table name="company" schema="" catalog="work" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="fk_company_has_country_company1" table="company_has_country" schema="" catalog="work" columns="company_id"/>
-      <exported-key name="fk_employee_company" table="employee" schema="" catalog="work" columns="company_id"/>
-    </table>
-    <table name="company_has_country" schema="" catalog="work" type="TABLE">
-      <column name="company_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="country_name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="company_id,country_name"/>
-      <foreign-key name="fk_company_has_country_company1" columns="company_id" ref-table="company" ref-schema="" ref-catalog="work" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="fk_company_has_country_country1" columns="country_name" ref-table="country" ref-schema="" ref-catalog="work" ref-columns="name" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="fk_company_has_country_company1_idx" unique="false" columns="company_id"/>
-      <index name="fk_company_has_country_country1_idx" unique="false" columns="country_name"/>
-    </table>
-    <table name="country" schema="" catalog="work" type="TABLE">
-      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="name"/>
-      <exported-key name="fk_company_has_country_country1" table="company_has_country" schema="" catalog="work" columns="country_name"/>
-    </table>
-    <table name="employee" schema="" catalog="work" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="company_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="fk_employee_company" columns="company_id" ref-table="company" ref-schema="" ref-catalog="work" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="fk_employee_company_idx" unique="false" columns="company_id"/>
     </table>
   </data-source>
 </component>

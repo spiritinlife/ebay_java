@@ -7,11 +7,5 @@
       <schema-pattern>ebay_ted.*</schema-pattern>
       <default-schemas>ebay_ted.*</default-schemas>
     </data-source>
-    <data-source name="MySQL - work@localhost" uuid="33bc279c-927e-4284-8972-a26cfca73f17">
-      <secret-storage>master_key</secret-storage>
-      <user-name>root</user-name>
-      <schema-pattern>work.*</schema-pattern>
-      <default-schemas>work.*</default-schemas>
-    </data-source>
   </component>
 </project>

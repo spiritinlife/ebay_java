@@ -1,0 +1,157 @@
+<div ng-controller="EbayController as ec">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- LOGO -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">E-bid</a>
+            </div>
+            <!-- COLLAPSING PART -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <!-- SEARCH BAR -->
+                <form class="navbar-form navbar-left" role="search" style="margin-left: 24%;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search..." style="width:500px;">
+                        <div class="input-group-btn" ng-init="categoryFilter = 'All'">
+                            <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                {{categoryFilter}}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href ng-click="categoryFilter = 'All'; ec.items = ec.allItems;">All</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li ng-repeat="cat in ec.categories | orderBy:name">
+                                    <a href ng-click="$parent.categoryFilter = cat.name; $parent.ec.items = cat.items;">{{cat.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+                <!-- SORT OPTIONS -->
+                <ul class="nav navbar-nav">
+                    <li class="dropdown" ng-init="sort = 'name'">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort By: {{sort}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href ng-click="sort = 'name'">Name<i class="glyphicon glyphicon-arrow-up"></i></a></li>
+                            <li><a href ng-click="sort = '-name'">Name<i class="glyphicon glyphicon-arrow-down"></i></a></li>
+
+                            <li><a href ng-click="sort = 'currently'">Current Bid<i class="glyphicon glyphicon-arrow-up"></i></a></li>
+                            <li><a href ng-click="sort = '-currently'">Current Bid<i class="glyphicon glyphicon-arrow-down"></i></a></li>
+
+                            <li><a href ng-click="sort = 'description'">Description</a></li>
+                            <li><a href ng-click="sort = 'category'">Category</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- ACOUNT CONTROLS -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- SIGN IN MODAL -->
+    <div id="signInModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">Sign In</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username">
+                                <input type="text" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sign In</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- SIGN UP MODAL -->
+    <div id="signUpModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align: center">Sign In</h4>
+                </div>
+                <form name="signUpForm" ng-controller="SignUpController as signUpCtrl"
+                      ng-submit="signUpForm.$valid && signUpCtrl.addUser()" novalidate>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-lg-offset-4">
+                                <div class="input-group">
+                                    <input name="username" type="text" class="form-control" placeholder="Username" ng-model="signUpCtrl.user.username" required>
+                                    <input name="email" type="email" class="form-control" placeholder="email" ng-model="signUpCtrl.user.email" required>
+                                    <input type="text" class="form-control" placeholder="Password" ng-model="signUpCtrl.user.password" required>
+                                    <input type="text" class="form-control" placeholder="Re-type Password" ng-model="signUpCtrl.user.password" required>
+                                    <input type="text" class="form-control" placeholder="First Name" ng-model="signUpCtrl.user.firstName" required>
+                                    <input type="text" class="form-control" placeholder="Last Name" ng-model="signUpCtrl.user.lastName" required>
+                                    <input name="phone" type="number" class="form-control" placeholder="Phone Number" ng-model="signUpCtrl.user.phoneNumber">
+                                    <input type="text" class="form-control" placeholder="Social Security Number" ng-model="signUpCtrl.user.socialSecurityNumber">
+                                    <input type="text" class="form-control" placeholder="Address" ng-model="signUpCtrl.user.address">
+                                    <input type="text" class="form-control" placeholder="Country"  ng-model="signUpCtrl.user.country" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="text-align: center">
+                        <button type="submit" class="btn btn-default">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--  <input type="file" id="file" name="file"/>
+    <button ng-click="add()">Add</button>
+
+   ITEM PANELS -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default" ng-repeat="item in ec.items | orderBy:sort">
+                    <div class="panel-heading" role="tab" id="heading{{item.id}}">
+                        <h4 class="panel-title">
+                            <div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{item.id}}" aria-expanded="false" aria-controls="collapse{{item.id}}">
+                                <h3>{{item.name}}</h3>
+                                <h4>{{item.currently | currency}}</h4>
+                            </div>
+                        </h4>
+                    </div>
+                    <div id="collapse{{item.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{item.id}}">
+                        <div class="panel-body">
+                            <h4>categories:</h4>
+                            <h3 ng-repeat="category in item.categories | orderBy:name" >
+                                {{category.name}}
+                            </h3>
+                            <p>{{item.description}}</p>
+                            <button> Bid! </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--col lg-->
+    </div> <!--row-->
+
+</div>
