@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - ebay_ted@localhost" uuid="42bb3fca-1162-4f5e-be1d-1e37d800184e">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>ebay_ted.*</schema-pattern>
+      <default-schemas>ebay_ted.*</default-schemas>
+    </data-source>
+  </component>
+</project>
