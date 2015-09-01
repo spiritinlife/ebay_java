@@ -7,16 +7,17 @@ app.config(function ($routeProvider) {
         '/welcome',
         {
             templateUrl: 'partials/welcome.html',
-            controller: 'MyCtrl1'
+            controller: ''
         });
     $routeProvider.when(
         '/store',
         {
             templateUrl: 'partials/store.html',
-            controller: 'EbayController'
+            controller: ''
         });
     $routeProvider.otherwise(
         {
-            redirectTo: '/store'
+            redirectTo: '/welcome'
         });
 });
+

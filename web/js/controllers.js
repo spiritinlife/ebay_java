@@ -1,9 +1,3 @@
-app.controller('EbayController', function($scope, $resource){
-    this.items  = $resource('/api/items').query();
-    this.allItems = $resource('/api/items').query();
-    this.categories = $resource('/api/categories').query();
-    this.user = {};
-});
 
 app.controller("SignUpController", function(){
     this.user = {};
@@ -12,6 +6,13 @@ app.controller("SignUpController", function(){
         console.log(this.user);
 
     }
+});
+
+app.controller("GlobalScopeController", function($scope,$resource) {
+    $scope.items = $resource('/api/items').query();
+    $scope.allItems = $resource('/api/items').query();
+    $scope.categories = $resource('/api/categories').query();
+    $scope.user = {};
 });
 
 /*app.controller('SignUpController', ['$http', function($http){
