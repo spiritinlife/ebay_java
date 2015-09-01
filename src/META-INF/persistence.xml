@@ -4,13 +4,13 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="ebay_ted" transaction-type="RESOURCE_LOCAL">
 
-        <class>gr.geomike.ted.db.entity.Bid</class>
-        <class>gr.geomike.ted.db.entity.Bidder</class>
-        <class>gr.geomike.ted.db.entity.Category</class>
-        <class>gr.geomike.ted.db.entity.Item</class>
-        <class>gr.geomike.ted.db.entity.Location</class>
-        <class>gr.geomike.ted.db.entity.Seller</class>
-        <class>gr.geomike.ted.db.entity.User</class>
+        <class>gr.geomike.ted.api.db.entity.Bid</class>
+        <class>gr.geomike.ted.api.db.entity.Bidder</class>
+        <class>gr.geomike.ted.api.db.entity.Category</class>
+        <class>gr.geomike.ted.api.db.entity.Item</class>
+        <class>gr.geomike.ted.api.db.entity.Location</class>
+        <class>gr.geomike.ted.api.db.entity.Seller</class>
+        <class>gr.geomike.ted.api.db.entity.User</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"  value="com.mysql.jdbc.Driver"  />
