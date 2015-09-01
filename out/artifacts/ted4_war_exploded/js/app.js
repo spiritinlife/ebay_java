@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ebay', ['ngResource','ngRoute','ngAnimate']);
+var app = angular.module('ebay', ['ngResource','ngRoute']);
 
 app.config(function ($routeProvider) {
     $routeProvider.when(

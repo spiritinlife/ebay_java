@@ -1,7 +1,3 @@
-.container-fluid.centered {
-    margin: 0px auto;
-}
-
 .ng-invalid.ng-dirty{
     border-color: #ed145b;
 }
