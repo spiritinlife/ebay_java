@@ -1,13 +1,15 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.entity;
 
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
 @Table(name = "ITEM")
+@XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item  i")/*,
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),

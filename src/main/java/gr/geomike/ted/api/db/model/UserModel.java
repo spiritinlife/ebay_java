@@ -1,11 +1,9 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.model;
 
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import javax.persistence.*;
-
-@Entity
-public class User {
+@XmlRootElement
+public class UserModel {
     private int id;
 
     private String firstName;
@@ -17,100 +15,94 @@ public class User {
     private String address;
     private String phoneNumber;
 
-    private Bidder bidder;
-    private Seller seller;
+    /*private Bidder bidder;
+    private Seller seller;*/
 
-    @Id
-    @Column(name = "ID")
+    public UserModel() {
+    }
+
+    @Override
+    public String toString() {
+        return "User[" +
+                "id=" + id +
+                ", firstName='" + firstName +
+                ", lastName='" + lastName +
+                ", username='" + username +
+                ", password='" + password +
+                ", email='" + email +
+                ", socialSecurityNumber='" + socialSecurityNumber +
+                ", address='" + address +
+                ", phoneNumber='" + phoneNumber +
+                ']';
+    }
+
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "FIRST_NAME")
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    @Basic
-    @Column(name = "LAST_NAME")
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "USERNAME")
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "PASSWORD")
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "EMAIL")
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "SOCIAL_SECURITY_NUMBER")
+
     public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
-
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    @Basic
-    @Column(name = "ADDRESS")
+
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "PHONE_NUMBER")
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -163,5 +155,5 @@ public class User {
 
     public void setSeller(Seller seller) {
         this.seller = seller;
-    }
+    }*/
 }

@@ -1,4 +1,4 @@
-package gr.geomike.ted.db;
+package gr.geomike.ted.api.db;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

@@ -1,11 +1,13 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.entity;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Timestamp;
 
 @Entity
+@XmlRootElement
 public class Bid {
     private int id;
     private int itemId;

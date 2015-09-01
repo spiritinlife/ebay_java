@@ -1,8 +1,7 @@
 package gr.geomike.ted.api;
 
 import gr.geomike.ted.JSON;
-import gr.geomike.ted.db.dao.CategoryDao;
-import gr.geomike.ted.db.dao.ItemDao;
+import gr.geomike.ted.api.db.dao.CategoryDao;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

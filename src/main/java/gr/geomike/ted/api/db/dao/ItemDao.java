@@ -1,8 +1,8 @@
-package gr.geomike.ted.db.dao;
+package gr.geomike.ted.api.db.dao;
 
-import gr.geomike.ted.db.JPAResource;
-import gr.geomike.ted.db.entity.Item;
-import gr.geomike.ted.db.entity.User;
+import gr.geomike.ted.api.db.JPAResource;
+import gr.geomike.ted.api.db.entity.Item;
+import gr.geomike.ted.api.db.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

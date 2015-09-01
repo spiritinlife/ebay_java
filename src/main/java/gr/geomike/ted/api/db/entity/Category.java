@@ -1,12 +1,14 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.entity;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
 @Entity
 @Table(name = "CATEGORY")
+@XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")/*,
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
@@ -47,6 +49,7 @@ public class Category {
 
     @ManyToMany(mappedBy="categories")
     @JsonBackReference
+    //@XmlInverseReference
     public Collection<Item> getItems(){
         return items;
     }

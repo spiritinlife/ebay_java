@@ -1,16 +1,18 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.entity;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
-
 @Entity
-public class Seller {
+@XmlRootElement
+public class Bidder {
     private int userId;
 
     private Integer rating;
+    private String location;
 
     private Collection<Bid> bids;
     private User user;
@@ -35,15 +37,26 @@ public class Seller {
         this.rating = rating;
     }
 
+    @Basic
+    @Column(name = "LOCATION")
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Seller seller = (Seller) o;
+        Bidder bidder = (Bidder) o;
 
-        if (userId != seller.userId) return false;
-        if (rating != null ? !rating.equals(seller.rating) : seller.rating != null) return false;
+        if (userId != bidder.userId) return false;
+        if (rating != null ? !rating.equals(bidder.rating) : bidder.rating != null) return false;
+        if (location != null ? !location.equals(bidder.location) : bidder.location != null) return false;
 
         return true;
     }
@@ -52,16 +65,17 @@ public class Seller {
     public int hashCode() {
         int result = userId;
         result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "bidder")
     @JsonBackReference
-    public Collection<Bid> getBidsByUserId() {
+    public Collection<Bid> getBids() {
         return bids;
     }
 
-    public void setBidsByUserId(Collection<Bid> bids) {
+    public void setBids(Collection<Bid> bids) {
         this.bids = bids;
     }
 

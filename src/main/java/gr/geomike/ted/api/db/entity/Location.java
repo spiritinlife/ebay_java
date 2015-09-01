@@ -1,10 +1,12 @@
-package gr.geomike.ted.db.entity;
+package gr.geomike.ted.api.db.entity;
 
 import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement
 public class Location {
     private int itemId;
 

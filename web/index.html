@@ -117,7 +117,7 @@
                         <h4 class="modal-title" style="text-align: center">Sign In</h4>
                     </div>
                     <form name="signUpForm" ng-controller="SignUpController as signUpCtrl"
-                          ng-submit="signUpForm.$valid && signUpCtrl.addUser()" novalidate>
+                          ng-submit="signUpForm.$valid && signUpCtrl.register()" novalidate>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-4 col-lg-offset-4">
@@ -128,10 +128,9 @@
                                         <input type="text" class="form-control" placeholder="Re-type Password" ng-model="signUpCtrl.user.password" required>
                                         <input type="text" class="form-control" placeholder="First Name" ng-model="signUpCtrl.user.firstName" required>
                                         <input type="text" class="form-control" placeholder="Last Name" ng-model="signUpCtrl.user.lastName" required>
-                                        <input name="phone" type="number" class="form-control" placeholder="Phone Number" ng-model="signUpCtrl.user.phoneNumber">
+                                        <input name="phone" type="text" class="form-control" placeholder="Phone Number" ng-model="signUpCtrl.user.phoneNumber">
                                         <input type="text" class="form-control" placeholder="Social Security Number" ng-model="signUpCtrl.user.socialSecurityNumber">
                                         <input type="text" class="form-control" placeholder="Address" ng-model="signUpCtrl.user.address">
-                                        <input type="text" class="form-control" placeholder="Country"  ng-model="signUpCtrl.user.country" required>
                                     </div>
                                 </div>
                             </div>
