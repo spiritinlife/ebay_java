@@ -27,7 +27,7 @@ public class Item implements Serializable{
 
     private int id;
 
-    private String name;
+    private String itemName;
     private Integer currently;
     private Integer buyPrice;
     private Integer firstBid;
@@ -47,7 +47,7 @@ public class Item implements Serializable{
     public Item(int id, String name, Integer currently, Integer buyPrice, Integer firstBid, Integer numberOfBids, String country
             , Timestamp started, Timestamp ends, String description, Collection<Bid> bids, Collection<Category> categories, Location location) {
         this.id = id;
-        this.name = name;
+        this.itemName = name;
         this.currently = currently;
         this.buyPrice = buyPrice;
         this.firstBid = firstBid;
@@ -74,11 +74,11 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "NAME")
     public String getName() {
-        return name;
+        return itemName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.itemName = name;
     }
 
     @Basic
@@ -169,7 +169,7 @@ public class Item implements Serializable{
         Item item = (Item) o;
 
         if (id != item.id) return false;
-        if (name != null ? !name.equals(item.name) : item.name != null) return false;
+        if (itemName != null ? !itemName.equals(item.itemName) : item.itemName != null) return false;
         if (currently != null ? !currently.equals(item.currently) : item.currently != null) return false;
         if (buyPrice != null ? !buyPrice.equals(item.buyPrice) : item.buyPrice != null) return false;
         if (firstBid != null ? !firstBid.equals(item.firstBid) : item.firstBid != null) return false;
@@ -185,7 +185,7 @@ public class Item implements Serializable{
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
         result = 31 * result + (currently != null ? currently.hashCode() : 0);
         result = 31 * result + (buyPrice != null ? buyPrice.hashCode() : 0);
         result = 31 * result + (firstBid != null ? firstBid.hashCode() : 0);

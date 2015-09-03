@@ -11,7 +11,10 @@ import javax.ws.rs.Produces;
 public class CategoryService {
     @GET
     @Produces("application/json")
-    public String getItems() {
-        return JSON.toJson(CategoryDao.findAll());
+    public String getCategories() {
+
+        String json = JSON.toJson(CategoryDao.findAll());
+        System.err.println(json);
+        return json;
     }
 }
