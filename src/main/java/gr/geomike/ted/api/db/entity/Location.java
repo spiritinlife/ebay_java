@@ -1,17 +1,16 @@
 package gr.geomike.ted.api.db.entity;
 
-//import org.codehaus.jackson.annotate.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+import gr.geomike.ted.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="itemId")
 @XmlRootElement
-public class Location {
+public class Location implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private int itemId;
 
     private String name;
@@ -21,36 +20,37 @@ public class Location {
 
     @Id
     @Column(name = "ITEM_ID")
+    @JsonView(Views.Internal.class)
     public int getItemId() {
         return itemId;
     }
-
     public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 
     @Basic
     @Column(name = "NAME")
+    @JsonView(Views.Basic.class)
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
     @Basic
     @Column(name = "LONGITUDE")
+    @JsonView(Views.Basic.class)
     public Float getLongitude() {
         return longitude;
     }
-
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
     @Basic
     @Column(name = "LATITUDE")
+    @JsonView(Views.Basic.class)
     public Float getLatitude() {
         return latitude;
     }
@@ -84,8 +84,8 @@ public class Location {
     }
 
     @OneToOne
-    //@JsonBackReference(value = "item-location")
     @PrimaryKeyJoinColumn(name = "ITEM_ID", referencedColumnName = "ID")
+    @JsonView(Views.Location.class)
     public Item getItem() {
         return item;
     }
