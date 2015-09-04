@@ -14,8 +14,3 @@ div.grid-section img {
     width: 100%;
     margin: 10px 0;
 }
-
-
- .grid-item div.grid-section {
-    clear: both;
-}

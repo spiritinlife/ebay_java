@@ -1,9 +1,7 @@
 package gr.geomike.ted.api.db.entity;
 
-//import org.codehaus.jackson.annotate.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+import gr.geomike.ted.Views;
+import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -11,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "ITEM")
 @XmlRootElement
 @NamedQueries({
@@ -21,7 +18,6 @@ import java.util.Collection;
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="categories")
 public class Item implements Serializable{
     private static final long serialVersionUID = 1L;
 
@@ -44,10 +40,13 @@ public class Item implements Serializable{
     public Item() {
     }
 
-    public Item(int id, String name, Integer currently, Integer buyPrice, Integer firstBid, Integer numberOfBids, String country
+    public Item(int id) {
+        this.id = id;
+    }
+    public Item(int id, String itemName, Integer currently, Integer buyPrice, Integer firstBid, Integer numberOfBids, String country
             , Timestamp started, Timestamp ends, String description, Collection<Bid> bids, Collection<Category> categories, Location location) {
         this.id = id;
-        this.name = name;
+        this.name = itemName;
         this.currently = currently;
         this.buyPrice = buyPrice;
         this.firstBid = firstBid;
@@ -62,101 +61,101 @@ public class Item implements Serializable{
     }
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
+    @JsonView(Views.Basic.class)
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
     @Basic
     @Column(name = "NAME")
+    @JsonView(Views.Basic.class)
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
     @Basic
     @Column(name = "CURRENTLY")
+    @JsonView(Views.Basic.class)
     public Integer getCurrently() {
         return currently;
     }
-
     public void setCurrently(Integer currently) {
         this.currently = currently;
     }
 
     @Basic
     @Column(name = "BUY_PRICE")
+    @JsonView(Views.Basic.class)
     public Integer getBuyPrice() {
         return buyPrice;
     }
-
     public void setBuyPrice(Integer buyPrice) {
         this.buyPrice = buyPrice;
     }
 
     @Basic
     @Column(name = "FIRST_BID")
+    @JsonView(Views.Basic.class)
     public Integer getFirstBid() {
         return firstBid;
     }
-
     public void setFirstBid(Integer firstBid) {
         this.firstBid = firstBid;
     }
 
     @Basic
     @Column(name = "NUMBER_OF_BIDS")
+    @JsonView(Views.Basic.class)
     public Integer getNumberOfBids() {
         return numberOfBids;
     }
-
     public void setNumberOfBids(Integer numberOfBids) {
         this.numberOfBids = numberOfBids;
     }
 
     @Basic
     @Column(name = "COUNTRY")
+    @JsonView(Views.Basic.class)
     public String getCountry() {
         return country;
     }
-
     public void setCountry(String country) {
         this.country = country;
     }
-
     @Basic
     @Column(name = "STARTED")
+    @JsonView(Views.Basic.class)
     public Timestamp getStarted() {
         return started;
     }
-
     public void setStarted(Timestamp started) {
         this.started = started;
     }
 
     @Basic
     @Column(name = "ENDS")
+    @JsonView(Views.Basic.class)
     public Timestamp getEnds() {
         return ends;
     }
-
     public void setEnds(Timestamp ends) {
         this.ends = ends;
     }
 
     @Basic
     @Column(name = "DESCRIPTION")
+    @JsonView(Views.Basic.class)
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -198,35 +197,32 @@ public class Item implements Serializable{
     }
 
     @OneToMany(mappedBy = "item")
-    //@JsonManagedReference(value = "item-bid")
+    @JsonView(Views.Item.class)
     public Collection<Bid> getBids() {
         return bids;
     }
-
     public void setBids(Collection<Bid> bids) {
         this.bids = bids;
     }
 
-    @ManyToMany
-    //@JsonManagedReference(value = "item-category")
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="ITEM_HAS_CATEGORY",
             joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")}
+            inverseJoinColumns={@JoinColumn(name="CATEGORY_ID", referencedColumnName="ID")}
     )
+    @JsonView(Views.Item.class)
     public Collection<Category> getCategories() {
         return categories;
     }
-
     public void setCategories(Collection<Category> categories) {
         this.categories = categories;
     }
 
     @OneToOne(mappedBy = "item")
-    //@JsonManagedReference(value = "item-location")
+    @JsonView(Views.Item.class)
     public Location getLocation() {
         return location;
     }
-
     public void setLocation(Location locationById) {
         this.location = locationById;
     }

@@ -1,19 +1,18 @@
 package gr.geomike.ted.api.db.entity;
 
-//import org.codehaus.jackson.annotate.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonView;
+import gr.geomike.ted.Views;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Collection;
 
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 @XmlRootElement
-public class Seller {
+public class Seller implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int userId;
 
     private Integer rating;
@@ -21,8 +20,18 @@ public class Seller {
     private Collection<Bid> bids;
     private User user;
 
+    public Seller() {
+    }
+    public Seller(int userId, Integer rating, Collection<Bid> bids, User user) {
+        this.userId = userId;
+        this.rating = rating;
+        this.bids = bids;
+        this.user = user;
+    }
+
     @Id
     @Column(name = "USER_ID")
+    @JsonView(Views.Basic.class)
     public int getUserId() {
         return userId;
     }
@@ -33,6 +42,7 @@ public class Seller {
 
     @Basic
     @Column(name = "RATING")
+    @JsonView(Views.Basic.class)
     public Integer getRating() {
         return rating;
     }
@@ -62,7 +72,7 @@ public class Seller {
     }
 
     @OneToMany(mappedBy = "seller")
-    //@JsonBackReference(value="bid-seller")
+    @JsonView(Views.Seller.class)
     public Collection<Bid> getBidsByUserId() {
         return bids;
     }
@@ -72,7 +82,7 @@ public class Seller {
     }
 
     @OneToOne
-    //@JsonBackReference(value="user-bidder")
+    @JsonView(Views.Seller.class)
     @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
     public User getUser() {
         return user;

@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="ebay" ng-controller="GlobalScopeController">
+<html ng-app="ebay" ng-controller="GlobalScopeController as gsc">
 <head>
     <meta charset="utf-8">
     <title>E-bid</title>
@@ -74,9 +74,13 @@
                     </li>
                 </ul>
                 <!-- SIGN CONTROLS -->
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
+                <ul class="nav navbar-nav navbar-right" ng-controller="SignInController as signInCtrl" >
+                    {{signInCtrl.role}}
+                    {{signInStatus}}
+                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
+                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
+
+                    <li ng-if="signInCtrl.role === 'user'"><a href="" ng-click="role = 'guest'">Sign Out</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -113,21 +117,28 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="text-align: center">Sign In</h4>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Username">
-                            <input type="text" class="form-control" placeholder="Password">
+            <form name="signInForm" ng-controller="SignInController as signInCtrl"
+                  ng-submit="signInForm.$valid && signIn()" novalidate>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username"
+                                       ng-model="form.credentials.username" required>
+                                <input type="password" class="form-control" placeholder="Password"
+                                       ng-model="form.credentials.password" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer" style="text-align: center">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Sign In</button>
-            </div>
+                <div class="modal-footer" style="text-align: center">
+                    <button type="submit" class="btn btn-default">Sign In</button>
+                    <p>
+                        {{signInStatus}}
+                    </p>
+                </div>
+            </form>
         </div>
-
     </div>
 </div>
 <!-- SIGN UP MODAL -->

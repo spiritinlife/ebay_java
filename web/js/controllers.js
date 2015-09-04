@@ -27,3 +27,36 @@ app.controller("SignUpController", ['$scope', '$http', function($scope, $http) {
         });*/
     };
 }]);
+
+app.controller("SignInController", ['$scope', '$http', function($scope, $http) {
+    var sictrl = this;
+    sictrl.role = "guest";
+    $scope.signInStatus = "";
+    $scope.formCredentials = {
+        username: "",
+        password: ""
+    }
+    $scope.credentials = {
+        username: "",
+        password: ""
+    }
+
+    $scope.signIn = function() {
+        $scope.credentials.username = $scope.formCredentials.username;
+        $scope.credentials.password = $scope.credentials.password;
+
+        $http.post('/api/users/login', {
+            headers: {'Authentication': btoa($scope.credentials.username + ":" + $scope.credentials.password) }
+        }).then(function(response) {
+            sictrl.role = "user";
+            $scope.signInStatus = "logged in succesfuly" + response;
+        }, function(response) {
+            sictrl.role = "guest";
+            $scope.signInStatus = "wrong username or password" + response;
+        });
+    }
+
+    $scope.signOut = function() {
+        sictrl.role = "guest";
+    }
+}]);

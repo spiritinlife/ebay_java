@@ -1,9 +1,7 @@
 package gr.geomike.ted.api.db.entity;
 
-//import org.codehaus.jackson.annotate.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonView;
+import gr.geomike.ted.Views;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="name")
 @Table(name = "CATEGORY")
 @XmlRootElement
 @NamedQueries({
@@ -21,29 +18,44 @@ import java.util.Collection;
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="categories")
 public class Category implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    private int id;
     private String name;
     private Collection<Item> items;
 
+    public Category() {
+    }
+    public Category(int id) {
+        this.id = id;
+    }
+    public Category(int id, String name, Collection<Item> items) {
+        this.id = id;
+        this.name = name;
+        this.items = items;
+    }
+
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID")
+    @JsonView(Views.Internal.class)
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Basic
     @Column(name = "NAME")
+    @JsonView(Views.Basic.class)
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Category() {
-    }
-
-    public Category(String name, Collection<Item> items) {
-        this.name = name;
-        this.items = items;
     }
 
     @Override
@@ -63,13 +75,11 @@ public class Category implements Serializable{
         return name != null ? name.hashCode() : 0;
     }
 
-    @ManyToMany(mappedBy="categories")
-    //@JsonBackReference(value = "item-category")
-    //@XmlInverseReference
+    @ManyToMany(mappedBy="categories",fetch=FetchType.LAZY)
+    @JsonView(Views.Category.class)
     public Collection<Item> getItems(){
         return items;
     }
-
     public void setItems( Collection<Item> items){
         this.items = items;
     }

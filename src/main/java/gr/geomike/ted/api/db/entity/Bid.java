@@ -1,18 +1,17 @@
 package gr.geomike.ted.api.db.entity;
 
-//import org.codehaus.jackson.annotate.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+import com.fasterxml.jackson.annotation.JsonView;
+import gr.geomike.ted.Views;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @XmlRootElement
-public class Bid {
+public class Bid implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
 
     private int itemId;
@@ -26,8 +25,26 @@ public class Bid {
     private Item item;
     private Seller seller;
 
+    public Bid() {
+    }
+    public Bid(int id) {
+        this.id = id;
+    }
+    public Bid(int id, int itemId, int sellerId, int bidderId, Timestamp time, Integer amount, Bidder bidder, Item item, Seller seller) {
+        this.id = id;
+        this.itemId = itemId;
+        this.sellerId = sellerId;
+        this.bidderId = bidderId;
+        this.time = time;
+        this.amount = amount;
+        this.bidder = bidder;
+        this.item = item;
+        this.seller = seller;
+    }
+
     @Id
     @Column(name = "ID")
+    @JsonView(Views.Internal.class)
     public int getId() {
         return id;
     }
@@ -38,6 +55,7 @@ public class Bid {
 
     @Basic
     @Column(name = "ITEM_ID")
+    @JsonView(Views.Basic.class)
     public int getItemId() {
         return itemId;
     }
@@ -48,6 +66,7 @@ public class Bid {
 
     @Basic
     @Column(name = "SELLER_ID")
+    @JsonView(Views.Basic.class)
     public int getSellerId() {
         return sellerId;
     }
@@ -58,6 +77,7 @@ public class Bid {
 
     @Basic
     @Column(name = "BIDDER_ID")
+    @JsonView(Views.Basic.class)
     public int getBidderId() {
         return bidderId;
     }
@@ -68,6 +88,7 @@ public class Bid {
 
     @Basic
     @Column(name = "TIME")
+    @JsonView(Views.Basic.class)
     public Timestamp getTime() {
         return time;
     }
@@ -78,6 +99,7 @@ public class Bid {
 
     @Basic
     @Column(name = "AMOUNT")
+    @JsonView(Views.Basic.class)
     public Integer getAmount() {
         return amount;
     }
@@ -115,7 +137,7 @@ public class Bid {
     }
 
     @ManyToOne
-    //@JsonBackReference(value="bidder-bid")
+    @JsonView(Views.Bid.class)
     @JoinColumn(name = "BIDDER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
     public Bidder getBidder() {
         return bidder;
@@ -126,7 +148,7 @@ public class Bid {
     }
 
     @ManyToOne
-    //@JsonBackReference(value="item-bid")
+    @JsonView(Views.Bid.class)
     @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID", nullable = false, insertable=false, updatable=false)
     public Item getItem() {
         return item;
@@ -137,7 +159,7 @@ public class Bid {
     }
 
     @ManyToOne
-    //@JsonBackReference(value="seller-bid")
+    @JsonView(Views.Bid.class)
     @JoinColumn(name = "SELLER_ID", referencedColumnName = "USER_ID", nullable = false, insertable=false, updatable=false)
     public Seller getSeller() {
         return seller;
