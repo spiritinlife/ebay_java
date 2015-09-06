@@ -1,30 +1,22 @@
 package gr.geomike.ted;
 
-
 public class Views {
 
-    public static class Basic {
-    }
+    //all fields
+    public static interface Basic {}
 
-    public static class Internal extends Basic{
-    }
+    public static interface Bid extends  Basic {}
+    public static interface BidInternal extends  Bid {}
 
-    public static class Item extends Basic {
-    }
-    public static class Location extends Basic {
-    }
+    public static interface Bidder extends Basic {}
+    public static interface BidderInternal extends Basic {}
 
-    public static class Category extends Basic {
-    }
+    public static interface Seller extends Basic {}
+    public static interface SellerInternal extends Basic {}
 
-    public static class Bid extends Basic {
-    }
+    public static interface User extends Basic {}
 
-    public static class User extends Basic {
-    }
-
-    public static class Bidder extends Basic {
-    }
-    public static class Seller extends Basic {
-    }
+    public static interface Item extends Basic, Bid {}
+    public static interface Category extends Basic {}
+    public static interface Location {}
 }

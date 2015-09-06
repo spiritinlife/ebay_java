@@ -1,19 +1,20 @@
 package gr.geomike.ted.api.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.Views;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Collection;
 
 
 @Entity
-@XmlRootElement
+@XmlRootElement(name = "Seller")
 public class Seller implements Serializable {
     private static final long serialVersionUID = 1L;
-    private int userId;
+    private String username;
 
     private Integer rating;
 
@@ -22,31 +23,31 @@ public class Seller implements Serializable {
 
     public Seller() {
     }
-    public Seller(int userId, Integer rating, Collection<Bid> bids, User user) {
-        this.userId = userId;
+    public Seller(String username, Integer rating, Collection<Bid> bids, User user) {
+        this.username = username;
         this.rating = rating;
         this.bids = bids;
         this.user = user;
     }
 
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "USERNAME")
     @JsonView(Views.Basic.class)
-    public int getUserId() {
-        return userId;
+    @XmlAttribute(name = "UserID")
+    public String getUsername() {
+        return username;
     }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
     @Column(name = "RATING")
     @JsonView(Views.Basic.class)
+    @XmlAttribute(name = "Rating")
     public Integer getRating() {
         return rating;
     }
-
     public void setRating(Integer rating) {
         this.rating = rating;
     }
@@ -54,40 +55,43 @@ public class Seller implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Seller)) return false;
 
         Seller seller = (Seller) o;
 
-        if (userId != seller.userId) return false;
-        if (rating != null ? !rating.equals(seller.rating) : seller.rating != null) return false;
+        if (!getUsername().equals(seller.getUsername())) return false;
+        if (getRating() != null ? !getRating().equals(seller.getRating()) : seller.getRating() != null) return false;
+        if (bids != null ? !bids.equals(seller.bids) : seller.bids != null) return false;
+        return getUser().equals(seller.getUser());
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userId;
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        int result = getUsername().hashCode();
+        result = 31 * result + (getRating() != null ? getRating().hashCode() : 0);
+        result = 31 * result + (bids != null ? bids.hashCode() : 0);
+        result = 31 * result + getUser().hashCode();
         return result;
     }
 
     @OneToMany(mappedBy = "seller")
-    @JsonView(Views.Seller.class)
+    @JsonView(Views.SellerInternal.class)
+    @XmlTransient
     public Collection<Bid> getBidsByUserId() {
         return bids;
     }
-
     public void setBidsByUserId(Collection<Bid> bids) {
         this.bids = bids;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JsonView(Views.Seller.class)
-    @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
+    @XmlTransient
     public User getUser() {
         return user;
     }
-
     public void setUser(User userByUserId) {
         this.user = userByUserId;
     }

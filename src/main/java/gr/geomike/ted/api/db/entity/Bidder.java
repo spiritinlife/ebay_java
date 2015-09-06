@@ -4,16 +4,19 @@ import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.Views;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@XmlRootElement
+@XmlRootElement(name = "Bidder")
 public class Bidder implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int userId;
+    private String username;
 
     private Integer rating;
     private String location;
@@ -23,11 +26,11 @@ public class Bidder implements Serializable {
 
     public Bidder() {
     }
-    public Bidder(int userId) {
-        this.userId = userId;
+    public Bidder(String username) {
+        this.username = username;
     }
-    public Bidder(int userId, Integer rating, String location, Collection<Bid> bids, User user) {
-        this.userId = userId;
+    public Bidder(String username, Integer rating, String location, Collection<Bid> bids, User user) {
+        this.username = username;
         this.rating = rating;
         this.location = location;
         this.bids = bids;
@@ -35,18 +38,20 @@ public class Bidder implements Serializable {
     }
 
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "USERNAME")
     @JsonView(Views.Basic.class)
-    public int getUserId() {
-        return userId;
+    @XmlAttribute(name = "UserID")
+    public String getUsername() {
+        return username;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
     @Column(name = "RATING")
     @JsonView(Views.Basic.class)
+    @XmlAttribute(name = "Rating")
     public Integer getRating() {
         return rating;
     }
@@ -57,6 +62,7 @@ public class Bidder implements Serializable {
     @Basic
     @Column(name = "LOCATION")
     @JsonView(Views.Basic.class)
+    @XmlElement(name = "Location")
     public String getLocation() {
         return location;
     }
@@ -64,30 +70,9 @@ public class Bidder implements Serializable {
         this.location = location;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Bidder bidder = (Bidder) o;
-
-        if (userId != bidder.userId) return false;
-        if (rating != null ? !rating.equals(bidder.rating) : bidder.rating != null) return false;
-        if (location != null ? !location.equals(bidder.location) : bidder.location != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId;
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        return result;
-    }
-
     @OneToMany(mappedBy = "bidder")
-    @JsonView(Views.Bidder.class)
+    @JsonView(Views.BidderInternal.class)
+    @XmlTransient
     public Collection<Bid> getBids() {
         return bids;
     }
@@ -97,7 +82,8 @@ public class Bidder implements Serializable {
 
     @OneToOne
     @JsonView(Views.Bidder.class)
-    @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    @PrimaryKeyJoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
+    @XmlTransient
     public User getUser() {
         return user;
     }

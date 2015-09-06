@@ -1,16 +1,17 @@
 package gr.geomike.ted.api.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.Views;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlValue;
 import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 @Table(name = "CATEGORY")
-@XmlRootElement
+@XmlRootElement(name="Category")
 @NamedQueries({
         @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")/*,
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
@@ -21,39 +22,26 @@ import java.util.Collection;
 public class Category implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    private int id;
     private String name;
     private Collection<Item> items;
 
     public Category() {
     }
-    public Category(int id) {
-        this.id = id;
+    public Category(String name) {
+        this.name = name;
     }
-    public Category(int id, String name, Collection<Item> items) {
-        this.id = id;
+    public Category(String name, Collection<Item> items) {
         this.name = name;
         this.items = items;
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "ID")
-    @JsonView(Views.Internal.class)
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
     @Column(name = "NAME")
     @JsonView(Views.Basic.class)
+    @XmlValue
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -77,6 +65,7 @@ public class Category implements Serializable{
 
     @ManyToMany(mappedBy="categories",fetch=FetchType.LAZY)
     @JsonView(Views.Category.class)
+    @XmlTransient
     public Collection<Item> getItems(){
         return items;
     }

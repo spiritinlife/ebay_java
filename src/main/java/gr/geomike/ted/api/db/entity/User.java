@@ -1,22 +1,18 @@
 package gr.geomike.ted.api.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import gr.geomike.ted.Views;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 @Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "USER")
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-        @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+        //@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
@@ -25,34 +21,33 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private String username;
 
+    private String password;
     private String role;
     private String firstName;
     private String lastName;
-    private String username;
-    private String password;
     private String email;
     private String socialSecurityNumber;
     private String address;
     private String phoneNumber;
+    private String country;
 
     private Bidder bidder;
     private Seller seller;
 
     public User(){
     }
-    public User(int id) {
-        this.id = id;
+    public User(String username) {
+        this.username = username;
     }
-    public User(int id, String role, String firstName, String lastName, String username, String password, String email, String socialSecurityNumber, String address, String phoneNumber, Bidder bidder, Seller seller) {
-        this.id = id;
-
+    public User(String username, String password,String role, String firstName, String lastName,  String email,
+                String socialSecurityNumber, String address, String phoneNumber, Bidder bidder, Seller seller) {
+        this.username = username;
+        this.password = password;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
-        this.password = password;
         this.email = email;
         this.socialSecurityNumber = socialSecurityNumber;
         this.address = address;
@@ -62,14 +57,23 @@ public class User implements Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "ID")
-    @JsonView(Views.Internal.class)
-    public int getId() {
-        return id;
+    @Column(name = "USERNAME")
+    @JsonView(Views.Basic.class)
+    public String getUsername() {
+        return username;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Basic
+    @Column(name = "PASSWORD")
+    @JsonView(Views.Basic.class)
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Basic
@@ -103,26 +107,6 @@ public class User implements Serializable {
     }
 
     @Basic
-    @Column(name = "USERNAME")
-    @JsonView(Views.Basic.class)
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Basic
-    @Column(name = "PASSWORD")
-    @JsonView(Views.Basic.class)
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
     @Column(name = "EMAIL")
     @JsonView(Views.Basic.class)
     public String getEmail() {
@@ -140,6 +124,16 @@ public class User implements Serializable {
     }
     public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
+    }
+
+    @Basic
+    @Column(name = "COUNTRY")
+    @JsonView(Views.Basic.class)
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Basic
@@ -165,35 +159,41 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
-        if (id != user.id) return false;
-        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (socialSecurityNumber != null ? !socialSecurityNumber.equals(user.socialSecurityNumber) : user.socialSecurityNumber != null)
+        if (!getUsername().equals(user.getUsername())) return false;
+        if (!getPassword().equals(user.getPassword())) return false;
+        if (!getRole().equals(user.getRole())) return false;
+        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
             return false;
-        if (address != null ? !address.equals(user.address) : user.address != null) return false;
-        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
+        if (getSocialSecurityNumber() != null ? !getSocialSecurityNumber().equals(user.getSocialSecurityNumber()) : user.getSocialSecurityNumber() != null)
+            return false;
+        if (getAddress() != null ? !getAddress().equals(user.getAddress()) : user.getAddress() != null) return false;
+        if (getPhoneNumber() != null ? !getPhoneNumber().equals(user.getPhoneNumber()) : user.getPhoneNumber() != null)
+            return false;
+        if (getBidder() != null ? !getBidder().equals(user.getBidder()) : user.getBidder() != null) return false;
+        return !(getSeller() != null ? !getSeller().equals(user.getSeller()) : user.getSeller() != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (socialSecurityNumber != null ? socialSecurityNumber.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        int result = getUsername().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        result = 31 * result + getRole().hashCode();
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getSocialSecurityNumber() != null ? getSocialSecurityNumber().hashCode() : 0);
+        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
+        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
+        result = 31 * result + (getBidder() != null ? getBidder().hashCode() : 0);
+        result = 31 * result + (getSeller() != null ? getSeller().hashCode() : 0);
         return result;
     }
 

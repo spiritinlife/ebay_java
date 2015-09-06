@@ -1,37 +1,40 @@
 package gr.geomike.ted.api.db.entity;
 
+import gr.geomike.ted.CurrencyAdapter;
+import gr.geomike.ted.DateAdapter;
 import gr.geomike.ted.Views;
 import com.fasterxml.jackson.annotation.*;
+import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
 @Table(name = "ITEM")
-@XmlRootElement
+@XmlRootElement(name="item")
 @NamedQueries({
-        @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item  i")/*,
-        @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-        @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-        @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
-        @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
-        @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")*/})
+        @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item  i"),
+        @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id")
+})
 public class Item implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private int id;
 
     private String name;
-    private Integer currently;
-    private Integer buyPrice;
-    private Integer firstBid;
+    private Float currently;
+    private Float buyPrice;
+    private Float firstBid;
     private Integer numberOfBids;
     private String country;
     private Timestamp started;
     private Timestamp ends;
     private String description;
+    private String locationName;
 
     private Collection<Bid> bids;
     private Collection<Category> categories;
@@ -43,7 +46,7 @@ public class Item implements Serializable{
     public Item(int id) {
         this.id = id;
     }
-    public Item(int id, String itemName, Integer currently, Integer buyPrice, Integer firstBid, Integer numberOfBids, String country
+    public Item(int id, String itemName, Float currently, Float buyPrice, Float firstBid, Integer numberOfBids, String country
             , Timestamp started, Timestamp ends, String description, Collection<Bid> bids, Collection<Category> categories, Location location) {
         this.id = id;
         this.name = itemName;
@@ -64,6 +67,7 @@ public class Item implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
     @JsonView(Views.Basic.class)
+    @XmlAttribute(name = "ItemID")
     public int getId() {
         return id;
     }
@@ -74,6 +78,7 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "NAME")
     @JsonView(Views.Basic.class)
+    @XmlElement(name = "Name")
     public String getName() {
         return name;
     }
@@ -84,36 +89,43 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "CURRENTLY")
     @JsonView(Views.Basic.class)
-    public Integer getCurrently() {
+    @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @XmlElement(name = "Currently")
+    public Float getCurrently() {
         return currently;
     }
-    public void setCurrently(Integer currently) {
+    public void setCurrently(Float currently) {
         this.currently = currently;
     }
 
     @Basic
     @Column(name = "BUY_PRICE")
     @JsonView(Views.Basic.class)
-    public Integer getBuyPrice() {
+    @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @XmlElement(name = "Buy_Price")
+    public Float getBuyPrice() {
         return buyPrice;
     }
-    public void setBuyPrice(Integer buyPrice) {
+    public void setBuyPrice(Float buyPrice) {
         this.buyPrice = buyPrice;
     }
 
     @Basic
     @Column(name = "FIRST_BID")
     @JsonView(Views.Basic.class)
-    public Integer getFirstBid() {
+    @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @XmlElement(name = "First_Bid")
+    public Float getFirstBid() {
         return firstBid;
     }
-    public void setFirstBid(Integer firstBid) {
+    public void setFirstBid(Float firstBid) {
         this.firstBid = firstBid;
     }
 
     @Basic
     @Column(name = "NUMBER_OF_BIDS")
     @JsonView(Views.Basic.class)
+    @XmlElement(name = "Number_of_Bids")
     public Integer getNumberOfBids() {
         return numberOfBids;
     }
@@ -124,15 +136,19 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "COUNTRY")
     @JsonView(Views.Basic.class)
+    @XmlElement(name = "Country")
     public String getCountry() {
         return country;
     }
     public void setCountry(String country) {
         this.country = country;
     }
+
     @Basic
     @Column(name = "STARTED")
     @JsonView(Views.Basic.class)
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    @XmlElement(name = "Started")
     public Timestamp getStarted() {
         return started;
     }
@@ -143,6 +159,8 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "ENDS")
     @JsonView(Views.Basic.class)
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    @XmlElement(name = "Ends")
     public Timestamp getEnds() {
         return ends;
     }
@@ -153,12 +171,26 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "DESCRIPTION")
     @JsonView(Views.Basic.class)
+    @XmlElement(name = "Description")
     public String getDescription() {
         return description;
     }
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+    @Basic
+    @Column(name = "LOCATION_NAME")
+    @JsonView(Views.Basic.class)
+    @XmlTransient
+    public String getLocationName() {
+        return locationName;
+    }
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -198,6 +230,8 @@ public class Item implements Serializable{
 
     @OneToMany(mappedBy = "item")
     @JsonView(Views.Item.class)
+    @XmlElementWrapper(name = "Bids")
+    @XmlElement(name = "Bid")
     public Collection<Bid> getBids() {
         return bids;
     }
@@ -205,12 +239,13 @@ public class Item implements Serializable{
         this.bids = bids;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name="ITEM_HAS_CATEGORY",
             joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="CATEGORY_ID", referencedColumnName="ID")}
+            inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")}
     )
     @JsonView(Views.Item.class)
+    @XmlElement(name = "Category")
     public Collection<Category> getCategories() {
         return categories;
     }
@@ -218,12 +253,16 @@ public class Item implements Serializable{
         this.categories = categories;
     }
 
-    @OneToOne(mappedBy = "item")
+    @ManyToOne
     @JsonView(Views.Item.class)
+    @XmlElement(name = "Location")
+    @PrimaryKeyJoinColumn(name = "LOCATION_NAME", referencedColumnName = "NAME")
     public Location getLocation() {
         return location;
     }
     public void setLocation(Location locationById) {
         this.location = locationById;
     }
+
+
 }
