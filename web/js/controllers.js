@@ -46,12 +46,18 @@ angular.module('ebay')
         };
     })
     .controller('UserSignInController', function($scope, $state, $stateParams, Authentication) {
+
         $scope.signInStatus = "";
         $scope.signInUser = function() {
             $scope.signInStatus = "pending..";
             Authentication.signIn($scope.credentials);
         }
     })
+    .controller('UserPanelController', function($scope, $state, $stateParams) {
+        $state.go("userPanel.settings");
+    });
+
+
 
     /*.controller("SignUpController", ['$scope', '$http', function($scope, $http) {
         $scope.registerUser = function(){
