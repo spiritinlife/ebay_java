@@ -1,18 +1,30 @@
 .user-panel {
-    min-height: 600px;
+    min-height: 700px;
     background-color: lightgray;
     border-radius: 5px;
     padding: 10px;
+    margin : 10px
 
 }
 
 .panel-left {
-    height: 100%;
     background-color: azure;
-    border-right: 1px solid black;
+    padding: 20px;
+    border-radius : 5px;
+
+}
+
+.panel-right {
+    min-height: 700px;
+
+}
+
+.view-frame {
+    background-color: lightgray;
 }
 
 .panel-left ul{
-    height: 100%;
+    padding: 10px;
     list-style: none;
 }
+

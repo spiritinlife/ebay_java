@@ -1,8 +1,8 @@
 
 <div class="container-fluid">
     <link rel="stylesheet" href="/css/user-panel.css">
-    <div class="user-panel jumbobutton">
-        <div class="col-sm-4 panel-left">
+    <div class="user-panel row">
+        <div class="col-sm-2 panel-left">
             <ul>
                 <li><a ui-sref="userPanel.settings">Account Settings</a></li>
                 <li><a ui-sref="userPanel.bids">Bids</a></li>
@@ -11,9 +11,9 @@
             </ul>
         </div>
         <vr>
-        <div class="col-sm-8 panel-right">
+        <div class="col-sm-9 col-sm-offset-1 panel-right">
             <div class="ui-view-container">
-                <div class="view-frame" ui-view></div>
+                <div class="view-frame" ui-view ></div>
             </div>
         </div>
     </div>

@@ -21,8 +21,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     @Context
     private ResourceInfo resourceInfo;
 
-    private static final String AUTHORIZATION_PROPERTY = "Authorization";
-    private static final String AUTHENTICATION_SCHEME = "Basic";
+    public static final String AUTHORIZATION_PROPERTY = "Authorization";
+    public static final String AUTHENTICATION_SCHEME = "Basic";
     private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED)
             .entity("You cannot access this resource").build();
     private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
