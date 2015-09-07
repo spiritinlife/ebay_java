@@ -74,13 +74,11 @@
                     </li>
                 </ul>
                 <!-- SIGN CONTROLS -->
-                <ul class="nav navbar-nav navbar-right" ng-controller="SignInController as signInCtrl" >
+                <ul class="nav navbar-nav navbar-right">
                     {{signInCtrl.role}}
                     {{signInStatus}}
-                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
-                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-
-                    <li ng-if="signInCtrl.role === 'user'"><a href="" ng-click="role = 'guest'">Sign Out</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -118,16 +116,16 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="text-align: center">Sign In</h4>
             </div>
-            <form name="signInForm" ng-controller="SignInController as signInCtrl"
-                  ng-submit="signInForm.$valid && signIn()" novalidate>
+            <form name="signInForm" ng-controller="UserSignInController"
+                  ng-submit="signInForm.$valid && signInUser()" novalidate>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4 col-lg-offset-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Username"
-                                       ng-model="form.credentials.username" required>
+                                       ng-model="credentials.username" required>
                                 <input type="password" class="form-control" placeholder="Password"
-                                       ng-model="form.credentials.password" required>
+                                       ng-model="credentials.password" required>
                             </div>
                         </div>
                     </div>
@@ -150,32 +148,32 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="text-align: center">Sign Up</h4>
             </div>
-            <form name="signUpForm" ng-controller="SignUpController as signUpCtrl"
-                  ng-submit="signUpForm.$valid && registerUser()" novalidate>
+            <form name="signUpForm" ng-controller="UserCreateController"
+                  ng-submit="signUpForm.$valid && addUser()" novalidate>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4 col-lg-offset-4">
                             <div class="input-group">
-                                <input name="username" type="text" class="form-control" placeholder="Username"
-                                       ng-model="username" required>
-                                <input name="email" type="email" class="form-control" placeholder="email"
-                                       ng-model="email" required>
+                                <input type="text" class="form-control" placeholder="Username"
+                                       ng-model="user.username" required>
+                                <input type="email" class="form-control" placeholder="email"
+                                       ng-model="user.email" required>
                                 <input type="text" class="form-control" placeholder="Password"
-                                       ng-model="password" required>
+                                       ng-model="user.password" required>
                                 <input type="text" class="form-control" placeholder="Re-type Password"
-                                       ng-model="password" required>
+                                       ng-model="passwordCheck" required>
                                 <input type="text" class="form-control" placeholder="First Name"
-                                       ng-model="firstName" required>
+                                       ng-model="user.firstName" required>
                                 <input type="text" class="form-control" placeholder="Last Name"
-                                       ng-model="lastName" required>
+                                       ng-model="user.lastName" required>
                                 <input type="text" class="form-control" placeholder="Phone Number"
-                                       ng-model="phoneNumber">
+                                       ng-model="user.phoneNumber">
                                 <input type="text" class="form-control" placeholder="Social Security Number"
-                                       ng-model="socialSecurityNumber">
+                                       ng-model="user.socialSecurityNumber">
                                 <input type="text" class="form-control" placeholder="Address"
-                                       ng-model="address">
+                                       ng-model="user.address">
                                 <input type="text" class="form-control" placeholder="Country"
-                                       ng-model="country">
+                                       ng-model="user.country">
                             </div>
                         </div>
                     </div>

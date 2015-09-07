@@ -17,7 +17,24 @@ angular.module('ebay')
         });
     })
 
-    .controller("SignUpController", ['$scope', '$http', function($scope, $http) {
+    .controller('UserCreateController', function($scope, $state, $stateParams, User) {
+        $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
+
+        //create a new user. Issues a POST to /api/users
+        $scope.addUser = function() {
+            $scope.user.$save(function() {
+                //$state.go('welcome'); // on success go back to home
+            });
+        };
+    })
+    .controller('UserSignInController', function($scope, $state, $stateParams, Authentication) {
+        $scope.signInStatus = "pending..";
+        $scope.signInUser = function() {
+            Authentication.signIn($scope.credentials);
+        }
+    })
+
+    /*.controller("SignUpController", ['$scope', '$http', function($scope, $http) {
         $scope.registerUser = function(){
             var dataObj = {
                 username: $scope.username,
@@ -32,12 +49,12 @@ angular.module('ebay')
                 phoneNumber: $scope.phoneNumber
             };
             var res = $http.post('/api/users/signup', dataObj);
-            /*res.success(function(data, status, headers, config) {
+            res.success(function(data, status, headers, config) {
                 $scope.message = data;
             });
             res.error(function(data, status, headers, config) {
                 alert( "failure message: " + JSON.stringify({data: data}));
-            });*/
+            });
         };
     }])
 
@@ -72,4 +89,4 @@ angular.module('ebay')
         $scope.signOut = function() {
             sictrl.role = "guest";
         }
-    }]);
+    }]);*/
