@@ -12,14 +12,16 @@ import java.util.Collection;
 
 @Entity
 @XmlRootElement(name = "Seller")
+@NamedQueries({
+@NamedQuery(name = "Seller.findByUsername", query = "SELECT u FROM Seller u WHERE u.username = :username")})
 public class Seller implements Serializable {
     private static final long serialVersionUID = 1L;
     private String username;
+    private User user;
 
     private Integer rating;
 
     private Collection<Bid> bids;
-    private User user;
     private Collection<Item> items;
 
     public Seller() {
@@ -77,9 +79,9 @@ public class Seller implements Serializable {
     }
 
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(fetch=FetchType.LAZY)
     @JsonView(Views.Seller.class)
-    @PrimaryKeyJoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
+    @PrimaryKeyJoinColumn(name="USERNAME")
     @XmlTransient
     public User getUser() {
         return user;

@@ -1,22 +1,23 @@
 <div class="container-fluid centered">
     <link rel="stylesheet" href="/css/welcome.css">
-    <div class="col-sm-12" style="padding: 30px;">
-        <li class="divider" style="width: 100%"></li>
-        <p style="text-align: center;">
-
-        <h3>Latest Auctions</h3></p>
-        <li class="divider" style="width: 100%"></li>
-    </div>
-    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="item in items | orderBy:sort">
-        <div class="grid-item">
-            <div class="grid-section">
-                <img src="/images/market.jpg" class="pull-left">
-                <p style="font-size: 17px;font-weight: 400;">{{item.name}}</p>
-                <p style="font-size: 17px;font-weight: 400;">{{item.currently | currency}}</p>
-            </div>
-            <div class="grid-section">
-                <button class="btn btn-lg btn-primary">Bid</button>
+    <!--SECTION LATEST AUCTIONS-->
+    <section>
+        <div class="col-sm-12" style="padding: 30px;">
+            <hr>
+            <p><h1 style="text-align: center;">Welcome to E-Bid</h1><h3 style="text-align: center;">Check out our latest auctions</h3></p>
+            <hr>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="item in items | orderBy:sort">
+            <div class="grid-item">
+                <div class="grid-section">
+                    <img src="/images/market.jpg" class="pull-left">
+                    <p style="font-size: 17px;font-weight: 400;">{{item.name}}</p>
+                    <p style="font-size: 17px;font-weight: 400;">{{item.currently | currency}}</p>
+                </div>
+                <div class="grid-section">
+                    <button class="btn btn-lg btn-primary" ng-click="bid()">Bid</button>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>

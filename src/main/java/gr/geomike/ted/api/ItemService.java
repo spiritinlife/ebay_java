@@ -21,7 +21,6 @@ public class ItemService {
     @Produces("application/json")
     public String getItems() {
         String itemsJson = JSON.toJson(EntityDao.Find("Item.findAll"), Views.Item.class);
-        //System.err.println(itemsJson);
         return itemsJson;
     }
 

@@ -1,10 +1,15 @@
 package gr.geomike.ted.api;
 
 import gr.geomike.ted.api.db.EntityDao;
-import gr.geomike.ted.api.db.entity.*;
+import gr.geomike.ted.api.db.entity.Item;
+import gr.geomike.ted.api.db.entity.Location;
+import gr.geomike.ted.api.db.entity.Seller;
+import gr.geomike.ted.api.db.entity.User;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
+import java.util.HashMap;
+import java.util.List;
 
 @ApplicationPath("api")
 public class EbayApplication extends ResourceConfig {
@@ -31,9 +36,17 @@ public class EbayApplication extends ResourceConfig {
 
         Seller seller = new Seller();
         seller.setUsername("spiritinlife");
+        seller.setUser(user);
         seller.setRating(5);
         EntityDao.insert(seller);
 
+        // IMPORTANT !!
+        // if that works we are good i think
+        // Ok in order for this to work when we create seller we need to add the use by setUser
+        HashMap<String,Object> params = new HashMap<String, Object>();
+        params.put("username","spiritinlife");
+        List<Seller> sellers  = EntityDao.Find("Seller.findByUsername",params);
+        System.err.println("Lets see " + sellers.get(0).getUser().getFirstName());
 
 
         Item item = new Item();

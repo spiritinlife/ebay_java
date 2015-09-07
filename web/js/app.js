@@ -4,11 +4,11 @@ angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate']);
 
 //ebay config
 angular.module('ebay').config(function ($stateProvider) {
-    $stateProvider/*.state('welcome', {
+    $stateProvider.state('welcome', {
         url: '/welcome',
         templateUrl: 'partials/welcome.html',
         controller: ''
-    })*/.state('listItems', {
+    }).state('listItems', {
         url: '/items',
         templateUrl: 'partials/items.html',
         controller: 'ItemListController'
@@ -21,6 +21,6 @@ angular.module('ebay').config(function ($stateProvider) {
 
 //ebay run
 angular.module('ebay').run(function($state) {
-    $state.go('listItems');
+    $state.go('welcome');
 });
 

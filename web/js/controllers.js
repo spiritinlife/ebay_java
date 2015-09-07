@@ -1,5 +1,20 @@
 
 angular.module('ebay')
+    .controller('GlobalController', function($scope, Category, Item, Authentication) {
+        //fetch all categories. Issues a GET to /api/categories
+        $scope.categories = Category.query();
+
+        //fetch all items. Issues a GET to /api/items
+        $scope.items = Item.query();
+
+        $scope.bid = function() {
+           var userRole = Authentication.getRole();
+            if  (userRole != "USER") {
+                $("#signInModal").modal();
+
+            }
+        }
+    })
 
     .controller('CategoryListController', function($scope, Category) {
         //fetch all categories. Issues a GET to /api/categories

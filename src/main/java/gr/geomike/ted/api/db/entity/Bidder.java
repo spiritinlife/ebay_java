@@ -80,9 +80,9 @@ public class Bidder implements Serializable {
         this.bids = bids;
     }
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.LAZY)
     @JsonView(Views.Bidder.class)
-    @PrimaryKeyJoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")
+    @PrimaryKeyJoinColumn(name="USERNAME")
     @XmlTransient
     public User getUser() {
         return user;
