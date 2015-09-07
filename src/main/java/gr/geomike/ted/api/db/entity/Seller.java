@@ -20,6 +20,7 @@ public class Seller implements Serializable {
 
     private Collection<Bid> bids;
     private User user;
+    private Collection<Item> items;
 
     public Seller() {
     }
@@ -75,15 +76,6 @@ public class Seller implements Serializable {
         return result;
     }
 
-    @OneToMany(mappedBy = "seller")
-    @JsonView(Views.SellerInternal.class)
-    @XmlTransient
-    public Collection<Bid> getBidsByUserId() {
-        return bids;
-    }
-    public void setBidsByUserId(Collection<Bid> bids) {
-        this.bids = bids;
-    }
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JsonView(Views.Seller.class)
@@ -92,7 +84,28 @@ public class Seller implements Serializable {
     public User getUser() {
         return user;
     }
-    public void setUser(User userByUserId) {
-        this.user = userByUserId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    @OneToMany(mappedBy = "seller")
+    @JsonView(Views.SellerInternal.class)
+    @XmlTransient
+    public Collection<Bid> getBids() {
+        return bids;
+    }
+    public void setBids(Collection<Bid> bids) {
+        this.bids = bids;
+    }
+
+    @OneToMany(mappedBy = "seller")
+    @JsonView(Views.SellerInternal.class)
+    @XmlTransient
+    public Collection<Item> getItems() {
+        return items;
+    }
+    public void setItems(Collection<Item> items) {
+        this.items = items;
     }
 }

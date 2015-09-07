@@ -1,10 +1,9 @@
 package gr.geomike.ted.api.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.CurrencyAdapter;
 import gr.geomike.ted.DateAdapter;
 import gr.geomike.ted.Views;
-import com.fasterxml.jackson.annotation.*;
-import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -34,11 +33,13 @@ public class Item implements Serializable{
     private Timestamp started;
     private Timestamp ends;
     private String description;
-    private String locationName;
 
     private Collection<Bid> bids;
     private Collection<Category> categories;
+
     private Location location;
+
+    private Seller seller;
 
     public Item() {
     }
@@ -180,17 +181,6 @@ public class Item implements Serializable{
     }
 
 
-    @Basic
-    @Column(name = "LOCATION_NAME")
-    @JsonView(Views.Basic.class)
-    @XmlTransient
-    public String getLocationName() {
-        return locationName;
-    }
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -256,12 +246,24 @@ public class Item implements Serializable{
     @ManyToOne
     @JsonView(Views.Item.class)
     @XmlElement(name = "Location")
-    @PrimaryKeyJoinColumn(name = "LOCATION_NAME", referencedColumnName = "NAME")
+    @JoinColumn(name="LOCATION_NAME")
     public Location getLocation() {
         return location;
     }
     public void setLocation(Location locationById) {
         this.location = locationById;
+    }
+
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JsonView(Views.Item.class)
+    @XmlElement(name = "Seller")
+    @JoinColumn(name="SELLER_USERNAME")
+    public Seller getSeller() {
+        return seller;
+    }
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 
 

@@ -18,14 +18,9 @@ public class Bid implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
-
     private int itemId;
-    private String sellerUsername;
-    private String bidderUsername;
-
     private Timestamp time;
     private Float amount;
-
     private Bidder bidder;
     private Item item;
     private Seller seller;
@@ -35,12 +30,10 @@ public class Bid implements Serializable {
     public Bid(int id) {
         this.id = id;
     }
-    public Bid(int id, int itemId, String sellerUsername, String bidderUsername, Timestamp time, Float amount, Bidder bidder, Item item, Seller seller) {
+    public Bid(int id, int itemId, Timestamp time, Float amount, Bidder bidder, Item item, Seller seller) {
         this.id = id;
 
         this.itemId = itemId;
-        this.sellerUsername = sellerUsername;
-        this.bidderUsername = bidderUsername;
 
         this.time = time;
         this.amount = amount;
@@ -73,28 +66,6 @@ public class Bid implements Serializable {
     }
 
     @Basic
-    @Column(name = "SELLER_USERNAME")
-    @JsonView(Views.Basic.class)
-    @XmlTransient
-    public String getSellerUsername() {
-        return sellerUsername;
-    }
-    public void setSellerUsername(String sellerId) {
-        this.sellerUsername = sellerId;
-    }
-
-    @Basic
-    @Column(name = "BIDDER_USERNAME")
-    @JsonView(Views.Basic.class)
-    @XmlTransient
-    public String getBidderUsername() {
-        return bidderUsername;
-    }
-    public void setBidderUsername(String bidderUsername) {
-        this.bidderUsername = bidderUsername;
-    }
-
-    @Basic
     @Column(name = "TIME")
     @JsonView(Views.Basic.class)
     @XmlJavaTypeAdapter(DateAdapter.class)
@@ -118,10 +89,9 @@ public class Bid implements Serializable {
         this.amount = amount;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JsonView(Views.BidInternal.class)
-    @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID"
-            , nullable = false, insertable=false, updatable=false)
+    @PrimaryKeyJoinColumn(name = "ITEM_ID")
     public Item getItem() {
         return item;
     }
@@ -129,10 +99,9 @@ public class Bid implements Serializable {
         this.item = item;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JsonView(Views.Bid.class)
-    @JoinColumn(name = "BIDDER_USERNAME", referencedColumnName = "USERNAME",
-            nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "BIDDER_USERNAME")
     @XmlElement(name = "Bidder")
     public Bidder getBidder() {
         return bidder;
@@ -141,10 +110,9 @@ public class Bid implements Serializable {
         this.bidder = bidder;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JsonView(Views.Bid.class)
-    @JoinColumn(name = "SELLER_USERNAME", referencedColumnName = "USERNAME"
-            , nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "SELLER_USERNAME")
     @XmlElement(name = "Seller")
     public Seller getSeller() {
         return seller;
