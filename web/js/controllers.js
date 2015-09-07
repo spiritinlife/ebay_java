@@ -1,6 +1,8 @@
 
 angular.module('ebay')
     .controller('GlobalController', function($scope, Category, Item, Authentication) {
+        $scope.triedToBid = false;
+
         //fetch all categories. Issues a GET to /api/categories
         $scope.categories = Category.query();
 
@@ -10,6 +12,7 @@ angular.module('ebay')
         $scope.bid = function() {
            var userRole = Authentication.getRole();
             if  (userRole != "USER") {
+                $scope.triedToBid = true;
                 $("#signInModal").modal();
 
             }
@@ -43,8 +46,9 @@ angular.module('ebay')
         };
     })
     .controller('UserSignInController', function($scope, $state, $stateParams, Authentication) {
-        $scope.signInStatus = "pending..";
+        $scope.signInStatus = "";
         $scope.signInUser = function() {
+            $scope.signInStatus = "pending..";
             Authentication.signIn($scope.credentials);
         }
     })

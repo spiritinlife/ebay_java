@@ -1,0 +1,18 @@
+.user-panel {
+    min-height: 600px;
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+.panel-left {
+    height: 100%;
+    background-color: azure;
+    border-right: 1px solid black;
+}
+
+.panel-left ul{
+    height: 100%;
+    list-style: none;
+}

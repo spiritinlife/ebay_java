@@ -37,6 +37,7 @@ angular.module('ebay')
                 credentials = cred;
                 role = 'USER';
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa(credentials.username + ":" + credentials.password);
+
             },
             signUp: function() {
 

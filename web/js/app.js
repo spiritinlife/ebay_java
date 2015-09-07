@@ -16,6 +16,10 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/items/{:id}/view',
         templateUrl: 'partials/item-view.html',
         controller: 'ItemViewController'
+    }).state('userView', {
+        url: '/users/{:id}',
+        templateUrl: 'partials/user.html',
+        controller: ''
     });
 });
 
