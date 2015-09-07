@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="ebay" ng-controller="GlobalScopeController as gsc">
+<html ng-app="ebay" ng-controller="CategoryListController">
 <head>
     <meta charset="utf-8">
     <title>E-bid</title>
@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/#welcome">E-bid</a>
+                <a ui-sref="listItems" class="navbar-brand">E-bid</a>
             </div>
             <!-- COLLAPSING PART -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -29,9 +29,9 @@
                 <form class="navbar-form navbar-left" role="search" style="margin-left: 24%;">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search..." style="width:500px;">
-s
+
                         <div class="input-group-btn" ng-init="categoryFilter = 'All'">
-                            <a href="/#store">
+                            <a ui-sref="listItems">
                                 <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
                                 </button>
                             </a>
@@ -42,11 +42,11 @@ s
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li>
-                                    <a href ng-click="categoryFilter = 'All'; items = allItems;">All</a>
+                                    <a href ng-click="categoryFilter = 'All';">All</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li ng-repeat="cat in categories | orderBy:name">
-                                    <a href ng-click="$parent.categoryFilter = cat.name; $parent.items = cat.items;">{{cat.name}}</a>
+                                    <a href ng-click="$parent.categoryFilter = cat.name;">{{cat.name}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -74,13 +74,11 @@ s
                     </li>
                 </ul>
                 <!-- SIGN CONTROLS -->
-                <ul class="nav navbar-nav navbar-right" ng-controller="SignInController as signInCtrl" >
+                <ul class="nav navbar-nav navbar-right">
                     {{signInCtrl.role}}
                     {{signInStatus}}
-                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
-                    <li ng-if="signInCtrl.role === 'guest'"><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-
-                    <li ng-if="signInCtrl.role === 'user'"><a href="" ng-click="role = 'guest'">Sign Out</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -90,9 +88,9 @@ s
 
 </header>
 <body>
-<div class="view-container">
-    <div ng-view class="view-frame"></div>
-</div>
+    <div class="ui-view-container">
+        <div class="view-frame" ui-view></div>
+    </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -100,10 +98,11 @@ s
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
 <script src="js/controllers.js"></script>
-<script src="js/angular-resource.min.js"></script>
 <script src="js/filters.js"></script>
 <script src="js/directives.js"></script>
 </body>
@@ -117,16 +116,16 @@ s
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="text-align: center">Sign In</h4>
             </div>
-            <form name="signInForm" ng-controller="SignInController as signInCtrl"
-                  ng-submit="signInForm.$valid && signIn()" novalidate>
+            <form name="signInForm" ng-controller="UserSignInController"
+                  ng-submit="signInForm.$valid && signInUser()" novalidate>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4 col-lg-offset-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Username"
-                                       ng-model="form.credentials.username" required>
+                                       ng-model="credentials.username" required>
                                 <input type="password" class="form-control" placeholder="Password"
-                                       ng-model="form.credentials.password" required>
+                                       ng-model="credentials.password" required>
                             </div>
                         </div>
                     </div>
@@ -149,30 +148,32 @@ s
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="text-align: center">Sign Up</h4>
             </div>
-            <form name="signUpForm" ng-controller="SignUpController as signUpCtrl"
-                  ng-submit="signUpForm.$valid && registerUser()" novalidate>
+            <form name="signUpForm" ng-controller="UserCreateController"
+                  ng-submit="signUpForm.$valid && addUser()" novalidate>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4 col-lg-offset-4">
                             <div class="input-group">
-                                <input name="username" type="text" class="form-control" placeholder="Username"
-                                       ng-model="username" required>
-                                <input name="email" type="email" class="form-control" placeholder="email"
-                                       ng-model="email" required>
+                                <input type="text" class="form-control" placeholder="Username"
+                                       ng-model="user.username" required>
+                                <input type="email" class="form-control" placeholder="email"
+                                       ng-model="user.email" required>
                                 <input type="text" class="form-control" placeholder="Password"
-                                       ng-model="password" required>
+                                       ng-model="user.password" required>
                                 <input type="text" class="form-control" placeholder="Re-type Password"
-                                       ng-model="password" required>
+                                       ng-model="passwordCheck" required>
                                 <input type="text" class="form-control" placeholder="First Name"
-                                       ng-model="firstName" required>
+                                       ng-model="user.firstName" required>
                                 <input type="text" class="form-control" placeholder="Last Name"
-                                       ng-model="lastName" required>
-                                <input name="phone" type="text" class="form-control" placeholder="Phone Number"
-                                       ng-model="phoneNumber">
+                                       ng-model="user.lastName" required>
+                                <input type="text" class="form-control" placeholder="Phone Number"
+                                       ng-model="user.phoneNumber">
                                 <input type="text" class="form-control" placeholder="Social Security Number"
-                                       ng-model="socialSecurityNumber">
+                                       ng-model="user.socialSecurityNumber">
                                 <input type="text" class="form-control" placeholder="Address"
-                                       ng-model="address">
+                                       ng-model="user.address">
+                                <input type="text" class="form-control" placeholder="Country"
+                                       ng-model="user.country">
                             </div>
                         </div>
                     </div>
