@@ -1,13 +1,11 @@
 package gr.geomike.ted.api;
 
 import gr.geomike.ted.api.db.EntityDao;
-import gr.geomike.ted.api.db.entity.Item;
-import gr.geomike.ted.api.db.entity.Location;
-import gr.geomike.ted.api.db.entity.Seller;
-import gr.geomike.ted.api.db.entity.User;
+import gr.geomike.ted.api.db.entity.*;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,9 +17,9 @@ public class EbayApplication extends ResourceConfig {
 
         register(AuthenticationFilter.class);
 
-        Location location = new Location();
+        //PERSIST TEST
+        /*Location location = new Location();
         location.setName("Athens");
-        EntityDao.insert(location);
 
         User user = new User();
         user.setFirstName("George");
@@ -31,23 +29,19 @@ public class EbayApplication extends ResourceConfig {
         user.setEmail("ted@ted.com");
         user.setCountry("Greece");
         user.setUsername("spiritinlife");
-        EntityDao.insert(user);
-
 
         Seller seller = new Seller();
         seller.setUsername("spiritinlife");
         seller.setUser(user);
         seller.setRating(5);
-        EntityDao.insert(seller);
 
-        // IMPORTANT !!
-        // if that works we are good i think
-        // Ok in order for this to work when we create seller we need to add the use by setUser
-        HashMap<String,Object> params = new HashMap<String, Object>();
-        params.put("username","spiritinlife");
-        List<Seller> sellers  = EntityDao.Find("Seller.findByUsername",params);
-        System.err.println("Lets see " + sellers.get(0).getUser().getFirstName());
+        Bidder bidder = new Bidder();
+        bidder.setUsername("spiritinlife");
+        bidder.setUser(user);
+        bidder.setRating(4);
 
+        user.setSeller(seller);
+        user.setBidder(bidder);
 
         Item item = new Item();
         item.setName("Pencils ( 12 items )");
@@ -57,6 +51,16 @@ public class EbayApplication extends ResourceConfig {
         item.setBuyPrice(23f);
         item.setCountry("USA");
         item.setCurrently(23f);
-        EntityDao.insert(item);
+
+        List<Item> items = new ArrayList<Item>();
+        items.add(item);
+        user.getSeller().setItems(items);
+
+        EntityDao.insert(user);
+
+        HashMap<String,Object> params = new HashMap<String, Object>();
+        params.put("username","spiritinlife");
+        List<User> users  = EntityDao.Find("User.findByUsername",params);
+        System.err.println("Lets see " + users.get(0).getSeller().getItems().get(0).getName());*/
     }
 }

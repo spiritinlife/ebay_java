@@ -7,29 +7,28 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
-
+import java.util.List;
 
 @Entity
 @XmlRootElement(name = "Seller")
 @NamedQueries({
-@NamedQuery(name = "Seller.findByUsername", query = "SELECT u FROM Seller u WHERE u.username = :username")})
+        @NamedQuery(name = "Seller.findByUsername", query = "SELECT u FROM Seller u WHERE u.username = :username")})
 public class Seller implements Serializable {
     private static final long serialVersionUID = 1L;
+
     private String username;
     private User user;
 
     private Integer rating;
 
-    private Collection<Bid> bids;
-    private Collection<Item> items;
+    private List<Item> items;
+
 
     public Seller() {
     }
-    public Seller(String username, Integer rating, Collection<Bid> bids, User user) {
+    public Seller(String username, Integer rating, List<Bid> bids, User user) {
         this.username = username;
         this.rating = rating;
-        this.bids = bids;
         this.user = user;
     }
 
@@ -55,33 +54,32 @@ public class Seller implements Serializable {
         this.rating = rating;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Seller)) return false;
 
         Seller seller = (Seller) o;
 
-        if (!getUsername().equals(seller.getUsername())) return false;
-        if (getRating() != null ? !getRating().equals(seller.getRating()) : seller.getRating() != null) return false;
-        if (bids != null ? !bids.equals(seller.bids) : seller.bids != null) return false;
-        return getUser().equals(seller.getUser());
+        if (!username.equals(seller.username)) return false;
+        if (!user.equals(seller.user)) return false;
+        if (rating != null ? !rating.equals(seller.rating) : seller.rating != null) return false;
+        return !(items != null ? !items.equals(seller.items) : seller.items != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getUsername().hashCode();
-        result = 31 * result + (getRating() != null ? getRating().hashCode() : 0);
-        result = 31 * result + (bids != null ? bids.hashCode() : 0);
-        result = 31 * result + getUser().hashCode();
+        int result = username.hashCode();
+        result = 31 * result + user.hashCode();
+        result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        result = 31 * result + (items != null ? items.hashCode() : 0);
         return result;
-    }
-
+    }*/
 
     @OneToOne(fetch=FetchType.LAZY)
-    @JsonView(Views.Seller.class)
     @PrimaryKeyJoinColumn(name="USERNAME")
+    @JsonView(Views.Seller.class)
     @XmlTransient
     public User getUser() {
         return user;
@@ -90,24 +88,13 @@ public class Seller implements Serializable {
         this.user = user;
     }
 
-
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     @JsonView(Views.SellerInternal.class)
     @XmlTransient
-    public Collection<Bid> getBids() {
-        return bids;
-    }
-    public void setBids(Collection<Bid> bids) {
-        this.bids = bids;
-    }
-
-    @OneToMany(mappedBy = "seller")
-    @JsonView(Views.SellerInternal.class)
-    @XmlTransient
-    public Collection<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
-    public void setItems(Collection<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 }

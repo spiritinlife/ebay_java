@@ -7,57 +7,59 @@ angular.module('ebay')
         );
     })
     .factory('Category', function($resource) {
-        return $resource('/api/categories/:name', { id: '@name' }, {
+        return $resource('/api/categories/:id', { id: '@name' }, {
                 update: { method: 'PUT' }
             }
         );
     })
     .factory('User', function($resource) {
-        return $resource('/api/users/:username', { id: '@username' }, {
+        return $resource('/api/users/:id', { id: '@username' }, {
                 update: { method: 'PUT' }
             }
         );
     })
 
-    .factory('Authentication', function($http){
-        var role = 'GUEST';
+    .factory('Authentication', function($http, $cookies){
+        var role = $cookies.get('role') || 'GUEST';
         var credentials = {
             username: "",
             password: ""
         }
+        $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('credentials_base64');
 
         return {
             getRole: function(){
                 return role;
             },
-            setCredenetials: function(c) {
-                credentials = c;
-            },
             signIn: function(cred) {
                 credentials = cred;
                 role = 'USER';
-                $http.defaults.headers.common['Authorization'] = 'Basic ' + btoa(credentials.username + ":" + credentials.password);
-                console.log("Send")
-                $http.get('/users/login').
+                $cookies.put('role', 'USER');
+                var credentials_base64 = btoa(credentials.username + ":" + credentials.password);
+                $http.defaults.headers.common.Authorization = 'Basic ' + credentials_base64;
+                $cookies.put('credentials_base64', credentials_base64);
+
+                console.log("changed headers");
+                /*$http.get('/users/login').
                     then(function(response) {
-                        // this callback will be called asynchronously
-                        // when the response is available
+
                         console.log("Ok : " + response);
 
                     }, function(response) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
+
                         console.log("Not ok : " + response);
-                    });
+                    });*/
             },
             signUp: function() {
 
             },
             signOut: function() {
                 role = 'GUEST';
+                $cookies.put('role', 'GUEST');
                 credentials.username = "";
                 credentials.password = "";
-                $http.defaults.headers.common['Authorization'] = 'Basic ';
+                $http.defaults.headers.common.Authorization = 'Basic ';
+                $cookies.put('credentials_base64', "");
             }
         }
     })

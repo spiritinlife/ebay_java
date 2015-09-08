@@ -1,6 +1,6 @@
 
 //ebay app
-angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate']);
+angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate', 'ngCookies']);
 
 //ebay config
 angular.module('ebay').config(function ($stateProvider) {
@@ -10,31 +10,31 @@ angular.module('ebay').config(function ($stateProvider) {
         controller: ''
     }).state('listItems', {
         url: '/items',
-        templateUrl: 'partials/items.html',
+        templateUrl: 'partials/items-list.html',
         controller: 'ItemListController'
     }).state('viewItem', {
         url: '/items/{:id}/view',
         templateUrl: 'partials/item-view.html',
         controller: 'ItemViewController'
-    }).state('userPanel', {
-        url: '/users/{:id}',
-        templateUrl: 'partials/user-panel.html',
-        controller: 'UserPanelController'
-    }).state('userPanel.settings', {
-        url: '/users/{:id}/settings',
-        templateUrl: 'partials/user-panel-account-settings.html',
+    }).state('viewUser', {
+        url: '/users/{:id}/view',
+        templateUrl: 'partials/user-view.html',
+        controller: 'UserViewController'
+    }).state('viewUser.settings', {
+        url: '/settings',
+        templateUrl: 'partials/user-view-settings.html',
         controller: ''
-    }).state('userPanel.bought_products', {
-        url: '/users/{:id}/bought-products',
-        templateUrl: 'partials/user-panel-bought-products.html',
+    }).state('viewUser.bought_items', {
+        url: '/bought-items',
+        templateUrl: 'partials/user-view-bought_items.html',
         controller: ''
-    }).state('userPanel.selled_products', {
-        url: '/users/{:id}/selled-products',
-        templateUrl: 'partials/user-panel-selled-products.html',
+    }).state('viewUser.sold_items', {
+        url: '/sold-items',
+        templateUrl: 'partials/user-view-sold_items.html',
         controller: ''
-    }).state('userPanel.bids', {
-        url: '/users/{:id}/bids',
-        templateUrl: 'partials/user-panel-bids.html',
+    }).state('viewUser.bids', {
+        url: '/bids',
+        templateUrl: 'partials/user-view-bids.html',
         controller: ''
     });
 });

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -23,14 +23,14 @@ public class Category implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private String name;
-    private Collection<Item> items;
+    private List<Item> items;
 
     public Category() {
     }
     public Category(String name) {
         this.name = name;
     }
-    public Category(String name, Collection<Item> items) {
+    public Category(String name, List<Item> items) {
         this.name = name;
         this.items = items;
     }
@@ -46,7 +46,7 @@ public class Category implements Serializable{
         this.name = name;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -61,15 +61,15 @@ public class Category implements Serializable{
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
-    }
+    }*/
 
     @ManyToMany(mappedBy="categories",fetch=FetchType.LAZY)
     @JsonView(Views.Category.class)
     @XmlTransient
-    public Collection<Item> getItems(){
+    public List<Item> getItems(){
         return items;
     }
-    public void setItems( Collection<Item> items){
+    public void setItems( List<Item> items){
         this.items = items;
     }
 }

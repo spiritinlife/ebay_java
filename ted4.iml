@@ -21,7 +21,7 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="Ebay_Ted" />
-          <factory-entry name="ebay_ted" value="42bb3fca-1162-4f5e-be1d-1e37d800184e" />
+          <factory-entry name="ebay_ted" value="f2212270-b4eb-4eb8-9c89-9056b9d9df8f" />
           <factory-entry name="noname-a.xml@0" value="42bb3fca-1162-4f5e-be1d-1e37d800184e" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />

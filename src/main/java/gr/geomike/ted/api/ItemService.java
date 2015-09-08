@@ -29,8 +29,6 @@ public class ItemService {
     @GET
     @Produces("application/json")
     public String getItem(@PathParam("id") int id) {
-        /*List<QueryParameter> params = new ArrayList<QueryParameter>();
-        params.add(new QueryParameter("id", id));*/
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", id);
 

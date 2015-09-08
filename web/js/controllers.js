@@ -35,6 +35,14 @@ angular.module('ebay')
         });
     })
 
+    .controller('UserViewController', function($scope, $state, $stateParams, User) {
+        //$state.go("viewUser.settings");
+
+        $scope.user = User.get({
+            id: $stateParams.id
+        });
+    })
+
     .controller('UserCreateController', function($scope, $state, $stateParams, User) {
         $scope.user = new User();  //create new user instance. Properties will be set via ng-model on UI
 
@@ -45,17 +53,19 @@ angular.module('ebay')
             });
         };
     })
-    .controller('UserSignInController', function($scope, $state, $stateParams, Authentication) {
 
+    .controller('UserSignInController', function($scope, $state, $stateParams, Authentication) {
+        $scope.role = Authentication.getRole;
         $scope.signInStatus = "";
-        $scope.signInUser = function() {
+        $scope.signIn = function() {
             $scope.signInStatus = "pending..";
             Authentication.signIn($scope.credentials);
         }
-    })
-    .controller('UserPanelController', function($scope, $state, $stateParams) {
-        $state.go("userPanel.settings");
+        $scope.signOut = function() {
+            Authentication.signOut();
+        }
     });
+
 
 
 

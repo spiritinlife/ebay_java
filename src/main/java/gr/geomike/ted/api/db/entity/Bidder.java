@@ -9,27 +9,30 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @XmlRootElement(name = "Bidder")
+@NamedQueries({
+        @NamedQuery(name = "Bidder.findByUsername", query = "SELECT b FROM Bidder b WHERE b.username = :username")})
 public class Bidder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String username;
+    private User user;
 
     private Integer rating;
     private String location;
 
-    private Collection<Bid> bids;
-    private User user;
+    private List<Bid> bids;
+
 
     public Bidder() {
     }
     public Bidder(String username) {
         this.username = username;
     }
-    public Bidder(String username, Integer rating, String location, Collection<Bid> bids, User user) {
+    public Bidder(String username, Integer rating, String location, List<Bid> bids, User user) {
         this.username = username;
         this.rating = rating;
         this.location = location;
@@ -70,24 +73,49 @@ public class Bidder implements Serializable {
         this.location = location;
     }
 
-    @OneToMany(mappedBy = "bidder")
-    @JsonView(Views.BidderInternal.class)
-    @XmlTransient
-    public Collection<Bid> getBids() {
-        return bids;
-    }
-    public void setBids(Collection<Bid> bids) {
-        this.bids = bids;
+   /* @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bidder)) return false;
+
+        Bidder bidder = (Bidder) o;
+
+        if (!username.equals(bidder.username)) return false;
+        if (rating != null ? !rating.equals(bidder.rating) : bidder.rating != null) return false;
+        if (location != null ? !location.equals(bidder.location) : bidder.location != null) return false;
+        if (bids != null ? !bids.equals(bidder.bids) : bidder.bids != null) return false;
+        return user.equals(bidder.user);
+
     }
 
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + (rating != null ? rating.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (bids != null ? bids.hashCode() : 0);
+        result = 31 * result + user.hashCode();
+        return result;
+    }*/
+
     @OneToOne(fetch=FetchType.LAZY)
-    @JsonView(Views.Bidder.class)
     @PrimaryKeyJoinColumn(name="USERNAME")
+    @JsonView(Views.Bidder.class)
     @XmlTransient
     public User getUser() {
         return user;
     }
     public void setUser(User userByUserId) {
         this.user = userByUserId;
+    }
+
+    @OneToMany(mappedBy = "bidder")
+    @JsonView(Views.BidderInternal.class)
+    @XmlTransient
+    public List<Bid> getBids() {
+        return bids;
+    }
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 }

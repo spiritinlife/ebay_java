@@ -18,19 +18,20 @@ public class Bid implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
+
     private int itemId;
     private Timestamp time;
     private Float amount;
+
     private Bidder bidder;
     private Item item;
-    private Seller seller;
 
     public Bid() {
     }
     public Bid(int id) {
         this.id = id;
     }
-    public Bid(int id, int itemId, Timestamp time, Float amount, Bidder bidder, Item item, Seller seller) {
+    public Bid(int id, int itemId, Timestamp time, Float amount, Bidder bidder, Item item) {
         this.id = id;
 
         this.itemId = itemId;
@@ -40,7 +41,6 @@ public class Bid implements Serializable {
 
         this.bidder = bidder;
         this.item = item;
-        this.seller = seller;
     }
 
     @Id
@@ -90,8 +90,8 @@ public class Bid implements Serializable {
     }
 
     @ManyToOne
-    @JsonView(Views.BidInternal.class)
     @PrimaryKeyJoinColumn(name = "ITEM_ID")
+    @JsonView(Views.BidInternal.class)
     public Item getItem() {
         return item;
     }
@@ -100,24 +100,13 @@ public class Bid implements Serializable {
     }
 
     @ManyToOne
-    @JsonView(Views.Bid.class)
     @JoinColumn(name = "BIDDER_USERNAME")
+    @JsonView(Views.Bid.class)
     @XmlElement(name = "Bidder")
     public Bidder getBidder() {
         return bidder;
     }
     public void setBidder(Bidder bidder) {
         this.bidder = bidder;
-    }
-
-    @ManyToOne
-    @JsonView(Views.Bid.class)
-    @JoinColumn(name = "SELLER_USERNAME")
-    @XmlElement(name = "Seller")
-    public Seller getSeller() {
-        return seller;
-    }
-    public void setSeller(Seller seller) {
-        this.seller = seller;
     }
 }

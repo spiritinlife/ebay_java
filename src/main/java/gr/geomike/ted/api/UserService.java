@@ -25,8 +25,23 @@ public class UserService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getUsers() {
-        return JSON.toJson(EntityDao.Find("User.FindAll"), Views.Item.class);
+        return JSON.toJson(EntityDao.Find("User.findAll"), Views.Item.class);
     }
+
+    @RolesAllowed({"ADMIN", "AUTH_USER"})
+    @Path("{id}")
+    @GET
+    @Produces("application/json")
+    public String getUser(@PathParam("id") String username) {
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("username", username);
+
+        List<Item> items = EntityDao.Find("User.findByUsername", params);
+
+        return JSON.toJson(items.get(0), Views.Item.class);
+    }
+
 
     @PermitAll
     @GET
@@ -52,11 +67,11 @@ public class UserService {
         return j;
     }
 
-    @RolesAllowed("ADMIN")
-    @Path("{id}")
+    @RolesAllowed({"ADMIN", "AUTH_USER"})
+    @Path("{id}/bids")
     @GET
     @Produces("application/json")
-    public String getUser(@PathParam("id") String username) {
+    public String getUserBids(@PathParam("id") String username) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);
@@ -70,7 +85,6 @@ public class UserService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response signUp(User user) {
-        System.err.println("REACHED");
         user.setRole("USER");
         EntityDao.insert(user);
         return  Response.status(201).build();

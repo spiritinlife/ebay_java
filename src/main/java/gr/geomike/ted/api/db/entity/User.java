@@ -12,7 +12,6 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-        //@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
         @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
         @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
@@ -156,48 +155,47 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
-        if (!getUsername().equals(user.getUsername())) return false;
-        if (!getPassword().equals(user.getPassword())) return false;
-        if (!getRole().equals(user.getRole())) return false;
-        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
+        if (!username.equals(user.username)) return false;
+        if (!password.equals(user.password)) return false;
+        if (!role.equals(user.role)) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (socialSecurityNumber != null ? !socialSecurityNumber.equals(user.socialSecurityNumber) : user.socialSecurityNumber != null)
             return false;
-        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
-            return false;
-        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
-        if (getSocialSecurityNumber() != null ? !getSocialSecurityNumber().equals(user.getSocialSecurityNumber()) : user.getSocialSecurityNumber() != null)
-            return false;
-        if (getAddress() != null ? !getAddress().equals(user.getAddress()) : user.getAddress() != null) return false;
-        if (getPhoneNumber() != null ? !getPhoneNumber().equals(user.getPhoneNumber()) : user.getPhoneNumber() != null)
-            return false;
-        if (getBidder() != null ? !getBidder().equals(user.getBidder()) : user.getBidder() != null) return false;
-        return !(getSeller() != null ? !getSeller().equals(user.getSeller()) : user.getSeller() != null);
+        if (address != null ? !address.equals(user.address) : user.address != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
+        if (country != null ? !country.equals(user.country) : user.country != null) return false;
+        if (!bidder.equals(user.bidder)) return false;
+        return seller.equals(user.seller);
 
     }
 
     @Override
     public int hashCode() {
-        int result = getUsername().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        result = 31 * result + getRole().hashCode();
-        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-        result = 31 * result + (getSocialSecurityNumber() != null ? getSocialSecurityNumber().hashCode() : 0);
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
-        result = 31 * result + (getBidder() != null ? getBidder().hashCode() : 0);
-        result = 31 * result + (getSeller() != null ? getSeller().hashCode() : 0);
+        int result = username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + role.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (socialSecurityNumber != null ? socialSecurityNumber.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + bidder.hashCode();
+        result = 31 * result + seller.hashCode();
         return result;
-    }
+    }*/
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonView(Views.User.class)
     public Bidder getBidder() {
         return bidder;
@@ -206,7 +204,7 @@ public class User implements Serializable {
         this.bidder = bidder;
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonView(Views.User.class)
     public Seller getSeller() {
         return seller;

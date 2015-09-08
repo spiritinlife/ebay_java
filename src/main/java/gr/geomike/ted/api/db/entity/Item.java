@@ -1,16 +1,15 @@
 package gr.geomike.ted.api.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.CurrencyAdapter;
 import gr.geomike.ted.DateAdapter;
 import gr.geomike.ted.Views;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "ITEM")
@@ -34,11 +33,10 @@ public class Item implements Serializable{
     private Timestamp ends;
     private String description;
 
-    private Collection<Bid> bids;
-    private Collection<Category> categories;
+    private List<Bid> bids;
+    private List<Category> categories;
 
     private Location location;
-
     private Seller seller;
 
     public Item() {
@@ -48,7 +46,7 @@ public class Item implements Serializable{
         this.id = id;
     }
     public Item(int id, String itemName, Float currently, Float buyPrice, Float firstBid, Integer numberOfBids, String country
-            , Timestamp started, Timestamp ends, String description, Collection<Bid> bids, Collection<Category> categories, Location location) {
+            , Timestamp started, Timestamp ends, String description, List<Bid> bids, List<Category> categories, Location location) {
         this.id = id;
         this.name = itemName;
         this.currently = currently;
@@ -180,17 +178,15 @@ public class Item implements Serializable{
         this.description = description;
     }
 
-
-
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Item)) return false;
 
         Item item = (Item) o;
 
         if (id != item.id) return false;
-        if (name != null ? !name.equals(item.name) : item.name != null) return false;
+        if (!name.equals(item.name)) return false;
         if (currently != null ? !currently.equals(item.currently) : item.currently != null) return false;
         if (buyPrice != null ? !buyPrice.equals(item.buyPrice) : item.buyPrice != null) return false;
         if (firstBid != null ? !firstBid.equals(item.firstBid) : item.firstBid != null) return false;
@@ -199,14 +195,17 @@ public class Item implements Serializable{
         if (started != null ? !started.equals(item.started) : item.started != null) return false;
         if (ends != null ? !ends.equals(item.ends) : item.ends != null) return false;
         if (description != null ? !description.equals(item.description) : item.description != null) return false;
+        if (bids != null ? !bids.equals(item.bids) : item.bids != null) return false;
+        if (categories != null ? !categories.equals(item.categories) : item.categories != null) return false;
+        if (location != null ? !location.equals(item.location) : item.location != null) return false;
+        return seller.equals(item.seller);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + name.hashCode();
         result = 31 * result + (currently != null ? currently.hashCode() : 0);
         result = 31 * result + (buyPrice != null ? buyPrice.hashCode() : 0);
         result = 31 * result + (firstBid != null ? firstBid.hashCode() : 0);
@@ -215,38 +214,41 @@ public class Item implements Serializable{
         result = 31 * result + (started != null ? started.hashCode() : 0);
         result = 31 * result + (ends != null ? ends.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (bids != null ? bids.hashCode() : 0);
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + seller.hashCode();
         return result;
-    }
+    }*/
 
     @OneToMany(mappedBy = "item")
     @JsonView(Views.Item.class)
     @XmlElementWrapper(name = "Bids")
     @XmlElement(name = "Bid")
-    public Collection<Bid> getBids() {
+    public List<Bid> getBids() {
         return bids;
     }
-    public void setBids(Collection<Bid> bids) {
+    public void setBids(List<Bid> bids) {
         this.bids = bids;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="ITEM_HAS_CATEGORY",
             joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
-            inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")}
-    )
+            inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")})
     @JsonView(Views.Item.class)
     @XmlElement(name = "Category")
-    public Collection<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
-    public void setCategories(Collection<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="LOCATION_NAME")
     @JsonView(Views.Item.class)
     @XmlElement(name = "Location")
-    @JoinColumn(name="LOCATION_NAME")
     public Location getLocation() {
         return location;
     }
@@ -256,15 +258,13 @@ public class Item implements Serializable{
 
 
     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="SELLER_USERNAME")
     @JsonView(Views.Item.class)
     @XmlElement(name = "Seller")
-    @JoinColumn(name="SELLER_USERNAME")
     public Seller getSeller() {
         return seller;
     }
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
-
-
 }

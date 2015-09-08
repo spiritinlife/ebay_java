@@ -62,4 +62,25 @@ public class EntityDao {
             em.close();
         }
     }
+
+    public static void merge(Object entity) {
+
+        EntityManager em =  JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        try
+        {
+            em.merge(entity);
+            em.flush();
+            tx.commit();
+        }
+        catch (PersistenceException e)
+        {
+            if (tx.isActive()) tx.rollback();
+        }
+        finally
+        {
+            em.close();
+        }
+    }
 }

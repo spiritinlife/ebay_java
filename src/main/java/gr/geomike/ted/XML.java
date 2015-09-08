@@ -1,9 +1,6 @@
 package gr.geomike.ted;
 
-import gr.geomike.ted.api.db.entity.Bid;
-import gr.geomike.ted.api.db.entity.Item;
 import gr.geomike.ted.api.db.entity.Items;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -25,7 +22,6 @@ public class XML {
             e.printStackTrace();
         }
 
-        //System.out.println(JSON.toJson(((List<Bid>) ((List<Item>) items.getItems()).get(0).getBids()).get(0).getBidder(), Views.Item.class));
         return items;
     }
 }

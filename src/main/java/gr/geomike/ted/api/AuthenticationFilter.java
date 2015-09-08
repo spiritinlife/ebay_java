@@ -7,19 +7,25 @@ import java.util.*;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 import org.glassfish.jersey.internal.util.Base64;
+import org.glassfish.jersey.server.ContainerRequest;
 
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter
 {
     @Context
     private ResourceInfo resourceInfo;
+
+    @Inject
+    UriInfo uriInfo;
 
     public static final String AUTHORIZATION_PROPERTY = "Authorization";
     public static final String AUTHENTICATION_SCHEME = "Basic";
@@ -41,6 +47,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             }
 
             final MultivaluedMap<String, String> headers = requestContext.getHeaders();
+
+            final MultivaluedMap<String, String> pathParameters = uriInfo.getPathParameters();
 
             final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
@@ -65,7 +73,13 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 
-                if(!isUserAllowed(username, password, rolesSet))
+                List<String> authIds = pathParameters.get("id");
+                String authId = "";
+                if (!authIds.isEmpty()){
+                    authId = authIds.get(0);
+                }
+
+                if(!isUserAllowed(username, password, authId, rolesSet))
                 {
                     requestContext.abortWith(ACCESS_DENIED);
                     return;
@@ -73,12 +87,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             }
         }
     }
-    private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet)
+    private boolean isUserAllowed(final String username, final String password, final String authId, final Set<String> rolesSet)
     {
-        /*List<QueryParameter> params = new ArrayList<QueryParameter>();
-        params.add(new QueryParameter("username", username));
-        params.add(new QueryParameter("password", password));*/
-
         Map<String, Object> params =new HashMap<String, Object>();
         params.put("username",username);
         params.put("password",password);
@@ -88,7 +98,19 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             return false;
         }
         else {
-            return rolesSet.contains(users.get(0).getRole());
+            String role = users.get(0).getRole();
+            String userId = users.get(0).getUsername();
+
+            System.out.println("userId: " + username + ", authId: " + authId
+                    + ",permitUser: " + rolesSet.contains(role));
+
+            if (rolesSet.contains("AUTH_USER")){
+                return userId.equals(authId) || rolesSet.contains(role);
+            }
+            else {
+                return rolesSet.contains(role);
+            }
         }
+
     }
 }

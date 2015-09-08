@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -16,7 +15,7 @@ public class Location implements Serializable {
     private String name;
     private Float longitude;
     private Float latitude;
-    private Collection<Item> items;
+    private List<Item> items;
 
     @Id
     @Column(name = "NAME")
@@ -54,7 +53,7 @@ public class Location implements Serializable {
         this.latitude = latitude;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Location)) return false;
@@ -77,15 +76,15 @@ public class Location implements Serializable {
         result = 31 * result + (getLatitude() != null ? getLatitude().hashCode() : 0);
         result = 31 * result + (getItems() != null ? getItems().hashCode() : 0);
         return result;
-    }
+    }*/
 
     @OneToMany(mappedBy = "location")
     @JsonView(Views.Location.class)
     @XmlTransient
-    public Collection<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
-    public void setItems(Collection<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 }
