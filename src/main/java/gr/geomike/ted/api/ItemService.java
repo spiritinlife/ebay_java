@@ -6,10 +6,10 @@ import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.Item;
 
 import javax.annotation.security.PermitAll;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,5 +35,13 @@ public class ItemService {
         List<Item> items = EntityDao.Find("Item.findById", params);
 
         return JSON.toJson(items.get(0), Views.Item.class);
+    }
+
+    @RolesAllowed({"USER"})
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createItem(Item item) {
+        System.err.println(item);
+        return  Response.status(201).build();
     }
 }

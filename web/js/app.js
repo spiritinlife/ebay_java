@@ -24,6 +24,10 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/settings',
         templateUrl: 'partials/user-view-settings.html',
         controller: ''
+    }).state('viewUser.new_auction', {
+        url: '/new_auction',
+        templateUrl: 'partials/user-view-new-auction.html',
+        controller: ''
     }).state('viewUser.bought_items', {
         url: '/bought-items',
         templateUrl: 'partials/user-view-bought_items.html',

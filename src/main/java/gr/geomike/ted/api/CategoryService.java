@@ -17,7 +17,6 @@ public class CategoryService {
     @GET
     @Produces("application/json")
     public String getItems() {
-        String categoriesJson = JSON.toJson(EntityDao.Find("Category.findAll"), Views.Category.class);
-        return categoriesJson;
+        return JSON.toJson(EntityDao.Find("Category.findAll"), Views.Category.class);
     }
 }

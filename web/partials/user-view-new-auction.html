@@ -1,0 +1,89 @@
+<div class="container-fluid">
+<hr><h1>New Auction</h1><hr>
+
+    <form ng-submit="createAuction()">
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label>Product name</label>
+                <input type="text" ng-model="newauction.name" class="form-control" required>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Product category</label>
+                <select class="form-control" ng-model="newauction.category" required>
+                    <option ng-repeat="cat in categories">{{cat.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label>Product Buying Price</label>
+                <input class="form-control" ng-model="newauction.buyPrice" type="number" min="1" required>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Product Starting bid price</label>
+                <input class="form-control" ng-model="newauction.firstBid" type="number" min="1" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 form-group">
+                <label>Product bidding ends</label>
+                <input type="date" class="form-control" ng-model="newauction.ends"  placeholder="eg 2013-10-22" required>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label>Product Location (lat,lng)</label>
+                <input type="text" class="form-control" ng-model="newauction.location" placeholder="eg. 23.47,37.33" required>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label>Product Country</label>
+                <input type="text" class="form-control" ng-model="newauction.country" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 form-group">
+                <label>Product Description</label>
+                <textarea class="form-control" type="text" ng-model="newauction.description" placeholder="Add your description here" required></textarea>
+            </div>
+            <button class="col-sm-12 btn btn-primary btn-lg">Create new auction</button>
+        </div>
+    </form>
+</div>
+
+<!--ItemID (attribute): Μοναδικό id για το αντικείμενο που τίθεται σε δημοπρασία.-->
+<!--Name: Μία σύντομη ονομασία που χρησιμοποιείται ως περιγραφή της δημοπρασίας.-->
+<!--Category: Η κατηγορία στην οποία ανήκει το αντικείμενο. Ένα αντικείμενο μπορεί να-->
+<!--ανήκει σε πολλές κατηγορίες.-->
+<!--Currently: Η τρέχουσα καλύτερη προσφορά σε δολάρια. Είναι πάντοτε ίση με την-->
+<!--υψηλότερη προσφορά ή με το First_Bid αν δεν έχουν υποβληθεί προσφορές.-->
+<!--Buy_Price: Η τιμή που επιλέγει ο πωλητής πριν την έναρξη της δημοπρασίας με την-->
+<!--οποία ένας πλειοδότης μπορεί να κερδίσει τη δημοπρασία άμεσα. Ο πωλητής μπορεί-->
+<!--να επιλέξει να μην υπάρχει τέτοια τιμή, οπότε σε αυτή την περίπτωση το στοιχείο δεν-->
+<!--περιλαμβάνεται εντός της δημοπρασίας.-->
+<!--First_Bid: Το ελάχιστο μέγεθος της πρώτης προσφοράς, το οποίο ορίζεται από τον-->
+<!--πωλητή πριν την έναρξη της δημοπρασίας.-->
+<!--Number_of_Bids: Αριθμός των προσφορών / των στοιχείων προσφοράς καθένα εκ-->
+<!--των οποίων αντιστοιχεί σε μία προσφορά.-->
+<!--Bids/Bid/Bidder: Το στοιχείο Bids περιλαμβάνει πολλά Bid. Κάθε στοιχείο Bid-->
+<!--περιλαμβάνει 1 στοιχείο Bidder. Το attribute UserID του στοιχείου Bidder ταυτοποιεί-->
+<!--μοναδικά το χρήστη που κάνει την προσφορά. Το attribute Rating του Bidder αποτελεί-->
+<!--την αξιολόγηση του εν λόγω χρήστη. Τα στοιχεία-παιδιά του Bidder, Location και-->
+<!--Country παρέχουν πληροφορίες για την τοποθεσία του χρήστη που κάνει την-->
+<!--προσφορά. Ένας χρήστης μπορεί να συμμετέχει σε πολλές δημοπρασίες. Σε αυτή την-->
+<!--περίπτωση τα δεδομένα για την αξιολόγηση (Rating), Location και Country είναι ίδια-->
+<!--σε όλες τις προσφορές.-->
+<!--Bids/Bid/Time: Το στοιχείο Time βρίσκεται εντός του Bid και αφορά το χρόνο-->
+<!--υποβολής της προσφοράς. Πρέπει να είναι μεταγενέστερο του χρόνου έναρξης της-->
+<!--ψηφοφορίας και προγενέστερο του χρόνου λήξης της. Ένας χρήστης μπορεί να-->
+<!--υποβάλλει πολλαπλές προσφορές σε μια δημοπρασία αλλά σε διαφορετικό χρόνο.-->
+<!--Bids/Bid/Amount: Το ποσό της προσφοράς.-->
+<!--Location/Country: Τα στοιχεία Location και Country εντός του Item περιλαμβάνουν-->
+<!--τις γεωγραφικές πληροφορίες του αντικειμένου. Προαιρετικά τα attributes Latitude-->
+<!--και Longitude του στοιχείου Location ορίζουν τις γεωγραφικές συντεταγμένες του-->
+<!--αντικειμένου. Όταν το στοιχείο Location βρίσκεται εντός του Bidder δεν έχει-->
+<!--χαρακτηριστικά Latitude και Longitude-->
+<!--Started: Χρόνος έναρξης της δημοπρασίας-->
+<!--Ends: Χρόνος λήξης της δημοπρασίας.-->
+<!--Seller: Τα attributes UserID και Rating του στοιχείου Seller παρέχουν τα δεδομένα-->
+<!--του πωλητή. Ένας χρήστης έχει διαφορετικό rating ως πωλητής και ως bidder.-->
+<!--Description: Η πλήρης περιγραφή του αντικειμένου-->.

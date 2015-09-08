@@ -9,12 +9,13 @@ angular.module('ebay')
         //fetch all items. Issues a GET to /api/items
         $scope.items = Item.query();
 
-        $scope.bid = function() {
+        $scope.bid = function(item) {
            var userRole = Authentication.getRole();
-            if  (userRole != "USER") {
+            if  (userRole == "GUEST") {
                 $scope.triedToBid = true;
                 $("#signInModal").modal();
-
+            } else  {
+                $state.go("viewItem",{id:item.id});
             }
         }
 
@@ -48,14 +49,35 @@ angular.module('ebay')
         });
     })
 
-    .controller('UserViewController', function($scope, $state, $stateParams, User) {
+    .controller('UserViewController', function($scope, $state, $stateParams, $http, User) {
+        $scope.newauction = {
+            currently : null,
+            numberOfBids : null,
+            started : new Date(),
+            seller : null,
+            bids : null
+        };
 
         $scope.user = User.get({
             username: $stateParams.username
         });
 
+        $scope.createAuction = function() {
 
-        $state.go("viewUser.settings");
+            var data = $scope.newauction;
+            data.location = {
+                name : $scope.newauction.country,
+                lat: $scope.newauction.location.split(",")[0],
+                lng: $scope.newauction.location.split(",")[1]};
+
+            $http.post("/api/items",data).then(function(res){
+                console.log(res);
+
+            });
+
+        };
+
+        $state.go("viewUser.new_auction");
 
     })
     .controller('AdminViewController', function($scope, $http) {
