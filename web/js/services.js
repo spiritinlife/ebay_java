@@ -22,7 +22,7 @@ angular.module('ebay')
     .factory('Authentication', function($http, $cookies, $state){
         var role = $cookies.get('role') || 'GUEST';
         var credentials = {
-            username: "",
+            username: $cookies.get('username'),
             password: ""
         }
         $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('credentials_base64');
@@ -39,6 +39,7 @@ angular.module('ebay')
                 var credentials_base64 = btoa(credentials.username + ":" + credentials.password);
                 $http.defaults.headers.common.Authorization = 'Basic ' + credentials_base64;
                 $cookies.put('credentials_base64', credentials_base64);
+                $cookies.put('username', credentials.username);
 
                 $http.get('/api/users/'+credentials.username).
                     then(function(response) {
@@ -50,6 +51,7 @@ angular.module('ebay')
                         credentials.password = "";
                         $http.defaults.headers.common.Authorization = 'Basic ';
                         $cookies.put('credentials_base64', "");
+                        $cookies.put('username', "");
                         callback(false);
                     });
             },
@@ -64,6 +66,7 @@ angular.module('ebay')
                 credentials.password = "";
                 $http.defaults.headers.common.Authorization = 'Basic ';
                 $cookies.put('credentials_base64', "");
+                $cookies.put('username', "");
                 $state.go("welcome");
             }
         }

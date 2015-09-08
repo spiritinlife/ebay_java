@@ -8,3 +8,7 @@
 .ng-valid.ng-dirty{
     border-color: lightseagreen;
 }
+
+.nav a {
+    cursor: pointer;
+}

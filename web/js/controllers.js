@@ -1,6 +1,6 @@
-
+var user = {};
 angular.module('ebay')
-    .controller('GlobalController', function($scope, Category, Item, Authentication) {
+    .controller('GlobalController', function($scope, $state, Category, Item, Authentication) {
         $scope.triedToBid = false;
 
         //fetch all categories. Issues a GET to /api/categories
@@ -15,6 +15,12 @@ angular.module('ebay')
                 $scope.triedToBid = true;
                 $("#signInModal").modal();
 
+            }
+        }
+
+        $scope.goToAccount = function() {
+            if (Authentication.getUserName()) {
+                $state.go("viewUser", {username: Authentication.getUserName()});
             }
         }
     })
@@ -40,6 +46,7 @@ angular.module('ebay')
         $scope.user = User.get({
             username: $stateParams.username
         });
+
 
         $state.go("viewUser.settings");
 
