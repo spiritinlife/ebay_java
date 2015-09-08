@@ -24,6 +24,7 @@ public class User implements Serializable {
 
     private String password;
     private String role;
+    private String accountStatus;
     private String firstName;
     private String lastName;
     private String email;
@@ -83,6 +84,16 @@ public class User implements Serializable {
     }
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Basic
+    @Column(name = "ACCOUNT_STATUS")
+    @JsonView(Views.Basic.class)
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     @Basic

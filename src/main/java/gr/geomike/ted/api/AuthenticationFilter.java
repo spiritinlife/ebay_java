@@ -73,11 +73,11 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 
-                List<String> authIds = pathParameters.get("username");
-                String authId = "";
-                if (!authIds.isEmpty()){
+               List<String> authIds = pathParameters.get("username");
+               String authId = "";
+               if (authIds != null && !authIds.isEmpty()){
                     authId = authIds.get(0);
-                }
+               }
 
                 if(!isUserAllowed(username, password, authId, rolesSet))
                 {
@@ -103,6 +103,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
             System.out.println("userId: " + username + ", authId: " + authId
                     + ",permitUser: " + rolesSet.contains(role));
+
+
 
             if (rolesSet.contains("AUTH_USER")){
                 return userId.equals(authId) || rolesSet.contains(role);

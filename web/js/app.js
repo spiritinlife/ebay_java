@@ -36,6 +36,10 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/bids',
         templateUrl: 'partials/user-view-bids.html',
         controller: ''
+    }).state('viewAdmin', {
+        url: '/admin',
+        templateUrl: 'partials/admin.html',
+        controller: 'AdminViewController'
     });
 });
 

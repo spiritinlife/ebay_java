@@ -78,7 +78,7 @@
                     <li ng-if="role() == 'GUEST'"><a href="" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
                     <li ng-if="role() == 'GUEST'"><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
 
-                    <li ng-if="role() == 'ADMIN'"><a href="" >Administration</a></li>
+                    <li ng-if="role() == 'ADMIN'" ng-click="goToAdmin()"><a >Administration</a></li>
                     <li ng-if="role() == 'USER'" ng-click="goToAccount()"><a>Acount</a></li>
                     <li ng-if="role() != 'GUEST'" ng-click = "signOut()"><a>Sign Out</a></li>
                 </ul>

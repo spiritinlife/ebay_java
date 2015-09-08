@@ -19,12 +19,34 @@ import java.util.Map;
 @Path("/users")
 public class UserService {
 
-    @PermitAll
+    @RolesAllowed({"ADMIN"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getUsers() {
         return JSON.toJson(EntityDao.Find("User.findAll"), Views.Item.class);
     }
+
+
+    @RolesAllowed({"ADMIN"})
+    @PUT
+    @Path("admin/account/{username}/{action}")
+    public Response acceptUser(@PathParam("action") String action,@PathParam("username") String username) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("username", username);
+
+        List<User> users = EntityDao.Find("User.findByUsername", params);
+        if (action.equals("accept")) {
+            users.get(0).setAccountStatus("ACCEPTED");
+        } else if (action.equals("reject")) {
+            users.get(0).setAccountStatus("REJECTED");
+        } else if (action.equals("revoke")) {
+            users.get(0).setAccountStatus("PENDING");
+        }
+        EntityDao.merge(users.get(0));
+
+        return Response.ok().build();
+    }
+
 
     @RolesAllowed({"ADMIN", "AUTH_USER"})
     @Path("{username}")
@@ -35,10 +57,12 @@ public class UserService {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);
 
-        List<Item> items = EntityDao.Find("User.findByUsername", params);
+        List<User> users = EntityDao.Find("User.findByUsername", params);
 
-        return JSON.toJson(items.get(0), Views.Item.class);
+        return JSON.toJson(users.get(0), Views.Item.class);
     }
+
+
 
 
 

@@ -1,6 +1,33 @@
 
-<div class="container-fluid" ng-controller="GlobalController">
+<div class="container-fluid">
     <link rel="stylesheet" href="/css/user-panel.css">
+
+    <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
+        <div class="col-sm-12" style="text-align:center;">
+            <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
+            <div ng-if="user.accountStatus == 'PENDING'">
+                <button  class="btn btn-lg  btn-danger" ng-click="accept(user.username)">Accept</button>
+                <button class="btn btn-lg  btn-danger" ng-click="reject(user.username)">Reject</button>
+            </div>
+            <div ng-if="user.accountStatus == 'REJECTED'">
+                <button ng-if="user.accountStatus == 'REJECTED'" class="btn btn-lg  btn-danger" ng-click="revoke(user.username)">Revoke</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="getRole() == 'USER'">
+        <div class="col-sm-12" style="text-align:center;">
+            <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
+            <div ng-if="user.accountStatus == 'PENDING'">
+                <h3>Your account is awaiting moderation</h3>
+            </div>
+            <div ng-if="user.accountStatus == 'REJECTED'">
+                <h3>The administration chose to reject your registration</h3>
+            </div>
+        </div>
+    </div>
+
+
     <div class="user-panel row">
         <div class="col-sm-2 panel-left">
             <ul>
@@ -8,6 +35,7 @@
                 <li><a ui-sref="viewUser.bids">Bids</a></li>
                 <li><a ui-sref="viewUser.sold_items">Sold items</a></li>
                 <li><a ui-sref="viewUser.bought_items">Bought items</a></li>
+                <li ng-show=""><a ui-sref="viewUser.bought_items">Bought items</a></li>
             </ul>
         </div>
 

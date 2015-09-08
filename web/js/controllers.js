@@ -23,6 +23,13 @@ angular.module('ebay')
                 $state.go("viewUser", {username: Authentication.getUserName()});
             }
         }
+        $scope.goToAdmin = function() {
+            if (Authentication.getRole() == "ADMIN") {
+                $state.go("viewAdmin");
+            }
+        }
+
+        $scope.getRole = Authentication.getRole;
     })
 
     .controller('CategoryListController', function($scope, Category) {
@@ -49,6 +56,39 @@ angular.module('ebay')
 
 
         $state.go("viewUser.settings");
+
+    })
+    .controller('AdminViewController', function($scope, $http) {
+
+        $http.get("/api/users").then(function(res) {
+            $scope.users = res.data;
+        }, function(response) {
+            //something went wrong
+        });
+
+
+    })
+
+    .controller('AdminController', function($scope, $http) {
+
+        $scope.reject = function(username) {
+            $http.put("/api/users/admin/account/"+username+"/reject").then(function(res){
+                location.reload();
+            });
+        };
+
+        $scope.accept = function(username) {
+            $http.put("/api/users/admin/account/"+username+"/accept").then(function(res){
+                location.reload();
+            });
+        };
+
+        $scope.revoke = function(username) {
+            $http.put("/api/users/admin/account/"+username+"/revoke").then(function(res){
+                location.reload();
+            });
+        };
+
 
     })
 

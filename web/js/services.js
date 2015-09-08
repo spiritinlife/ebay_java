@@ -42,7 +42,10 @@ angular.module('ebay')
                 $cookies.put('username', credentials.username);
 
                 $http.get('/api/users/'+credentials.username).
-                    then(function(response) {
+                    then(function(res) {
+                        role = res.data.role;
+                        $cookies.put('role', role);
+
                         callback(true);
                     }, function(response) {
                         role = 'GUEST';

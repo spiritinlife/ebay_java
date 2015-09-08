@@ -1,0 +1,39 @@
+<div class="container-fluid centered">
+    <!--SECTION LATEST AUCTIONS-->
+    <style>
+        #users-list div{
+            cursor: pointer;
+            height: 250px;
+            border-radius: 5px;
+            background-color: floralwhite;
+            padding: 20px;
+        }
+
+        #users-list div.REJECTED{
+            border-radius: 5px;
+            background-color: red;
+        }
+
+        #users-list div.ACCEPTED{
+            border-radius: 5px;
+            background-color: lawngreen;
+        }
+
+
+    </style>
+    <section>
+        <div class="col-sm-12" style="padding: 30px;">
+            <hr>
+            <p><h1 style="text-align: center;">Users list</h1><h3 style="text-align: center;">Click on a user to go to a more detailed view</h3></p>
+            <hr>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="u in users" id="users-list">
+            <div ui-sref="viewUser({username : '{{u.username}}' })" class="{{u.accountStatus}}">
+                <h1>{{u.lastName}}</h1>
+                <h4>First name : {{u.firstName}}</h4>
+                <h4>Email : {{u.email}}</h4>
+                <h4>Username : {{u.username}}</h4>
+            </div>
+        </div>
+    </section>
+</div>
