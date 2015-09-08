@@ -13,13 +13,13 @@ angular.module('ebay')
         );
     })
     .factory('User', function($resource) {
-        return $resource('/api/users/:id', { id: '@username' }, {
+        return $resource('/api/users/:username', { username: '@username' }, {
                 update: { method: 'PUT' }
             }
         );
     })
 
-    .factory('Authentication', function($http, $cookies){
+    .factory('Authentication', function($http, $cookies, $state){
         var role = $cookies.get('role') || 'GUEST';
         var credentials = {
             username: "",
@@ -31,25 +31,29 @@ angular.module('ebay')
             getRole: function(){
                 return role;
             },
-            signIn: function(cred) {
+            signIn: function(cred, callback) {
                 credentials = cred;
                 role = 'USER';
+
                 $cookies.put('role', 'USER');
                 var credentials_base64 = btoa(credentials.username + ":" + credentials.password);
                 $http.defaults.headers.common.Authorization = 'Basic ' + credentials_base64;
                 $cookies.put('credentials_base64', credentials_base64);
 
-                console.log("changed headers");
-                /*$http.get('/users/login').
+                $http.get('/api/users/'+credentials.username).
                     then(function(response) {
-
-                        console.log("Ok : " + response);
-
+                        callback(true);
                     }, function(response) {
-
-                        console.log("Not ok : " + response);
-                    });*/
+                        role = 'GUEST';
+                        $cookies.put('role', 'GUEST');
+                        credentials.username = "";
+                        credentials.password = "";
+                        $http.defaults.headers.common.Authorization = 'Basic ';
+                        $cookies.put('credentials_base64', "");
+                        callback(false);
+                    });
             },
+            getUserName : function() { return credentials.username } ,
             signUp: function() {
 
             },
@@ -60,6 +64,7 @@ angular.module('ebay')
                 credentials.password = "";
                 $http.defaults.headers.common.Authorization = 'Basic ';
                 $cookies.put('credentials_base64', "");
+                $state.go("welcome");
             }
         }
     })

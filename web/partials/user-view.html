@@ -1,11 +1,8 @@
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="GlobalController">
     <link rel="stylesheet" href="/css/user-panel.css">
     <div class="user-panel row">
         <div class="col-sm-2 panel-left">
-            <h3>{{user.firstName}}</h3>
-            <h3>{{user.lastName}}</h3>
-            <h3>{{user.username}}</h3>
             <ul>
                 <li><a ui-sref="viewUser.settings">Account Settings</a></li>
                 <li><a ui-sref="viewUser.bids">Bids</a></li>

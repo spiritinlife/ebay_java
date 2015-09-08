@@ -17,7 +17,7 @@ angular.module('ebay').config(function ($stateProvider) {
         templateUrl: 'partials/item-view.html',
         controller: 'ItemViewController'
     }).state('viewUser', {
-        url: '/users/{:id}/view',
+        url: '/users/{:username}/view',
         templateUrl: 'partials/user-view.html',
         controller: 'UserViewController'
     }).state('viewUser.settings', {

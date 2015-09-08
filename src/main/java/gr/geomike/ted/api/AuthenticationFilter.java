@@ -2,8 +2,8 @@ package gr.geomike.ted.api;
 
 import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.User;
-import java.lang.reflect.Method;
-import java.util.*;
+import org.glassfish.jersey.internal.util.Base64;
+
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -15,8 +15,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
-import org.glassfish.jersey.internal.util.Base64;
-import org.glassfish.jersey.server.ContainerRequest;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Provider
 public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequestFilter
@@ -73,7 +73,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
 
-                List<String> authIds = pathParameters.get("id");
+                List<String> authIds = pathParameters.get("username");
                 String authId = "";
                 if (!authIds.isEmpty()){
                     authId = authIds.get(0);

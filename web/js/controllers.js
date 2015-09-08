@@ -36,11 +36,13 @@ angular.module('ebay')
     })
 
     .controller('UserViewController', function($scope, $state, $stateParams, User) {
-        //$state.go("viewUser.settings");
 
         $scope.user = User.get({
-            id: $stateParams.id
+            username: $stateParams.username
         });
+
+        $state.go("viewUser.settings");
+
     })
 
     .controller('UserCreateController', function($scope, $state, $stateParams, User) {
@@ -59,7 +61,14 @@ angular.module('ebay')
         $scope.signInStatus = "";
         $scope.signIn = function() {
             $scope.signInStatus = "pending..";
-            Authentication.signIn($scope.credentials);
+            Authentication.signIn($scope.credentials, function(success) {
+                if (success) {
+                    $("#signInModal").modal('hide');
+                    $state.go("viewUser",{username:Authentication.getUserName()});
+                } else {
+                    $scope.signInStatus = "Something went wrong";
+                }
+            });
         }
         $scope.signOut = function() {
             Authentication.signOut();

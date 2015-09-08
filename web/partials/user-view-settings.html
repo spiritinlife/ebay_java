@@ -4,48 +4,91 @@
 
         <div class="col-xs-3  thumbnail">
             <form id="change-name" >
-                <h4>Αλλαγή ονόματος χρήστη</h4>
+                <h4>Change your username</h4>
                 <div>
-                    <label for="userName">Όνομα χρήστη</label>
-                    <input type='text' id="userName" value="<%= userName %>" required>
+                    <label for="userName">Username</label>
+                    <input type='text' id="userName" value="{{user.username}}" required>
                 </div>
                 <div >
-                    <label for="change-name-password">Κωδικός χρήστη</label>
+                    <label for="change-name-password">Password</label>
                     <input type='password' id="change-name-password" name="password" required>
                 </div>
-                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Αποθήκευση</button>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
             </form>
         </div>
         <div class="col-xs-3 col-xs-offset-1  thumbnail">
             <form id="change-email">
-                <h4>Αλλαγή email</h4>
+                <h4>Change email</h4>
                 <div >
-                    <label for="userEmail">Email χρήστη</label>
-                    <input type='email' id="userEmail" value="<%= userEmail %>" required>
+                    <label for="userEmail">Email</label>
+                    <input type='email' id="userEmail" value="{{user.email}}" required>
                 </div>
                 <div >
-                    <label for="change-email-password">Κωδικός χρήστη</label>
+                    <label for="change-email-password">Password</label>
                     <input type='password' id="change-email-password" name="password" required>
                 </div>
-                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Αποθήκευση</button>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
             </form>
         </div>
         <div class="col-xs-3 col-xs-offset-1  thumbnail">
             <form id="change-password">
-                <h4>Αλλαγή κωδικού χρήστη</h4>
+                <h4>Change password</h4>
                 <div>
-                    <label for="new-password">Νέος Κωδικός χρήστη</label>
+                    <label for="new-password">New Password</label>
                     <input type='password' id="new-password" required>
                 </div>
                 <div >
-                    <label for="change-password-password">Κωδικός χρήστη</label>
+                    <label for="change-password-password">Password</label>
                     <input type='password' id="change-password-password" name="password" required>
                 </div>
-                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Αποθήκευση</button>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
             </form>
         </div>
-
     </div>
 
+    <div class="row">
+    <div class="col-xs-3   thumbnail">
+            <form id="change-first-name">
+                <h4>Change first name</h4>
+                <div>
+                    <label for="firstName">New Password</label>
+                    <input type='text' id="firstName"  value="{{user.firstName}}" required>
+                </div>
+                <div >
+                    <label for="change-firstName-password">Password</label>
+                    <input type='text' id="change-firstName-password" name="password" required>
+                </div>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
+            </form>
+        </div>
+        <div class="col-xs-3 col-xs-offset-1  thumbnail">
+            <form id="change-last-name">
+                <h4>Change last name</h4>
+                <div>
+                    <label for="lastName">New Password</label>
+                    <input type='text' id="lastName"  value="{{user.lastName}}" required>
+                </div>
+                <div >
+                    <label for="change-lastName-password">Password</label>
+                    <input type='password' id="change-lastName-password" name="password" required>
+                </div>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
+            </form>
+        </div>
+        <div class="col-xs-3 col-xs-offset-1  thumbnail">
+            <form id="change-country-name">
+                <h4>Change Country</h4>
+                <div>
+                    <label for="country">New Password</label>
+                    <input type='text' id="country"  value="{{user.country}}" required>
+                </div>
+                <div >
+                    <label for="change-country-password">Password</label>
+                    <input type='password' id="change-country-password" name="password" required>
+                </div>
+                <button class="btn" type="submit" style="background-color:#00aeef; color: #fff;">Change</button>
+            </form>
+        </div>
+    </div>
 
 </div>

@@ -1,3 +1,7 @@
+
+.user-panel label {
+    display: block;
+}
 .user-panel {
     min-height: 700px;
     background-color: lightgray;
