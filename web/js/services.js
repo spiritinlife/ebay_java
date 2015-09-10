@@ -1,3 +1,4 @@
+"use strict";
 
 angular.module('ebay')
     .factory('Item', function($resource) {
@@ -25,7 +26,7 @@ angular.module('ebay')
         );
     })
     .factory('SellerItem', function($resource, Authentication){
-        return $resource('/api/sellers/:username/items/:id/:bidId', {
+        return $resource('/api/sellers/:username/items/:id', {
                 username: Authentication.getUserName,
                 id: '@id'
             }, {

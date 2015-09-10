@@ -1,18 +1,18 @@
 package gr.geomike.ted.api;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 @Path("/files")
 public class FileService {
 
-    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:/Code/ebay_java/web/images/";
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/Users/spiritinlife/Documents/Sxolh/texn_efarm_diad/ebay_java/web/images/";
 
     @POST
     @Path("upload")

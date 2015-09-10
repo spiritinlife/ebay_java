@@ -6,7 +6,6 @@ import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.Image;
 import gr.geomike.ted.api.db.entity.Item;
 import gr.geomike.ted.api.db.entity.Seller;
-import gr.geomike.ted.api.db.entity.User;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
@@ -36,7 +35,7 @@ public class SellerService {
 
         List<Seller> sellers = EntityDao.Find("Seller.findByUsername", params);
 
-        System.err.println(sellers.get(0).getItems().get(0).getEnds());
+      //  System.err.println(sellers.get(0).getItems().get(0).getEnds());
 
         return JSON.toJson(sellers.get(0), Views.SellerInternal.class);
     }
@@ -62,6 +61,27 @@ public class SellerService {
         return Response.status(201).build();
     }
 
+    @RolesAllowed({"AUTH_USER"})
+    //just for authorization
+    @Path("{username}/items")
+    //---
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateSeller(@PathParam("username") String username, Item item){
+
+
+        Seller seller = (Seller) EntityDao.Find("Seller.findByUsername","username",username).get(0);
+        item.setSeller(seller);
+        item.setStatus("BEGUN");
+        item.setCurrently(item.getFirstBid());
+        EntityDao.merge(item);
+
+        seller = (Seller) EntityDao.Find("Seller.findByUsername","username",username).get(0);
+        System.err.println(seller.getItems());
+
+        return Response.status(201).build();
+    }
+
     //just returns item
     //shouldnt be there except for authorization purposes i.e. return(seller(username).item(id))
     //when username is authorized
@@ -82,21 +102,17 @@ public class SellerService {
                     @PathParam("username") String username,
                     @PathParam("id") int id) {
 
-        for (Item i : ((Seller)EntityDao.Find("Seller.findByUsername", "username", username).get(0)).getItems()){
-            //validate ids
-            if (i.getId() == item.getId() && i.getId() == id){
-                //check if item status permits modification
-                /*if (i.getStatus() != "BEGUN"){
-                    return Response.status(Response.Status.FORBIDDEN).build();
-                }*/
-
-                System.out.println("OK..");
-                EntityDao.merge(item);
-
-                return  Response.status(201).build();
-            }
+        Item oldItem = (Item) EntityDao.Find("Item.findById","id",id).get(0);
+        for ( Image image : item.getImages()) {
+            image.setItem(item);
         }
 
-        return Response.status(201).build();
+        if (oldItem.getSeller().getUsername().equals(username) && oldItem.getId() == item.getId() && oldItem.getStatus().equals("BEGUN")) {
+
+            EntityDao.merge(item);
+            return  Response.status(201).build();
+        }
+        return Response.status(Response.Status.FORBIDDEN).build();
+
     }
 }

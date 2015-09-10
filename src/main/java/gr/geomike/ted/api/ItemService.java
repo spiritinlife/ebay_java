@@ -4,7 +4,6 @@ import gr.geomike.ted.JSON;
 import gr.geomike.ted.Views;
 import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.Item;
-import gr.geomike.ted.api.db.entity.User;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -43,6 +42,7 @@ public class ItemService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createItem(Item item) {
         System.err.println(item);
+
         return  Response.status(201).build();
     }
 }

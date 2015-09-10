@@ -14,8 +14,9 @@
                     <p>{{item.description}}</p>
 
                     <form ng-if="role() == 'USER'" name = "bidForm" ng-submit="bidForm.$valid && createBid()">
-                        <input type="number" class="form-control" ng-model="bid.amount" required>
-                        <button type="submit" class="btn btn-primary">Bid</button>
+                        <input type="number" class="form-control" ng-model="bid.amount" value="{{bid.amount}}" min="{{bid.amount}}" required>
+                        <br>
+                        <button type="submit" class="btn btn-lg btn-primary">Bid</button>
                     </form>
 
                 </div>

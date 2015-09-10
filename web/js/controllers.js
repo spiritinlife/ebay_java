@@ -1,4 +1,5 @@
-var user = {};
+
+
 angular.module('ebay')
     .controller('GlobalController', function($scope, $state, Category, Item, Authentication) {
         $scope.triedToBid = false;
@@ -46,14 +47,19 @@ angular.module('ebay')
         $scope.imageIndex = 0;
         $scope.imageCount = 0;
 
+
+
+        $scope.role = Authentication.getRole;
+        $scope.bid = new Bid();
+
         $scope.item = Item.get({
             id: $stateParams.id
         }, function(){
             $scope.imageCount = $scope.item.images.length;
+            $scope.bid.amount = parseFloat($scope.item.currently) + 1;
+
         });
 
-        $scope.role = Authentication.getRole;
-        $scope.bid = new Bid();
         $scope.createBid = function(){
             console.log("called!");
             $scope.bid.$save({
@@ -70,15 +76,12 @@ angular.module('ebay')
     })
 
     .controller('SellerItemCreateController', function($scope, $stateParams, Seller,
-                                                       Authentication, $state, $stateParams, Upload, $timeout) {
-        $scope.seller = Seller.get({
-            username: $stateParams.username
-        });
+                                                       Authentication, $state , SellerItem, Upload, $timeout) {
 
         $scope.files = [];
         $scope.fileList = [];
         $scope.log = '';
-
+        $scope.item = new SellerItem();
         $scope.createItem = function() {
             $scope.item.images = [];
             for (var i = 0; i < $scope.fileList.length; i++) {
@@ -87,9 +90,7 @@ angular.module('ebay')
                     url: $scope.fileList[i].name
                 });
             }
-            $scope.seller.items.push($scope.item);
-
-            $scope.seller.$update();
+            $scope.item.$save();
 
             $state.go("viewUser", {username: $stateParams.username});
         };
