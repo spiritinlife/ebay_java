@@ -1,50 +1,50 @@
 "use strict";
 
 angular.module('ebay')
-    .factory('Item', function($resource) {
-        return $resource('/api/items/:id/', { id: '@id'}, {
-                update: { method: 'PUT' }
+    .factory('Item', function ($resource) {
+        return $resource('/api/items/:id/', {id: '@id'}, {
+                update: {method: 'PUT'}
             }
         );
     })
-    .factory('Category', function($resource) {
-        return $resource('/api/categories/:id', { id: '@name' }, {
-                update: { method: 'PUT' }
+    .factory('Category', function ($resource) {
+        return $resource('/api/categories/:id', {id: '@name'}, {
+                update: {method: 'PUT'}
             }
         );
     })
-    .factory('User', function($resource) {
-        return $resource('/api/users/:username', { username: '@username'}, {
-                update: { method: 'PUT' }
+    .factory('User', function ($resource) {
+        return $resource('/api/users/:username', {username: '@username'}, {
+                update: {method: 'PUT'}
             }
         );
     })
-    .factory('Seller', function($resource) {
-        return $resource('/api/sellers/:username', { username: '@username'}, {
-                update: { method: 'PUT' }
+    .factory('Seller', function ($resource) {
+        return $resource('/api/sellers/:username', {username: '@username'}, {
+                update: {method: 'PUT'}
             }
         );
     })
-    .factory('SellerItem', function($resource, Authentication){
+    .factory('SellerItem', function ($resource, Authentication) {
         return $resource('/api/sellers/:username/items/:id', {
                 username: Authentication.getUserName,
                 id: '@id'
             }, {
-                update: { method: 'PUT' }
+                update: {method: 'PUT'}
             }
         );
     })
-    .factory('Bid', function($resource) {
+    .factory('Bid', function ($resource) {
         return $resource('/api/bids/:username/:itemId', {
                 username: '@username',
                 itemId: '@itemId'
             }, {
-                update: { method: 'PUT' }
+                update: {method: 'PUT'}
             }
         );
     })
 
-    .factory('Authentication', function($http, $cookies, $state){
+    .factory('Authentication', function ($http, $cookies, $state) {
         var role = $cookies.get('role') || 'GUEST';
         var credentials = {
             username: $cookies.get('username'),
@@ -53,10 +53,10 @@ angular.module('ebay')
         $http.defaults.headers.common.Authorization = 'Basic ' + $cookies.get('credentials_base64');
 
         return {
-            getRole: function(){
+            getRole: function () {
                 return role;
             },
-            signIn: function(cred, callback) {
+            signIn: function (cred, callback) {
                 credentials = cred;
                 role = 'USER';
 
@@ -66,13 +66,13 @@ angular.module('ebay')
                 $cookies.put('credentials_base64', credentials_base64);
                 $cookies.put('username', credentials.username);
 
-                $http.get('/api/users/'+credentials.username).
-                    then(function(res) {
+                $http.get('/api/users/' + credentials.username).
+                    then(function (res) {
                         role = res.data.role;
                         $cookies.put('role', role);
 
                         callback(true);
-                    }, function(response) {
+                    }, function (response) {
                         role = 'GUEST';
                         $cookies.put('role', 'GUEST');
                         credentials.username = "";
@@ -83,12 +83,13 @@ angular.module('ebay')
                         callback(false);
                     });
             },
-            getUserName : function() {
-                return credentials.username } ,
-            signUp: function() {
+            getUserName: function () {
+                return credentials.username
+            },
+            signUp: function () {
 
             },
-            signOut: function() {
+            signOut: function () {
                 role = 'GUEST';
                 $cookies.put('role', 'GUEST');
                 credentials.username = "";
@@ -99,4 +100,4 @@ angular.module('ebay')
                 $state.go("welcome");
             }
         }
-    })
+    });

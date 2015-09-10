@@ -1,9 +1,8 @@
-
 //ebay app
 angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate', 'ngCookies', 'ngFileUpload']);
 
 //ebay config
-angular.module('ebay').config(function ($stateProvider) {
+angular.module('ebay').config(function ($stateProvider,$httpProvider) {
     $stateProvider.state('welcome', {
         url: '/welcome',
         templateUrl: 'partials/welcome.html',
@@ -36,9 +35,9 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/items/bought',
         templateUrl: 'partials/seller-bought_items.html',
         controller: ''
-    }).state('viewUser.soldItems', {
-        url: '/items/sold',
-        templateUrl: 'partials/seller-sold_items.html',
+    }).state('viewUser.activeAuctions', {
+        url: '/auctions/active',
+        templateUrl: 'partials/seller-active_auctions.html',
         controller: 'SellerItemsViewController'
     }).state('viewUser.bids', {
         url: '/bids',
@@ -48,11 +47,32 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/users',
         templateUrl: 'partials/users-list.html',
         controller: 'AdminViewController'
+    }).state('account-pending', {
+        url: '/account-pending',
+        templateUrl: 'partials/account-pending.html',
+        controller: ''
+    });
+
+
+
+    $httpProvider.interceptors.push(function ($q) {
+        return {
+            'responseError': function (response) {
+                console.log(response.status, response)
+
+                //Will only be called for HTTP up to 300
+                if (response.status == 405) {
+                    location.href = '/account-pending.html';
+                }
+                return response;
+            }
+        };
     });
 });
 
+
 //ebay run
-angular.module('ebay').run(function($state) {
+angular.module('ebay').run(function ($state) {
     $state.go('welcome');
 });
 

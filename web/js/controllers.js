@@ -284,7 +284,11 @@ angular.module('ebay')
             Authentication.signIn($scope.credentials, function(success) {
                 if (success) {
                     $("#signInModal").modal('hide');
-                    $state.go("viewUser",{username:Authentication.getUserName()});
+                    if (Authentication.getRole() == "ADMIN") {
+                        $state.go("listUsers");
+                    } else {
+                        $state.go("viewUser",{username:Authentication.getUserName()});
+                    }
                 } else {
                     $scope.signInStatus = "Something went wrong";
                 }

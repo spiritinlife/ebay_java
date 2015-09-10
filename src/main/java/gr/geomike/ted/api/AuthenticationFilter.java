@@ -33,6 +33,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             .entity("You cannot access this resource").build();
     private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
             .entity("Access blocked for all users !!").build();
+    private static final Response ACCESS_ACCOUNT_PENDING= Response.status(405).build();
 
     public void filter(ContainerRequestContext requestContext)
     {
@@ -74,15 +75,15 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                     authId = authIds.get(0);
                }
 
-                if(!isUserAllowed(username, password, authId, rolesSet))
-                {
-                    requestContext.abortWith(ACCESS_DENIED);
-                    return;
+                Response response = isUserAllowed(username, password, authId, rolesSet);
+                if ( response != null ) {
+                    requestContext.abortWith(response);
                 }
+
             }
         }
     }
-    private boolean isUserAllowed(final String username, final String password, final String authId, final Set<String> rolesSet)
+    private Response isUserAllowed(final String username, final String password, final String authId, final Set<String> rolesSet)
     {
         Map<String, Object> params =new HashMap<String, Object>();
         params.put("username",username);
@@ -90,17 +91,23 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         List<User> users = EntityDao.Find("User.findByUsernameAndPassword", params);
 
         if (users.isEmpty()) {
-            return false;
+            return ACCESS_DENIED;
         }
         else {
             String role = users.get(0).getRole();
             String userId = users.get(0).getUsername();
 
-            if (rolesSet.contains("AUTH_USER")){
-                return userId.equals(authId) || rolesSet.contains(role);
+            if ( rolesSet.contains("AUTH_USER") && ( userId.equals(authId) || rolesSet.contains(role) ) ){
+                if (!users.get(0).getAccountStatus().equals("ACCEPTED")) {
+                    return ACCESS_ACCOUNT_PENDING;
+                }
+                return null;
             }
             else {
-                return rolesSet.contains(role);
+                if  ( rolesSet.contains(role) ) {
+                    return null;
+                }
+                return ACCESS_DENIED;
             }
         }
     }

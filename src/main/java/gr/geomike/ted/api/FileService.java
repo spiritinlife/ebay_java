@@ -12,7 +12,7 @@ import java.io.*;
 @Path("/files")
 public class FileService {
 
-    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "/Users/spiritinlife/Documents/Sxolh/texn_efarm_diad/ebay_java/web/images/";
+    private static final String SERVER_UPLOAD_LOCATION_FOLDER = "C:/Code/ebay_java/web/images/";
 
     @POST
     @Path("upload")
