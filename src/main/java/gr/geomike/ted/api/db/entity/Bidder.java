@@ -1,5 +1,6 @@
 package gr.geomike.ted.api.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import gr.geomike.ted.Views;
 
@@ -40,9 +41,11 @@ public class Bidder implements Serializable {
         this.user = user;
     }
 
+    //basic-------------------------
     @Id
     @Column(name = "USERNAME")
     @JsonView(Views.Basic.class)
+    @JsonProperty("username")
     @XmlAttribute(name = "UserID")
     public String getUsername() {
         return username;
@@ -54,6 +57,7 @@ public class Bidder implements Serializable {
     @Basic
     @Column(name = "RATING")
     @JsonView(Views.Basic.class)
+    @JsonProperty("rating")
     @XmlAttribute(name = "Rating")
     public Integer getRating() {
         return rating;
@@ -65,6 +69,7 @@ public class Bidder implements Serializable {
     @Basic
     @Column(name = "LOCATION")
     @JsonView(Views.Basic.class)
+    @JsonProperty("location")
     @XmlElement(name = "Location")
     public String getLocation() {
         return location;
@@ -73,34 +78,11 @@ public class Bidder implements Serializable {
         this.location = location;
     }
 
-   /* @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Bidder)) return false;
-
-        Bidder bidder = (Bidder) o;
-
-        if (!username.equals(bidder.username)) return false;
-        if (rating != null ? !rating.equals(bidder.rating) : bidder.rating != null) return false;
-        if (location != null ? !location.equals(bidder.location) : bidder.location != null) return false;
-        if (bids != null ? !bids.equals(bidder.bids) : bidder.bids != null) return false;
-        return user.equals(bidder.user);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (bids != null ? bids.hashCode() : 0);
-        result = 31 * result + user.hashCode();
-        return result;
-    }*/
-
+    //references-----------------------------------
     @OneToOne(fetch=FetchType.LAZY)
     @PrimaryKeyJoinColumn(name="USERNAME")
     @JsonView(Views.Bidder.class)
+    @JsonProperty("user")
     @XmlTransient
     public User getUser() {
         return user;
@@ -109,8 +91,9 @@ public class Bidder implements Serializable {
         this.user = userByUserId;
     }
 
-    @OneToMany(mappedBy = "bidder")
+    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL)
     @JsonView(Views.BidderInternal.class)
+    @JsonProperty("bids")
     @XmlTransient
     public List<Bid> getBids() {
         return bids;

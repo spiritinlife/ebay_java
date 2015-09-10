@@ -1,5 +1,6 @@
 package gr.geomike.ted.api.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.geomike.ted.CurrencyAdapter;
 import gr.geomike.ted.DateAdapter;
 import gr.geomike.ted.Views;
@@ -24,6 +25,7 @@ public class Item implements Serializable{
     private int id;
 
     private String name;
+    private String status;
     private Float currently;
     private Float buyPrice;
     private Float firstBid;
@@ -36,6 +38,7 @@ public class Item implements Serializable{
     private List<Bid> bids;
     private List<Category> categories;
 
+    private List<Image> images;
     private Location location;
     private Seller seller;
 
@@ -45,9 +48,10 @@ public class Item implements Serializable{
     public Item(int id) {
         this.id = id;
     }
-    public Item(int id, String itemName, Float currently, Float buyPrice, Float firstBid, Integer numberOfBids, String country
+    public Item(int id, String itemName, String status, Float currently, Float buyPrice, Float firstBid, Integer numberOfBids, String country
             , Timestamp started, Timestamp ends, String description, List<Bid> bids, List<Category> categories, Location location) {
         this.id = id;
+        this.status = status;
         this.name = itemName;
         this.currently = currently;
         this.buyPrice = buyPrice;
@@ -66,6 +70,7 @@ public class Item implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
     @JsonView(Views.Basic.class)
+    @JsonProperty("id")
     @XmlAttribute(name = "ItemID")
     public int getId() {
         return id;
@@ -75,8 +80,21 @@ public class Item implements Serializable{
     }
 
     @Basic
+    @Column(name = "STATUS")
+    @JsonView(Views.Basic.class)
+    @JsonProperty("status")
+    @XmlElement(name = "Name")
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Basic
     @Column(name = "NAME")
     @JsonView(Views.Basic.class)
+    @JsonProperty("name")
     @XmlElement(name = "Name")
     public String getName() {
         return name;
@@ -89,6 +107,7 @@ public class Item implements Serializable{
     @Column(name = "CURRENTLY")
     @JsonView(Views.Basic.class)
     @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @JsonProperty("currently")
     @XmlElement(name = "Currently")
     public Float getCurrently() {
         return currently;
@@ -100,7 +119,8 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "BUY_PRICE")
     @JsonView(Views.Basic.class)
-    @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @JsonProperty("buyPrice")
+    //@XmlJavaTypeAdapter(CurrencyAdapter.class)
     @XmlElement(name = "Buy_Price")
     public Float getBuyPrice() {
         return buyPrice;
@@ -112,7 +132,8 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "FIRST_BID")
     @JsonView(Views.Basic.class)
-    @XmlJavaTypeAdapter(CurrencyAdapter.class)
+    //@XmlJavaTypeAdapter(CurrencyAdapter.class)
+    @JsonProperty("firstBid")
     @XmlElement(name = "First_Bid")
     public Float getFirstBid() {
         return firstBid;
@@ -124,6 +145,7 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "NUMBER_OF_BIDS")
     @JsonView(Views.Basic.class)
+    @JsonProperty("numberOfBids")
     @XmlElement(name = "Number_of_Bids")
     public Integer getNumberOfBids() {
         return numberOfBids;
@@ -135,6 +157,7 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "COUNTRY")
     @JsonView(Views.Basic.class)
+    @JsonProperty("country")
     @XmlElement(name = "Country")
     public String getCountry() {
         return country;
@@ -146,7 +169,8 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "STARTED")
     @JsonView(Views.Basic.class)
-    @XmlJavaTypeAdapter(DateAdapter.class)
+    @JsonProperty("started")
+    //@XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "Started")
     public Timestamp getStarted() {
         return started;
@@ -158,7 +182,8 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "ENDS")
     @JsonView(Views.Basic.class)
-    @XmlJavaTypeAdapter(DateAdapter.class)
+    @JsonProperty("ends")
+    //@XmlJavaTypeAdapter(DateAdapter.class)
     @XmlElement(name = "Ends")
     public Timestamp getEnds() {
         return ends;
@@ -170,6 +195,7 @@ public class Item implements Serializable{
     @Basic
     @Column(name = "DESCRIPTION")
     @JsonView(Views.Basic.class)
+    @JsonProperty("description")
     @XmlElement(name = "Description")
     public String getDescription() {
         return description;
@@ -223,6 +249,7 @@ public class Item implements Serializable{
 
     @OneToMany(mappedBy = "item")
     @JsonView(Views.Item.class)
+    @JsonProperty("bids")
     @XmlElementWrapper(name = "Bids")
     @XmlElement(name = "Bid")
     public List<Bid> getBids() {
@@ -232,11 +259,12 @@ public class Item implements Serializable{
         this.bids = bids;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="ITEM_HAS_CATEGORY",
             joinColumns={@JoinColumn(name="ITEM_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="CATEGORY_NAME", referencedColumnName="NAME")})
     @JsonView(Views.Item.class)
+    @JsonProperty("categories")
     @XmlElement(name = "Category")
     public List<Category> getCategories() {
         return categories;
@@ -248,6 +276,7 @@ public class Item implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="LOCATION_NAME")
     @JsonView(Views.Item.class)
+    @JsonProperty("location")
     @XmlElement(name = "Location")
     public Location getLocation() {
         return location;
@@ -256,10 +285,22 @@ public class Item implements Serializable{
         this.location = locationById;
     }
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonView(Views.Item.class)
+    @JsonProperty("images")
+    @XmlTransient
+    public List<Image> getImages() {
+        return images;
+    }
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="SELLER_USERNAME")
-    @JsonView(Views.Item.class)
+    @JsonView(Views.ItemInternal.class)
+    @JsonProperty("seller")
     @XmlElement(name = "Seller")
     public Seller getSeller() {
         return seller;

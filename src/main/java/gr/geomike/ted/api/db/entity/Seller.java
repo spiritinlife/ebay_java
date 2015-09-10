@@ -1,5 +1,6 @@
 package gr.geomike.ted.api.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.geomike.ted.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @XmlRootElement(name = "Seller")
 @NamedQueries({
-        @NamedQuery(name = "Seller.findByUsername", query = "SELECT u FROM Seller u WHERE u.username = :username")})
+        @NamedQuery(name = "Seller.findByUsername", query = "SELECT s FROM Seller s WHERE s.username = :username")})
 public class Seller implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +36,7 @@ public class Seller implements Serializable {
     @Id
     @Column(name = "USERNAME")
     @JsonView(Views.Basic.class)
+    @JsonProperty("username")
     @XmlAttribute(name = "UserID")
     public String getUsername() {
         return username;
@@ -46,6 +48,7 @@ public class Seller implements Serializable {
     @Basic
     @Column(name = "RATING")
     @JsonView(Views.Basic.class)
+    @JsonProperty("rating")
     @XmlAttribute(name = "Rating")
     public Integer getRating() {
         return rating;
@@ -80,6 +83,7 @@ public class Seller implements Serializable {
     @OneToOne(fetch=FetchType.LAZY)
     @PrimaryKeyJoinColumn(name="USERNAME")
     @JsonView(Views.Seller.class)
+    @JsonProperty("user")
     @XmlTransient
     public User getUser() {
         return user;
@@ -90,6 +94,7 @@ public class Seller implements Serializable {
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     @JsonView(Views.SellerInternal.class)
+    @JsonProperty("items")
     @XmlTransient
     public List<Item> getItems() {
         return items;

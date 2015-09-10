@@ -3,14 +3,21 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-5">
-                <a href="#" class="thumbnail">
-                    <img src="http://images.esellerpro.com/2209/I/594/81/U2185%20BLUE%20NEXUS%204%20S%20LINE%20front.jpg" alt="item thumbnail">
-                </a>
+                <div ng-show="imageCount > 0" class="thumbnail">
+                    <img ng-src="/images/{{item.images[imageIndex].url}}" alt="item thumbnail">
+                    <a ng-click="imageIndex = (imageIndex + 1) % imageCount"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                </div>
             </div><!--col lg-->
             <div class="col-md-5">
                 <div class="page-header">
                     <h1>{{item.name}} <small ng-repeat="category in item.categories | orderBy:name">{{category.name}}</small></h1>
                     <p>{{item.description}}</p>
+
+                    <form ng-if="role() == 'USER'" name = "bidForm" ng-submit="bidForm.$valid && createBid()">
+                        <input type="number" class="form-control" ng-model="bid.amount" required>
+                        <button type="submit" class="btn btn-primary">Bid</button>
+                    </form>
+
                 </div>
             </div>
         </div> <!--row-->

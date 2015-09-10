@@ -26,8 +26,30 @@ public class UserService {
         return JSON.toJson(EntityDao.Find("User.findAll"), Views.Item.class);
     }
 
+    @RolesAllowed({"ADMIN", "AUTH_USER"})
+    @Path("{username}")
+    @GET
+    @Produces("application/json")
+    public String getUser(@PathParam("username") String username) {
 
-    @RolesAllowed({"ADMIN"})
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("username", username);
+
+        List<User> users = EntityDao.Find("User.findByUsername", params);
+
+        return JSON.toJson(users.get(0), Views.Item.class);
+    }
+
+    @PermitAll
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response signUp(User user) {
+        user.setRole("USER");
+        EntityDao.insert(user);
+        return  Response.status(201).build();
+    }
+
+    /*@RolesAllowed({"ADMIN"})
     @PUT
     @Path("admin/account/{username}/{action}")
     public Response acceptUser(@PathParam("action") String action,@PathParam("username") String username) {
@@ -45,27 +67,17 @@ public class UserService {
         EntityDao.merge(users.get(0));
 
         return Response.ok().build();
-    }
+    }*/
 
-
-    @RolesAllowed({"ADMIN", "AUTH_USER"})
+    @RolesAllowed({"ADMIN"})
     @Path("{username}")
-    @GET
-    @Produces("application/json")
-    public String getUser(@PathParam("username") String username) {
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUser(User user) {
+        EntityDao.merge(user);
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("username", username);
-
-        List<User> users = EntityDao.Find("User.findByUsername", params);
-
-        return JSON.toJson(users.get(0), Views.Item.class);
+        return Response.ok().build();
     }
-
-
-
-
-
 
 
     @RolesAllowed({"ADMIN", "AUTH_USER"})
@@ -80,14 +92,5 @@ public class UserService {
         List<Item> items = EntityDao.Find("User.findByUsername", params);
 
         return JSON.toJson(items.get(0).getBids(), Views.Item.class);
-    }
-
-    @PermitAll
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response signUp(User user) {
-        user.setRole("USER");
-        EntityDao.insert(user);
-        return  Response.status(201).build();
     }
 }

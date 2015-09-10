@@ -1,13 +1,15 @@
 package gr.geomike.ted.api;
 
-import gr.geomike.ted.api.db.EntityDao;
-import gr.geomike.ted.api.db.entity.*;
-import org.glassfish.jersey.server.ResourceConfig;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 import javax.ws.rs.ApplicationPath;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import gr.geomike.ted.api.db.EntityDao;
+import gr.geomike.ted.api.db.entity.*;
 
 @ApplicationPath("api")
 public class EbayApplication extends ResourceConfig {
@@ -15,6 +17,8 @@ public class EbayApplication extends ResourceConfig {
     public EbayApplication() {
         packages("gr.geomike.ted.api");
 
+        register(MultiPartFeature.class);
+        //register(FileService.class);
         register(AuthenticationFilter.class);
 
         //PERSIST TEST

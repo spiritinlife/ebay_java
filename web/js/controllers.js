@@ -26,7 +26,7 @@ angular.module('ebay')
         }
         $scope.goToAdmin = function() {
             if (Authentication.getRole() == "ADMIN") {
-                $state.go("viewAdmin");
+                $state.go("listUsers");
             }
         }
 
@@ -42,27 +42,183 @@ angular.module('ebay')
         //fetch all items. Issues a GET to /api/items
         $scope.items = Item.query();
     })
-    .controller('ItemViewController', function($scope, $stateParams, Item) {
-        //Get a single item. Issues a GET to /api/items/:id
+    .controller('ItemViewController', function($scope, $stateParams, Item, Bid, Authentication) {
+        $scope.imageIndex = 0;
+        $scope.imageCount = 0;
+
         $scope.item = Item.get({
             id: $stateParams.id
+        }, function(){
+            $scope.imageCount = $scope.item.images.length;
+        });
+
+        $scope.role = Authentication.getRole;
+        $scope.bid = new Bid();
+        $scope.createBid = function(){
+            console.log("called!");
+            $scope.bid.$save({
+                username: Authentication.getUserName(),
+                itemId: $scope.item.id
+            });
+        }
+    })
+
+    .controller('SellerItemsViewController', function($scope, $stateParams, Seller) {
+        $scope.seller = Seller.get({
+            username: $stateParams.username
         });
     })
 
+    .controller('SellerItemCreateController', function($scope, $stateParams, Seller,
+                                                       Authentication, $state, $stateParams, Upload, $timeout) {
+        $scope.seller = Seller.get({
+            username: $stateParams.username
+        });
+
+        $scope.files = [];
+        $scope.fileList = [];
+        $scope.log = '';
+
+        $scope.createItem = function() {
+            $scope.item.images = [];
+            for (var i = 0; i < $scope.fileList.length; i++) {
+                $scope.item.images.push({
+                    caption: "none",
+                    url: $scope.fileList[i].name
+                });
+            }
+            $scope.seller.items.push($scope.item);
+
+            $scope.seller.$update();
+
+            $state.go("viewUser", {username: $stateParams.username});
+        };
+
+        $scope.$watch('files', function () {
+            if (typeof $scope.files != 'undefined') {
+                for (var i = 0; i < $scope.files.length; i++) {
+                    $scope.fileList.push($scope.files[i]);
+                }
+            }
+
+            $scope.upload($scope.files);
+            if (typeof $scope.fileList != 'undefined'){
+                console.log($scope.fileList);
+            }
+        });
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    if (!file.$error) {
+                        Upload.upload({
+                            url: '/api/files/upload',
+                            fields: {
+                                'username': $scope.username
+                            },
+                            file: file
+                        }).progress(function (evt) {
+                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                            $scope.log = 'progress: ' + progressPercentage + '% ' +
+                                evt.config.file.name + '\n' + $scope.log;
+                        }).success(function (data, status, headers, config) {
+                            $timeout(function() {
+                                $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                            });
+                        });
+                    }
+                }
+            }
+        };
+
+    })
+    .controller('SellerItemEditController', function($scope, $stateParams, SellerItem,
+                                            Authentication, $state, $stateParams, Upload, $timeout) {
+        $scope.item = SellerItem.get({
+            id: $stateParams.id
+        }, function(){
+            for (var i = 0; i < $scope.item.images.length; i++) {
+                $scope.fileList.push({
+                    name: $scope.item.images[i].url,
+                    caption: $scope.item.images[i].caption
+                });
+            }
+        });
+
+        $scope.files = [];
+        $scope.fileList = [];
+        $scope.log = '';
+
+        $scope.editItem = function() {
+            for (var i = 0; i < $scope.fileList.length; i++) {
+                $scope.item.images.push({
+                    caption: $scope.fileList[i].caption,
+                    url: $scope.fileList[i].name
+                });
+            }
+
+            $scope.item.$update();
+
+            $state.go("viewUser", {username: $stateParams.username});
+        };
+
+        $scope.$watch('files', function () {
+            if (typeof $scope.files != 'undefined') {
+                for (var i = 0; i < $scope.files.length; i++) {
+                    $scope.fileList.push($scope.files[i]);
+                }
+            }
+
+            $scope.upload($scope.files);
+            if (typeof $scope.fileList != 'undefined'){
+                console.log($scope.fileList);
+            }
+        });
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    if (!file.$error) {
+                        Upload.upload({
+                            url: '/api/files/upload',
+                            fields: {
+                                'username': $scope.username
+                            },
+                            file: file
+                        }).progress(function (evt) {
+                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                            $scope.log = 'progress: ' + progressPercentage + '% ' +
+                                evt.config.file.name + '\n' + $scope.log;
+                        }).success(function (data, status, headers, config) {
+                            $timeout(function() {
+                                $scope.log = 'file: ' + config.file.name + ', Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                            });
+                        });
+                    }
+                }
+            }
+        };
+
+    })
+
+
+
     .controller('UserViewController', function($scope, $state, $stateParams, $http, User) {
-        $scope.newauction = {
+       /* $scope.newauction = {
             currently : null,
             numberOfBids : null,
             started : new Date(),
             seller : null,
             bids : null
-        };
+        };*/
 
         $scope.user = User.get({
             username: $stateParams.username
         });
 
-        $scope.createAuction = function() {
+        /*$scope.createAuction = function() {
 
             var data = $scope.newauction;
             data.location = {
@@ -77,7 +233,7 @@ angular.module('ebay')
 
         };
 
-        $state.go("viewUser.new_auction");
+        $state.go("viewUser.createItem");*/
 
     })
     .controller('AdminViewController', function($scope, $http) {
@@ -91,27 +247,21 @@ angular.module('ebay')
 
     })
 
-    .controller('AdminController', function($scope, $http) {
-
-        $scope.reject = function(username) {
-            $http.put("/api/users/admin/account/"+username+"/reject").then(function(res){
-                location.reload();
-            });
+    .controller('AdminController', function($scope, User) {
+        $scope.reject = function() {
+            $scope.user.accountStatus = 'REJECTED';
+            $scope.user.$update();
         };
 
-        $scope.accept = function(username) {
-            $http.put("/api/users/admin/account/"+username+"/accept").then(function(res){
-                location.reload();
-            });
+        $scope.accept = function() {
+            $scope.user.accountStatus = 'ACCEPTED';
+            $scope.user.$update();
         };
 
-        $scope.revoke = function(username) {
-            $http.put("/api/users/admin/account/"+username+"/revoke").then(function(res){
-                location.reload();
-            });
+        $scope.revoke = function() {
+            $scope.user.accountStatus = 'REVOKED';
+            $scope.user.$update();
         };
-
-
     })
 
     .controller('UserCreateController', function($scope, $state, $stateParams, User) {
@@ -143,63 +293,3 @@ angular.module('ebay')
             Authentication.signOut();
         }
     });
-
-
-
-
-    /*.controller("SignUpController", ['$scope', '$http', function($scope, $http) {
-        $scope.registerUser = function(){
-            var dataObj = {
-                username: $scope.username,
-                password: $scope.password,
-                role: "USER",
-                firstName: $scope.firstName,
-                lastName: $scope.lastName,
-                email: $scope.email,
-                address: $scope.address,
-                country: $scope.country,
-                socialSecurityNumber: $scope.socialSecurityNumber,
-                phoneNumber: $scope.phoneNumber
-            };
-            var res = $http.post('/api/users/signup', dataObj);
-            res.success(function(data, status, headers, config) {
-                $scope.message = data;
-            });
-            res.error(function(data, status, headers, config) {
-                alert( "failure message: " + JSON.stringify({data: data}));
-            });
-        };
-    }])
-
-    .controller("SignInController", ['$scope', '$http', function($scope, $http) {
-        var sictrl = this;
-        sictrl.role = "guest";
-        $scope.signInStatus = "";
-        $scope.formCredentials = {
-            username: "",
-            password: ""
-        }
-        $scope.credentials = {
-            username: "",
-            password: ""
-        }
-
-        $scope.signIn = function() {
-            $scope.credentials.username = $scope.formCredentials.username;
-            $scope.credentials.password = $scope.credentials.password;
-
-            $http.post('/api/users/login', {
-                headers: {'Authentication': btoa($scope.credentials.username + ":" + $scope.credentials.password) }
-            }).then(function(response) {
-                sictrl.role = "user";
-                $scope.signInStatus = "logged in succesfuly" + response;
-            }, function(response) {
-                sictrl.role = "guest";
-                $scope.signInStatus = "wrong username or password" + response;
-            });
-        }
-
-        $scope.signOut = function() {
-            sictrl.role = "guest";
-        }
-    }]);*/

@@ -32,8 +32,17 @@
       <primary-key name="PRIMARY" columns="NAME"/>
       <exported-key name="fk_ITEM_has_CATEGORY_CATEGORY1" table="item_has_category" schema="" catalog="ebay_ted" columns="CATEGORY_NAME"/>
     </table>
+    <table name="image" schema="" catalog="ebay_ted" type="TABLE">
+      <column name="URL" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="CAPTION" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ITEM_ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="URL"/>
+      <foreign-key name="fk_IMAGE_ITEM1" columns="ITEM_ID" ref-table="item" ref-schema="" ref-catalog="ebay_ted" ref-columns="ID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_IMAGE_ITEM1_idx" unique="false" columns="ITEM_ID"/>
+    </table>
     <table name="item" schema="" catalog="ebay_ted" type="TABLE">
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="STATUS" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="CURRENTLY" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
       <column name="BUY_PRICE" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
@@ -49,6 +58,7 @@
       <foreign-key name="fk_ITEM_LOCATION1" columns="LOCATION_NAME" ref-table="location" ref-schema="" ref-catalog="ebay_ted" ref-columns="NAME" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_ITEM_SELLER1" columns="SELLER_USERNAME" ref-table="seller" ref-schema="" ref-catalog="ebay_ted" ref-columns="USERNAME" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="fk_BID_ITEM1" table="bid" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
+      <exported-key name="fk_IMAGE_ITEM1" table="image" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
       <exported-key name="fk_ITEM_has_CATEGORY_ITEM" table="item_has_category" schema="" catalog="ebay_ted" columns="ITEM_ID"/>
       <index name="fk_ITEM_LOCATION1_idx" unique="false" columns="LOCATION_NAME"/>
       <index name="fk_ITEM_SELLER1_idx" unique="false" columns="SELLER_USERNAME"/>
@@ -92,6 +102,7 @@
       <column name="USERNAME" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="PASSWORD" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="ROLE" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ACCOUNT_STATUS" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="FIRST_NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="LAST_NAME" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="EMAIL" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>

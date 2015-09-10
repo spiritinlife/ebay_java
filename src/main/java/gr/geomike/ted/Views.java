@@ -11,12 +11,15 @@ public class Views {
     public static interface Bidder extends Basic {}
     public static interface BidderInternal extends Basic {}
 
-    public static interface Seller extends Basic {}
-    public static interface SellerInternal extends Basic {}
+    public static interface Seller extends Basic, Item {}
+    public static interface SellerInternal extends Seller {}
 
     public static interface User extends Basic {}
 
+    public static interface Image extends Basic {}
+
     public static interface Item extends Basic, Bid {}
+    public static interface ItemInternal extends Item {}
     public static interface Category extends Basic {}
     public static interface Location {}
 }

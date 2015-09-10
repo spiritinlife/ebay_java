@@ -27,6 +27,22 @@ public class EntityDao {
         return results;
     }
 
+    public static  List Find(String namedQuery, String paramName, Object paramValue) {
+        EntityManager em =  JPAResource.factory.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        Query query = em.createNamedQuery(namedQuery);
+        query.setParameter(paramName, paramValue);
+
+        List results =  query.getResultList();
+
+        tx.commit();
+        em.close();
+
+        return results;
+    }
+
     public static  List Find(String namedQuery) {
         EntityManager em =  JPAResource.factory.createEntityManager();
         EntityTransaction tx = em.getTransaction();

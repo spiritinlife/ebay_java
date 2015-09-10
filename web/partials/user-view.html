@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <link rel="stylesheet" href="/css/user-panel.css">
 
-    <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
+    <!-- <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
         <div class="col-sm-12" style="text-align:center;">
             <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
             <div ng-if="user.accountStatus == 'PENDING'">
@@ -11,6 +11,18 @@
             </div>
             <div ng-if="user.accountStatus == 'REJECTED'">
                 <button ng-if="user.accountStatus == 'REJECTED'" class="btn btn-lg  btn-danger" ng-click="revoke(user.username)">Revoke</button>
+            </div>
+        </div>
+    </div> -->
+    <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
+        <div class="col-sm-12" style="text-align:center;">
+            <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
+            <div ng-if="user.accountStatus == 'PENDING'">
+                <button  class="btn btn-lg  btn-danger" ng-click="accept()">Accept</button>
+                <button class="btn btn-lg  btn-danger" ng-click="reject()">Reject</button>
+            </div>
+            <div ng-if="user.accountStatus == 'REJECTED'">
+                <button ng-if="user.accountStatus == 'REJECTED'" class="btn btn-lg  btn-danger" ng-click="revoke()">Revoke</button>
             </div>
         </div>
     </div>
@@ -30,12 +42,11 @@
     <div class="user-panel row">
         <div class="col-sm-2 panel-left">
             <ul>
-                <li><a ui-sref="viewUser.new_auction">New Auction</a></li>
-                <li><a ui-sref="viewUser.bids">Bids</a></li>
-                <li><a ui-sref="viewUser.sold_items">Sold items</a></li>
-                <li><a ui-sref="viewUser.bought_items">Bought items</a></li>
+                <li><a ui-sref="viewUser.createItem({username:user.username})">New Auction</a></li>
+                <li><a ui-sref="viewUser.bids({username:user.username})">Bids</a></li>
+                <li><a ui-sref="viewUser.soldItems({username:user.username})">Sold items</a></li>
+                <li><a ui-sref="viewUser.boughtItems({username:user.username})">Bought items</a></li>
                 <li><a ui-sref="viewUser.settings">Account Settings</a></li>
-                <li ng-show=""><a ui-sref="viewUser.bought_items">Bought items</a></li>
             </ul>
         </div>
 

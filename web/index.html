@@ -79,7 +79,7 @@
                     <li ng-if="role() == 'GUEST'"><a href="" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
 
                     <li ng-if="role() == 'ADMIN'" ng-click="goToAdmin()"><a >Administration</a></li>
-                    <li ng-if="role() == 'USER'" ng-click="goToAccount()"><a>Acount</a></li>
+                    <li ng-if="role() == 'USER'" ng-click="goToAccount()"><a>Account</a></li>
                     <li ng-if="role() != 'GUEST'" ng-click = "signOut()"><a>Sign Out</a></li>
                 </ul>
             </div>
@@ -103,6 +103,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.min.js"></script>
 <script src="https://code.angularjs.org/1.4.4/angular-cookies.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/7.0.17/ng-file-upload-all.min.js"></script>
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
 <script src="js/controllers.js"></script>

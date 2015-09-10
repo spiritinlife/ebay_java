@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <hr><h1>Sold items</h1><hr>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default no-border" ng-repeat="item in seller.items | orderBy:sort">
+                    <div class="panel-heading no-border" role="tab" id="heading{{item.id}}">
+                        <h4 class="panel-title">
+                            <div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{item.id}}" aria-expanded="false" aria-controls="collapse{{item.id}}">
+                                <h3>{{item.name}}</h3>
+                                <h4>{{item.currently | currency}}</h4>
+                            </div>
+                        </h4>
+                    </div>
+                    <div id="collapse{{item.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{item.id}}">
+                        <div class="panel-body no-border">
+                            <h4>categories:</h4>
+                            <h3 ng-repeat="category in item.categories | orderBy:name">
+                                {{category.name}}
+                            </h3>
+                            <p>{{item.description}}</p>
+                            <a class="btn btn-primary" ui-sref="viewUser.editItem({id:item.id})">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--col lg-->
+    </div> <!--row-->
+
+</div>

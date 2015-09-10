@@ -1,5 +1,6 @@
 package gr.geomike.ted.api.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.geomike.ted.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Location implements Serializable {
     @Id
     @Column(name = "NAME")
     @JsonView(Views.Basic.class)
+    @JsonProperty("name")
     @XmlValue
     public String getName() {
         return name;
@@ -32,11 +34,11 @@ public class Location implements Serializable {
     @Basic
     @Column(name = "LONGITUDE")
     @JsonView(Views.Basic.class)
+    @JsonProperty("longitude")
     @XmlAttribute(name = "Longitude")
     public Float getLongitude() {
         return longitude;
     }
-
     public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
@@ -44,6 +46,7 @@ public class Location implements Serializable {
     @Basic
     @Column(name = "LATITUDE")
     @JsonView(Views.Basic.class)
+    @JsonProperty("latitude")
     @XmlAttribute(name = "Latitude")
     public Float getLatitude() {
         return latitude;
@@ -80,6 +83,7 @@ public class Location implements Serializable {
 
     @OneToMany(mappedBy = "location")
     @JsonView(Views.Location.class)
+    @JsonProperty("items")
     @XmlTransient
     public List<Item> getItems() {
         return items;

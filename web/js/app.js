@@ -1,6 +1,6 @@
 
 //ebay app
-angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate', 'ngCookies']);
+angular.module('ebay', ['ui.router', 'ngResource', 'ngAnimate', 'ngCookies', 'ngFileUpload']);
 
 //ebay config
 angular.module('ebay').config(function ($stateProvider) {
@@ -24,25 +24,29 @@ angular.module('ebay').config(function ($stateProvider) {
         url: '/settings',
         templateUrl: 'partials/user-view-settings.html',
         controller: ''
-    }).state('viewUser.new_auction', {
-        url: '/new_auction',
-        templateUrl: 'partials/user-view-new-auction.html',
+    }).state('viewUser.createItem', {
+        url: '/items/create',
+        templateUrl: 'partials/seller-create_item.html',
+        controller: 'SellerItemCreateController'
+    }).state('viewUser.editItem', {
+        url: '/items/{:id}/edit',
+        templateUrl: 'partials/seller-edit_item.html',
+        controller: 'SellerItemEditController'
+    }).state('viewUser.boughtItems', {
+        url: '/items/bought',
+        templateUrl: 'partials/seller-bought_items.html',
         controller: ''
-    }).state('viewUser.bought_items', {
-        url: '/bought-items',
-        templateUrl: 'partials/user-view-bought_items.html',
-        controller: ''
-    }).state('viewUser.sold_items', {
-        url: '/sold-items',
-        templateUrl: 'partials/user-view-sold_items.html',
-        controller: ''
+    }).state('viewUser.soldItems', {
+        url: '/items/sold',
+        templateUrl: 'partials/seller-sold_items.html',
+        controller: 'SellerItemsViewController'
     }).state('viewUser.bids', {
         url: '/bids',
         templateUrl: 'partials/user-view-bids.html',
         controller: ''
-    }).state('viewAdmin', {
-        url: '/admin',
-        templateUrl: 'partials/admin.html',
+    }).state('listUsers', {
+        url: '/users',
+        templateUrl: 'partials/users-list.html',
         controller: 'AdminViewController'
     });
 });

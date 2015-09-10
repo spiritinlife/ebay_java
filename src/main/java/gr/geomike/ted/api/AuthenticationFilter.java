@@ -47,9 +47,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             }
 
             final MultivaluedMap<String, String> headers = requestContext.getHeaders();
-
             final MultivaluedMap<String, String> pathParameters = uriInfo.getPathParameters();
-
             final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
             if(authorization == null || authorization.isEmpty())
@@ -64,9 +62,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
             final String username = tokenizer.nextToken();
             final String password = tokenizer.nextToken();
-
-            System.out.println(username);
-            System.out.println(password);
 
             if(method.isAnnotationPresent(RolesAllowed.class))
             {
@@ -92,7 +87,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         Map<String, Object> params =new HashMap<String, Object>();
         params.put("username",username);
         params.put("password",password);
-        List<User> users = EntityDao.Find("User.findByUsernameAndPassword",params);
+        List<User> users = EntityDao.Find("User.findByUsernameAndPassword", params);
 
         if (users.isEmpty()) {
             return false;
@@ -101,11 +96,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             String role = users.get(0).getRole();
             String userId = users.get(0).getUsername();
 
-            System.out.println("userId: " + username + ", authId: " + authId
-                    + ",permitUser: " + rolesSet.contains(role));
-
-
-
             if (rolesSet.contains("AUTH_USER")){
                 return userId.equals(authId) || rolesSet.contains(role);
             }
@@ -113,6 +103,5 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 return rolesSet.contains(role);
             }
         }
-
     }
 }

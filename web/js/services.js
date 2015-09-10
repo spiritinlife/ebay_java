@@ -1,7 +1,7 @@
 
 angular.module('ebay')
     .factory('Item', function($resource) {
-        return $resource('/api/items/:id', { id: '@id' }, {
+        return $resource('/api/items/:id/', { id: '@id'}, {
                 update: { method: 'PUT' }
             }
         );
@@ -13,7 +13,31 @@ angular.module('ebay')
         );
     })
     .factory('User', function($resource) {
-        return $resource('/api/users/:username', { username: '@username' }, {
+        return $resource('/api/users/:username', { username: '@username'}, {
+                update: { method: 'PUT' }
+            }
+        );
+    })
+    .factory('Seller', function($resource) {
+        return $resource('/api/sellers/:username', { username: '@username'}, {
+                update: { method: 'PUT' }
+            }
+        );
+    })
+    .factory('SellerItem', function($resource, Authentication){
+        return $resource('/api/sellers/:username/items/:id/:bidId', {
+                username: Authentication.getUserName,
+                id: '@id'
+            }, {
+                update: { method: 'PUT' }
+            }
+        );
+    })
+    .factory('Bid', function($resource) {
+        return $resource('/api/bids/:username/:itemId', {
+                username: '@username',
+                itemId: '@itemId'
+            }, {
                 update: { method: 'PUT' }
             }
         );
@@ -58,7 +82,8 @@ angular.module('ebay')
                         callback(false);
                     });
             },
-            getUserName : function() { return credentials.username } ,
+            getUserName : function() {
+                return credentials.username } ,
             signUp: function() {
 
             },
