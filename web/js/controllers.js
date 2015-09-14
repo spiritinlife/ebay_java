@@ -67,7 +67,7 @@ angular.module('ebay')
         //fetch all items. Issues a GET to /api/items
         $scope.items = Item.query();
     })
-    .controller('ItemViewController', function ($scope, $state, $stateParams, Item, Bid, Authentication) {
+    .controller('ItemViewController', function ($scope, $state, $stateParams, Item, Bid, Authentication, $http) {
         $scope.imageIndex = 0;
         $scope.imageCount = 0;
 
