@@ -95,6 +95,21 @@ angular.module('ebay')
             map.panTo(location);
         }
 
+        $scope.getXML = function(itemId){
+            $http({
+                method  : 'GET',
+                url     : '/api/items/'+itemId+'/xml',
+                timeout : 10000,
+                params  : {},
+                transformResponse : function(data) {
+                    return $.parseXML(data);
+                }
+            }).success(function(data, status, headers, config) {
+                console.dir(data);  // XML document object
+                $scope.xmlData = data.documentElement.innerHTML;
+            });
+        }
+
         $scope.item = Item.get({
             id: $stateParams.id
         }, function () {
