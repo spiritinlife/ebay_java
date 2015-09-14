@@ -2,43 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c928b7f4-9db5-403c-9e43-f89d97c90235" name="Default" comment="Done some stuff">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/no_image.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/MessageService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/partials/user-messages-create.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/partials/user-messages-received.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/partials/user-messages-sent.html" />
-      <change type="DELETED" beforePath="C:\Code\ebay_java\web\partials\user-view-bids.html" afterPath="" />
-      <change type="MOVED" beforePath="C:\Code\ebay_java\web\partials\seller-bought_items.html" afterPath="$PROJECT_DIR$/web/partials/bidder-active_bids.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Item.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Item.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Message.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/db/entity/Message.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/SellerService.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/SellerService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/gr/geomike/ted/Views.class" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/Views.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/db/entity/Item.java" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/db/entity/Item.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/db/entity/Message.java" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/db/entity/Message.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/SellerService.java" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/SellerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/Views.java" afterPath="$PROJECT_DIR$/src/main/java/gr/geomike/ted/Views.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/animations.css" afterPath="$PROJECT_DIR$/web/css/animations.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/app.css" afterPath="$PROJECT_DIR$/web/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/app.js" afterPath="$PROJECT_DIR$/web/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/controllers.js" afterPath="$PROJECT_DIR$/web/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/index.html" afterPath="$PROJECT_DIR$/web/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/item-view.html" afterPath="$PROJECT_DIR$/web/partials/item-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/items-list.html" afterPath="$PROJECT_DIR$/web/partials/items-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/seller-active_auctions.html" afterPath="$PROJECT_DIR$/web/partials/seller-active_auctions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/seller-create_item.html" afterPath="$PROJECT_DIR$/web/partials/seller-create_item.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/seller-edit_item.html" afterPath="$PROJECT_DIR$/web/partials/seller-edit_item.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/services.js" afterPath="$PROJECT_DIR$/web/js/services.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/user-panel.css" afterPath="$PROJECT_DIR$/web/css/user-panel.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/partials/user-view.html" afterPath="$PROJECT_DIR$/web/partials/user-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/welcome.css" afterPath="$PROJECT_DIR$/web/css/welcome.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/Capture.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/Capture2.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/Capture3.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/Capture4.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/images/Capture5.PNG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/api/MessageService.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/Views$Message.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/gr/geomike/ted/Views$SellerAll.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ted4.iws" />
@@ -98,15 +69,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seller-edit_item.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="seller-edit_item.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/partials/seller-edit_item.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63829786">
+            <state vertical-scroll-proportion="-12.692307">
               <caret line="80" column="90" selection-start-line="80" selection-start-column="90" selection-end-line="80" selection-end-column="90" />
               <folding>
                 <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#li#0;n#ul#0;n#div#1;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="services.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/js/services.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5635359">
+              <caret line="66" column="10" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -396,6 +377,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ted4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ebay_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1163,7 +1162,7 @@
       <workItem from="1441970693030" duration="31950000" />
       <workItem from="1442069529392" duration="1337000" />
       <workItem from="1442153984803" duration="18444000" />
-      <workItem from="1442229751359" duration="2419000" />
+      <workItem from="1442229751359" duration="3543000" />
     </task>
     <task id="LOCAL-00001" summary="Add correct libraries to maven for databases and json .&#10;Use Jpa and eclipselink for database entities.&#10;Use jackson for json.&#10;Add persistence.xml and create tables automatically.">
       <created>1440948423714</created>
@@ -1231,11 +1230,17 @@
       <option name="project" value="LOCAL" />
       <updated>1441845117126</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Done some stuff">
+      <created>1442232183637</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1442232183637</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="339566000" />
+    <option name="totallyTimeSpent" value="340690000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1248,7 +1253,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1263,7 +1268,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22921109" sideWeight="0.52507836" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18763326" sideWeight="0.47492164" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18763326" sideWeight="0.47492164" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20522387" sideWeight="0.5096774" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3160981" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1353,13 +1358,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/EbayApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/db/entity/Image.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1438,6 +1436,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1445,6 +1444,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1452,6 +1452,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1691,26 +1692,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="38" selection-start-line="64" selection-start-column="38" selection-end-line="64" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/gr/geomike/ted/api/MessageService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="75" selection-start-line="77" selection-start-column="75" selection-end-line="77" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="375" column="25" selection-start-line="375" selection-start-column="25" selection-end-line="375" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1818,14 +1803,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="375" column="25" selection-start-line="375" selection-start-column="25" selection-end-line="375" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/directives.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/partials/seller-edit_item.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63829786">
+        <state vertical-scroll-proportion="-12.692307">
           <caret line="80" column="90" selection-start-line="80" selection-start-column="90" selection-end-line="80" selection-end-column="90" />
           <folding>
             <element signature="n#style#0;n#li#0;n#ul#0;n#div#1;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#li#0;n#ul#0;n#div#1;n#form#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5635359">
+          <caret line="66" column="10" selection-start-line="66" selection-start-column="10" selection-end-line="66" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
