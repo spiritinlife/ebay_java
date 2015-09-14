@@ -7,21 +7,42 @@
                     <img ng-src="/images/{{item.images[imageIndex].url}}" alt="item thumbnail">
                     <a ng-click="imageIndex = (imageIndex + 1) % imageCount"><i class="glyphicon glyphicon-chevron-right"></i></a>
                 </div>
-            </div><!--col lg-->
+                <div ng-show="imageCount == 0" class="thumbnail">
+                    <img ng-src="/images/no_image.jpg" alt="item thumbnail">
+                </div>
+                <div class="row" ng-hide="item.location.longitude == null || item.location.latitude == null ">
+                    <div  class="col-md-12">
+                        <div class="thumbnail" id="map-container" style="width:100%;height:500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-5">
                 <div class="page-header">
-                    <h1>{{item.name}} <small ng-repeat="category in item.categories | orderBy:name">{{category.name}}</small></h1>
+                    <h1>{{item.name}} <small ng-repeat="category in item.categories | orderBy:name">{{category.name + " "}}</small></h1>
+                    <br>
                     <p>{{item.description}}</p>
+                    <p class="grey-text"><strong>{{item.numberOfBids}}</strong> people have placed their bids<br>
+                        ends at: {{item.ends | date}}
+                    </p>
 
-                    <form ng-if="role() == 'USER'" name = "bidForm" ng-submit="bidForm.$valid && createBid()">
-                        <input type="number" class="form-control" ng-model="bid.amount" value="{{bid.amount}}" min="{{bid.amount}}" required>
-                        <br>
-                        <button type="submit" class="btn btn-lg btn-primary">Bid</button>
-                    </form>
+                    <br><br><br>
+                    <div class = "row" ng-if="role() == 'USER'" >
+                        <div class="col-md-6">
+                            <form name = "bidForm" ng-submit="bidForm.$valid && createBid()" class="input-group input-group-lg">
+                                <input type="number" class="form-control" ng-model="bid.amount" value="{{bid.amount}}" min="{{bid.amount}}" required>
+                                <span class="input-group-btn"><button class="btn btn-default" type="submit">Bid</button></span>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-lg" type="button" ng-click="bid.amount = item.buyPrice; createBid();">Buy Now! ${{item.buyPrice}}</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
-        </div> <!--row-->
+        </div>
+
     </div>
 
 </div>

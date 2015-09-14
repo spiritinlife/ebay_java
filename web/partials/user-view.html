@@ -1,19 +1,6 @@
 
 <div class="container-fluid">
     <link rel="stylesheet" href="/css/user-panel.css">
-
-    <!-- <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
-        <div class="col-sm-12" style="text-align:center;">
-            <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
-            <div ng-if="user.accountStatus == 'PENDING'">
-                <button  class="btn btn-lg  btn-danger" ng-click="accept(user.username)">Accept</button>
-                <button class="btn btn-lg  btn-danger" ng-click="reject(user.username)">Reject</button>
-            </div>
-            <div ng-if="user.accountStatus == 'REJECTED'">
-                <button ng-if="user.accountStatus == 'REJECTED'" class="btn btn-lg  btn-danger" ng-click="revoke(user.username)">Revoke</button>
-            </div>
-        </div>
-    </div> -->
     <div class="row" ng-if="getRole() == 'ADMIN'" ng-controller="AdminController">
         <div class="col-sm-12" style="text-align:center;">
             <h3 style="text-align:center;"> Status : {{ user.accountStatus }} </h3>
@@ -38,19 +25,22 @@
         </div>
     </div>
 
-
-    <div class="user-panel row">
+    <div class="row">
         <div class="col-sm-2 panel-left">
-            <ul>
+            <ul class="nav nav-sidebar">
                 <li><a ui-sref="viewUser.createItem({username:user.username})">New Auction</a></li>
-                <li><a ui-sref="viewUser.bids({username:user.username})">Bids</a></li>
                 <li><a ui-sref="viewUser.activeAuctions({username:user.username})">Active Auctions</a></li>
-                <li><a ui-sref="viewUser.boughtItems({username:user.username})">Bought items</a></li>
+                <li><a ui-sref="viewUser.activeBids({username:user.username})">Active Bids</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a ui-sref="viewUser.createMessage({username:user.username})">New Message</a></li>
+                <li><a ui-sref="viewUser.receivedMessages({username:user.username})">Inbox</a></li>
+                <li><a ui-sref="viewUser.sentMessages({username:user.username})">Sent</a></li>
+                <li role="separator" class="divider"></li>
                 <li><a ui-sref="viewUser.settings">Account Settings</a></li>
             </ul>
         </div>
 
-        <div class="col-sm-9 col-sm-offset-1 panel-right">
+        <div class="col-sm-10 panel-right">
             <div class="ui-view-container">
                 <div class="view-frame" ui-view ></div>
             </div>

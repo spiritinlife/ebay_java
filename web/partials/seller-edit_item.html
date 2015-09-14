@@ -1,69 +1,86 @@
 <div class="container-fluid">
-    <hr><h1>New Auction</h1><hr>
 
-    <form ng-submit="editItem()">
-        <div class="row">
-            <div class="col-sm-6 form-group">
-                <label>Product name</label>
-                <input type="text" ng-model="item.name" class="form-control" required>
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Edit Auction</h1>
+        <form ng-submit="editItem()">
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label>Product Name</label>
+                    <input type="text" ng-model="item.name" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label>Select Categories</label>
+                    <select class="form-control" ng-change="addCategory(cat)" ng-model="cat" required>
+                        <option ng-repeat="cat in categories" value={{cat.name}}>
+                            {{cat.name}}
+                        </option>
+                    </select>
+                </div>
             </div>
-            <!--<div class="col-sm-6 form-group">
-                <label>Product category</label>
-                <select class="form-control" ng-model="item.categories[$index]" required>
-                    <option ng-repeat="cat in categories">{{cat.name}}</option>
-                </select>
-            </div>-->
-        </div>
+            <div class="row">
+                <ul class="col-sm-12">
+                    <li class="col-sm-2 list-group-item" style="float:left;" ng-repeat="cat2 in item.categories">
+                        {{cat2.name}}
+                        <i role="button" class="glyphicon glyphicon-remove" style="color: #D9853B;float:right;"
+                           ng-click="removeCategory(cat2)"></i>
+                    </li>
+                </ul>
+            </div>
 
-        <div class="row">
-            <div class="col-sm-6 form-group">
-                <label>Product Buying Price</label>
-                <input class="form-control" ng-model="item.buyPrice" type="number" min="1" required>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label>Product Buying Price</label>
+                    <input class="form-control" ng-model="item.buyPrice" type="number" min="1" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label>Product Starting bid price</label>
+                    <input class="form-control" ng-model="item.firstBid" type="number" min="1" required>
+                </div>
             </div>
-            <div class="col-sm-6 form-group">
-                <label>Product Starting bid price</label>
-                <input class="form-control" ng-model="item.firstBid" type="number" min="1" required>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label>Product bidding ends</label>
+                    <input type="date" class="form-control" ng-model="item.ends"  placeholder="eg 2013-10-22" required>
+                </div>
+                <!--<div class="col-sm-3 form-group">
+                    <label>Product Location (lat,lng)</label>
+                    <input type="text" class="form-control" ng-model="item.location" placeholder="eg. 23.47,37.33" required>
+                </div>-->
+                <div class="col-sm-4 form-group">
+                    <label>Product Location Name</label>
+                    <input type="text" class="form-control" ng-model="item.location.name" required>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Product Country</label>
+                    <input type="text" class="form-control" ng-model="item.country" required>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3 form-group">
-                <label>Product bidding ends</label>
-                <input type="date" class="form-control" ng-model="item.ends"  placeholder="eg 2013-10-22" required>
+            <!-- image upload -->
+            <div class="row">
+                <div  class="col-sm-12 form-group">
+                    <div ngf-drop ngf-select ng-model="files" class="drop-box upload-drop-zone"
+                         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                         accept="image/*"
+                         ngf-pattern="'image/*,application/pdf'">Drop images here or click to upload</div>
+                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                    <i>Images:</i>
+                    <ul class="list-group">
+                        <li class="list-group-item"
+                            ng-repeat="f in fileList" style="font-size: smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <!--<div class="col-sm-3 form-group">
-                <label>Product Location (lat,lng)</label>
-                <input type="text" class="form-control" ng-model="item.location" placeholder="eg. 23.47,37.33" required>
-            </div>-->
-            <div class="col-sm-3 form-group">
-                <label>Product Location Name</label>
-                <input type="text" class="form-control" ng-model="item.location.name" required>
-            </div>
-            <div class="col-sm-3 form-group">
-                <label>Product Country</label>
-                <input type="text" class="form-control" ng-model="item.country" required>
-            </div>
-        </div>
-        <!-- image upload -->
-        <div class="row">
-            <div ngf-drop ngf-select ng-model="files" class="drop-box upload-drop-zone"
-                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-                 accept="image/*"
-                 ngf-pattern="'image/*,application/pdf'">Drop images here or click to upload</div>
-            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-            Images:
-            <ul>
-                <li ng-repeat="f in fileList" style="font-size: smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
-            </ul>
-            Upload Log:
-            <pre>{{log}}</pre>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12 form-group">
-                <label>Product Description</label>
-                <textarea class="form-control" type="text" ng-model="item.description" placeholder="Add your description here" required></textarea>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label>Product Description</label>
+                    <textarea class="form-control" type="text" ng-model="item.description" placeholder="Add your description here" required></textarea>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <button class="col-sm-12 btn btn-primary btn-lg">Edit Auction</button>
+                </div>
             </div>
-            <button class="col-sm-12 btn btn-primary btn-lg">Update Item</button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

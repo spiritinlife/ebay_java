@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div ng-hide="message.toDeleted" class="panel panel-default no-border" ng-repeat="message in messages | orderBy:sort">
+
+            <div class="panel-heading no-border" style="height:46px" role="tab" id="heading{{message.id}}">
+                <h4 class="panel-title">
+                    <div class="row" style="color: #558C89">
+                        <div class="col-lg-11" role="button" data-toggle="collapse" data-parent="#accordion"
+                             href="#collapse{{message.id}}" aria-expanded="false" aria-controls="collapse{{message.id}}">
+                            <div class="col-lg-6">
+                                {{message.subject}}
+                            </div>
+                            <div class="col-lg-6">
+                                {{message.fromUsername}}
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="col-lg-5">
+                                <input class="checkbox" type="checkbox" ng-model="message.toSeen">
+                            </div>
+                            <div class="col-lg-5">
+                                <i role="button" class="glyphicon glyphicon-remove" style="color: #D9853B;"
+                                   ng-click="message.toDeleted = true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+
+            <div id="collapse{{message.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{message.id}}">
+                <div class="panel-body no-border">
+                    <p>{{message.body}}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

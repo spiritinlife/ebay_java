@@ -1,3 +1,27 @@
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].name == obj.name) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+var removeByAttr = function(arr, attr, value){
+    var i = arr.length;
+    while(i--){
+        if( arr[i]
+            && arr[i].hasOwnProperty(attr)
+            && (arguments.length > 2 && arr[i][attr] === value ) ){
+
+            arr.splice(i,1);
+
+        }
+    }
+    return arr;
+}
 
 
 angular.module('ebay')
@@ -43,40 +67,69 @@ angular.module('ebay')
         //fetch all items. Issues a GET to /api/items
         $scope.items = Item.query();
     })
-    .controller('ItemViewController', function($scope, $stateParams, Item, Bid, Authentication) {
+    .controller('ItemViewController', function($scope, $state, $stateParams, Item, Bid, Authentication) {
         $scope.imageIndex = 0;
         $scope.imageCount = 0;
 
-
-
         $scope.role = Authentication.getRole;
         $scope.bid = new Bid();
+
+        $scope.initMaps = function(){
+            var location = new google.maps.LatLng($scope.item.location.longitude, $scope.item.location.latitude);
+
+            var map = new google.maps.Map(
+                document.getElementById("map-container"), {
+                    center: location,
+                    zoom: 14
+                });
+
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title:$scope.item.location.name
+            });
+
+            marker.setMap(map);
+        }
 
         $scope.item = Item.get({
             id: $stateParams.id
         }, function(){
             $scope.imageCount = $scope.item.images.length;
             $scope.bid.amount = parseFloat($scope.item.currently) + 1;
-
+            $scope.initMaps();
         });
 
         $scope.createBid = function(){
-            console.log("called!");
             $scope.bid.$save({
                 username: Authentication.getUserName(),
                 itemId: $scope.item.id
+            }, function(){
+                $state.go("viewUser", {username: Authentication.getUserName()})
             });
         }
     })
 
-    .controller('SellerItemsViewController', function($scope, $stateParams, Seller) {
-        $scope.seller = Seller.get({
-            username: $stateParams.username
-        });
+    .controller('SellerItemsViewController', function($scope, $stateParams, SellerItem) {
+        $scope.items = SellerItem.query();
     })
 
     .controller('SellerItemCreateController', function($scope, $stateParams, Seller,
-                                                       Authentication, $state , SellerItem, Upload, $timeout) {
+                                                       Authentication, $state , SellerItem, Upload, $timeout, Category) {
+
+        $scope.categories = Category.query();
+        $scope.addCategory = function(cat){
+            if (typeof $scope.item.categories == 'undefined'){
+                $scope.item.categories = []
+            }
+            if (!containsObject({name: cat}, $scope.item.categories)){
+                $scope.item.categories.push({name: cat});
+            }
+        }
+        $scope.removeCategory = function(cat){
+            console.log("called");
+            removeByAttr($scope.item.categories, "name", cat.name);
+        }
 
         $scope.files = [];
         $scope.fileList = [];
@@ -103,9 +156,6 @@ angular.module('ebay')
             }
 
             $scope.upload($scope.files);
-            if (typeof $scope.fileList != 'undefined'){
-                console.log($scope.fileList);
-            }
         });
 
         $scope.upload = function (files) {
@@ -172,9 +222,6 @@ angular.module('ebay')
             }
 
             $scope.upload($scope.files);
-            if (typeof $scope.fileList != 'undefined'){
-                console.log($scope.fileList);
-            }
         });
 
         $scope.upload = function (files) {
@@ -297,4 +344,36 @@ angular.module('ebay')
         $scope.signOut = function() {
             Authentication.signOut();
         }
-    });
+    })
+
+    //MESSAGE CONTROLLERS================
+    .controller('UserCreateMessageController', function($scope, SentMessage, Authentication, $state){
+        $scope.message = new SentMessage()
+
+        $scope.createMessage = function(){
+            $scope.message.fromUsername = Authentication.getUserName()
+            $scope.message.$save()
+
+            $state.go("viewUser.sentMessages")
+        }
+    })
+    .controller('UserReceivedMessagesController', function($scope, ReceivedMessage){
+        $scope.messages = ReceivedMessage.query({},function(){
+            for (var i =0; i < $scope.messages.length; i++){
+                $scope.$watch('messages['+i+']', function(newMessage, oldMessage){
+                    console.log("updateMsg");
+                    newMessage.$update()
+                }, true);
+            }
+        });
+    })
+    .controller('UserSentMessagesController', function($scope, SentMessage){
+        $scope.messages = SentMessage.query({},function(){
+            for (var i =0; i < $scope.messages.length; i++){
+                $scope.$watch('messages['+i+']', function(newMessage, oldMessage){
+                    console.log("updateMsg");
+                    newMessage.$update()
+                }, true);
+            }
+        });
+    })

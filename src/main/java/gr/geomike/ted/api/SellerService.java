@@ -17,18 +17,23 @@ import java.util.Map;
 
 @Path("sellers")
 public class SellerService {
+    //get all sellers
     @RolesAllowed("ADMIN")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getSellers() {
+        System.err.println("GET: /sellers");
+
         return JSON.toJson(EntityDao.Find("Seller.findAll"), Views.Seller.class);
     }
 
+    //get single seller
     @RolesAllowed({"ADMIN", "AUTH_USER"})
     @Path("{username}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getSeller(@PathParam("username") String username) {
+        System.err.println("GET: /sellers/" + username);
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("username", username);
@@ -40,6 +45,7 @@ public class SellerService {
         return JSON.toJson(sellers.get(0), Views.SellerInternal.class);
     }
 
+    //update seller
     @RolesAllowed({"AUTH_USER"})
     //just for authorization
     @Path("{username}")
@@ -47,6 +53,8 @@ public class SellerService {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateSeller(Seller seller){
+        System.err.println("PUT: /sellers/" + seller.getUsername());
+
         //handle bi-directional references inside Seller
         for (Item item : seller.getItems()){
             item.setSeller(seller);
@@ -61,6 +69,21 @@ public class SellerService {
         return Response.status(201).build();
     }
 
+    //get all seller items
+    @RolesAllowed({"AUTH_USER"})
+    //just for authorization
+    @Path("{username}/items")
+    //---
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getSellerItems(@PathParam("username") String username, Item item){
+        System.err.println("GET: " + username + "/items");
+
+        return JSON.toJson(((Seller)EntityDao.Find("Seller.findByUsername", "username", username)
+                .get(0)).getItems(), Views.SellerInternal.class);
+    }
+
+    //create item for seller
     @RolesAllowed({"AUTH_USER"})
     //just for authorization
     @Path("{username}/items")
@@ -68,7 +91,7 @@ public class SellerService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateSeller(@PathParam("username") String username, Item item){
-
+        System.err.println("POST: " + username + "/items");
 
         Seller seller = (Seller) EntityDao.Find("Seller.findByUsername","username",username).get(0);
         item.setSeller(seller);
@@ -82,7 +105,7 @@ public class SellerService {
         return Response.status(201).build();
     }
 
-    //just returns item
+    //returns single seller item
     //shouldnt be there except for authorization purposes i.e. return(seller(username).item(id))
     //when username is authorized
     @RolesAllowed({"AUTH_USER"})
@@ -91,9 +114,12 @@ public class SellerService {
     @Produces(MediaType.APPLICATION_JSON)
     public String updateSeller(@PathParam("username") String username,
                                @PathParam("id") int id) {
+        System.err.println("GET: " + username + "/items/" + id);
+
         return JSON.toJson(EntityDao.Find("Item.findById", "id", id).get(0), Views.ItemInternal.class);
     }
 
+    //updates single seller item
     @RolesAllowed({"AUTH_USER"})
     @Path("{username}/items/{id}")
     @PUT
@@ -101,6 +127,7 @@ public class SellerService {
     public Response updateSeller(Item item,
                     @PathParam("username") String username,
                     @PathParam("id") int id) {
+        System.err.println("PUT: " + username + "/items/" + id);
 
         Item oldItem = (Item) EntityDao.Find("Item.findById","id",id).get(0);
         for ( Image image : item.getImages()) {

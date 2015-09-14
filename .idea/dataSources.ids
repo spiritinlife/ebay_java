@@ -83,8 +83,12 @@
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="FROM_USERNAME" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="TO_USERNAME" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <column name="SUBJECT" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="BODY" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="SUBJECT" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="BODY" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="FROM_SEEN" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="TO_SEEN" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="FROM_DELETED" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="TO_DELETED" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <primary-key name="PRIMARY" columns="ID"/>
       <foreign-key name="fk_MESSAGE_USER1" columns="FROM_USERNAME" ref-table="user" ref-schema="" ref-catalog="ebay_ted" ref-columns="USERNAME" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_MESSAGE_USER2" columns="TO_USERNAME" ref-table="user" ref-schema="" ref-catalog="ebay_ted" ref-columns="USERNAME" update-rule="3" delete-rule="3" deferrability="2"/>

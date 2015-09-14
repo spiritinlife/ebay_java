@@ -15,7 +15,9 @@ angular.module('ebay').config(function ($stateProvider,$httpProvider) {
         url: '/items/{:id}/view',
         templateUrl: 'partials/item-view.html',
         controller: 'ItemViewController'
-    }).state('viewUser', {
+    })
+        //USER PANEL
+       .state('viewUser', {
         url: '/users/{:username}/view',
         templateUrl: 'partials/user-view.html',
         controller: 'UserViewController'
@@ -39,10 +41,24 @@ angular.module('ebay').config(function ($stateProvider,$httpProvider) {
         url: '/auctions/active',
         templateUrl: 'partials/seller-active_auctions.html',
         controller: 'SellerItemsViewController'
-    }).state('viewUser.bids', {
-        url: '/bids',
-        templateUrl: 'partials/user-view-bids.html',
+    }).state('viewUser.activeBids', {
+        url: '/bids/active',
+        templateUrl: 'partials/bidder-active_bids.html',
         controller: ''
+    })
+        //MESSAGES
+      .state('viewUser.createMessage', {
+        url: '/create',
+        templateUrl: 'partials/user-messages-create.html',
+        controller: 'UserCreateMessageController'
+    }).state('viewUser.receivedMessages', {
+        url: '/received',
+        templateUrl: 'partials/user-messages-received.html',
+        controller: 'UserReceivedMessagesController'
+    }).state('viewUser.sentMessages', {
+        url: '/sent',
+        templateUrl: 'partials/user-messages-sent.html',
+        controller: 'UserSentMessagesController'
     }).state('listUsers', {
         url: '/users',
         templateUrl: 'partials/users-list.html',
@@ -75,4 +91,5 @@ angular.module('ebay').config(function ($stateProvider,$httpProvider) {
 angular.module('ebay').run(function ($state) {
     $state.go('welcome');
 });
+
 

@@ -1,6 +1,7 @@
 "use strict";
 
 angular.module('ebay')
+    //GUEST FETCH ===========
     .factory('Item', function ($resource) {
         return $resource('/api/items/:id/', {id: '@id'}, {
                 update: {method: 'PUT'}
@@ -19,6 +20,8 @@ angular.module('ebay')
             }
         );
     })
+
+    //SELLER-BIDDER ROLE SERVICE===========
     .factory('Seller', function ($resource) {
         return $resource('/api/sellers/:username', {username: '@username'}, {
                 update: {method: 'PUT'}
@@ -44,6 +47,27 @@ angular.module('ebay')
         );
     })
 
+    //MESSAGES ==========================
+    .factory('SentMessage', function ($resource, Authentication) {
+        return $resource('/api/messages/:username/sent/:id', {
+                username: Authentication.getUserName,
+                id : "@id"
+            }, {
+                update: {method: 'PUT'}
+            }
+        );
+    })
+    .factory('ReceivedMessage', function ($resource, Authentication) {
+        return $resource('/api/messages/:username/received/:id', {
+                username: Authentication.getUserName,
+                id : "@id"
+            }, {
+                update: {method: 'PUT'}
+            }
+        );
+    })
+
+    //AUTHENTICATION ===================
     .factory('Authentication', function ($http, $cookies, $state) {
         var role = $cookies.get('role') || 'GUEST';
         var credentials = {

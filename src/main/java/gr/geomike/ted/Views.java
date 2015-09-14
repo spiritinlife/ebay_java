@@ -22,4 +22,8 @@ public class Views {
     public static interface ItemInternal extends Item {}
     public static interface Category extends Basic {}
     public static interface Location {}
+
+    public static interface Message extends Basic {}
+
+    public static interface SellerAll extends SellerInternal, Item, Bid, Bidder {}
 }

@@ -148,7 +148,7 @@ public class Item implements Serializable{
     @JsonProperty("numberOfBids")
     @XmlElement(name = "Number_of_Bids")
     public Integer getNumberOfBids() {
-        return numberOfBids;
+        return getBids().size();
     }
     public void setNumberOfBids(Integer numberOfBids) {
         this.numberOfBids = numberOfBids;
