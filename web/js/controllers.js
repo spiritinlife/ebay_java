@@ -253,7 +253,7 @@ angular.module('ebay')
 
 
 
-    .controller('UserViewController', function($scope, $state, $stateParams, $http, User) {
+    .controller('UserViewController', function($scope, $state, $stateParams, $http, User, ReceivedMessage) {
        /* $scope.newauction = {
             currently : null,
             numberOfBids : null,
@@ -264,6 +264,13 @@ angular.module('ebay')
 
         $scope.user = User.get({
             username: $stateParams.username
+        });
+
+        $scope.unreadMessages = 0;
+        var messages = ReceivedMessage.query({},function(){
+            for (var i =0; i < messages.length; i++) {
+                if (!messages[i].toSeen) $scope.unreadMessages++;
+            }
         });
 
         /*$scope.createAuction = function() {
@@ -361,6 +368,12 @@ angular.module('ebay')
         $scope.messages = ReceivedMessage.query({},function(){
             for (var i =0; i < $scope.messages.length; i++){
                 $scope.$watch('messages['+i+']', function(newMessage, oldMessage){
+                    if ( newMessage.toSeen && !oldMessage.toSeen) {
+                        $scope.$parent.unreadMessages--;
+                    } else if ( !newMessage.toSeen && oldMessage.toSeen) {
+                        $scope.$parent.unreadMessages++;
+                    }
+
                     console.log("updateMsg");
                     newMessage.$update()
                 }, true);

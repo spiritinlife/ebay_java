@@ -33,7 +33,7 @@
                 <li><a ui-sref="viewUser.activeBids({username:user.username})">Active Bids</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a ui-sref="viewUser.createMessage({username:user.username})">New Message</a></li>
-                <li><a ui-sref="viewUser.receivedMessages({username:user.username})">Inbox</a></li>
+                <li><a ui-sref="viewUser.receivedMessages({username:user.username})">Inbox<span style="margin-left:10px;" class="badge" ng-if="unreadMessages != 0">{{unreadMessages}}</span></a></li>
                 <li><a ui-sref="viewUser.sentMessages({username:user.username})">Sent</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a ui-sref="viewUser.settings">Account Settings</a></li>
