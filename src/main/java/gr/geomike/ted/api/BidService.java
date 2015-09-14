@@ -1,5 +1,7 @@
 package gr.geomike.ted.api;
 
+import gr.geomike.ted.JSON;
+import gr.geomike.ted.Views;
 import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.*;
 import javax.annotation.security.RolesAllowed;
@@ -50,5 +52,19 @@ public class BidService {
         }
 
         return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+
+    @RolesAllowed({"AUTH_USER"})
+    @Path("{username}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getBids(@PathParam("username") String username) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("username", username);
+        List<Bidder> bidders = EntityDao.Find("Bidder.findByUsername", params);
+
+        return JSON.toJson(bidders.get(0).getBids(), Views.BidInternal.class);
+
     }
 }

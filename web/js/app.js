@@ -44,7 +44,7 @@ angular.module('ebay').config(function ($stateProvider,$httpProvider) {
     }).state('viewUser.activeBids', {
         url: '/bids/active',
         templateUrl: 'partials/bidder-active_bids.html',
-        controller: ''
+        controller: 'BidderActiveBids'
     })
         //MESSAGES
       .state('viewUser.createMessage', {

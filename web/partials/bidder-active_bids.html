@@ -1,3 +1,31 @@
 <div class="container-fluid">
-<hr><h1>Active Bids</h1><hr>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Active Bids</h1>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default no-border" ng-repeat="item in items | orderBy:sort">
+                    <div class="panel-heading no-border" role="tab" id="heading{{item.id}}">
+                        <h4 class="panel-title">
+                            <div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{item.id}}" aria-expanded="false" aria-controls="collapse{{item.id}}">
+                                <h1>{{item.name}}
+                                    <small ng-repeat="category in item.categories | orderBy:name">
+                                        {{category.name}}
+                                    </small>
+                                </h1>
+                                <h4>{{item.currently | currency}}</h4>
+                                <button class="btn btn-lg" type="button" ng-show="item.status = 'BEGUN'" type="button" ui-sref="viewUser.editItem({id:item.id})">Edit</button>
+                            </div>
+                        </h4>
+                    </div>
+                    <div id="collapse{{item.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{item.id}}">
+                        <div class="panel-body no-border">
+                            <div ng-repeat="bid in item.bids | orderBy:time">
+                                {{bid.bidder.username}} bid: {{bid.amount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--col lg-->
+    </div> <!--row-->
 </div>

@@ -1,10 +1,10 @@
 package gr.geomike.ted.api.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import gr.geomike.ted.CurrencyAdapter;
-import gr.geomike.ted.DateAdapter;
-import gr.geomike.ted.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+import gr.geomike.ted.CurrencyAdapter;
+import gr.geomike.ted.Views;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;

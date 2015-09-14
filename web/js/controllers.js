@@ -127,6 +127,12 @@ angular.module('ebay')
             });
         }
     })
+    .controller('BidderActiveBids', function ($scope, Authentication, Bid) {
+        $scope.bids = Bid.query({username : Authentication.getUserName() } ,function(){
+            console.log($scope.bids);
+        });
+    })
+
 
     .controller('SellerItemsViewController', function ($scope, $stateParams, SellerItem) {
         $scope.items = SellerItem.query();
