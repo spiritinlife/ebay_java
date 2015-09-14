@@ -101,6 +101,10 @@ ul.nav a {
     line-height: 0px;*/
 }
 
+.badge {
+    background-color: #D9853B;
+}
+
 
 /* MODALS */
 .modal-body {

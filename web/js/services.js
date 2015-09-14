@@ -65,7 +65,7 @@ angular.module('ebay')
                 username: Authentication.getUserName,
                 id : "@id"
             }, {
-                update: {method: 'PUT'}
+                update: {method: 'PUT'  }
             }
         );
     })
