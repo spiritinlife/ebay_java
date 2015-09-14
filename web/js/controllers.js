@@ -67,7 +67,7 @@ angular.module('ebay')
         //fetch all items. Issues a GET to /api/items
         $scope.items = Item.query();
     })
-    .controller('ItemViewController', function($scope, $state, $stateParams, Item, Bid, Authentication) {
+    .controller('ItemViewController', function($scope, $state, $stateParams, Item, Bid, ItemXML, Authentication, $http) {
         $scope.imageIndex = 0;
         $scope.imageCount = 0;
 
@@ -106,6 +106,21 @@ angular.module('ebay')
                 itemId: $scope.item.id
             }, function(){
                 $state.go("viewUser", {username: Authentication.getUserName()})
+            });
+        }
+
+        $scope.getXML = function(itemId){
+            $http({
+                method  : 'GET',
+                url     : '/api/items/'+itemId+'/xml',
+                timeout : 10000,
+                params  : {},
+                transformResponse : function(data) {
+                    return $.parseXML(data);
+                }
+            }).success(function(data, status, headers, config) {
+                console.dir(data);  // XML document object
+                $scope.xmlData = data.documentElement.innerHTML;
             });
         }
     })
@@ -251,37 +266,10 @@ angular.module('ebay')
 
     })
 
-
-
     .controller('UserViewController', function($scope, $state, $stateParams, $http, User) {
-       /* $scope.newauction = {
-            currently : null,
-            numberOfBids : null,
-            started : new Date(),
-            seller : null,
-            bids : null
-        };*/
-
         $scope.user = User.get({
             username: $stateParams.username
         });
-
-        /*$scope.createAuction = function() {
-
-            var data = $scope.newauction;
-            data.location = {
-                name : $scope.newauction.country,
-                lat: $scope.newauction.location.split(",")[0],
-                lng: $scope.newauction.location.split(",")[1]};
-
-            $http.post("/api/items",data).then(function(res){
-                console.log(res);
-
-            });
-
-        };
-
-        $state.go("viewUser.createItem");*/
 
     })
     .controller('AdminViewController', function($scope, $http) {
@@ -291,8 +279,6 @@ angular.module('ebay')
         }, function(response) {
             //something went wrong
         });
-
-
     })
 
     .controller('AdminController', function($scope, User) {

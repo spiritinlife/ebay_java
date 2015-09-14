@@ -2,6 +2,7 @@ package gr.geomike.ted.api;
 
 import gr.geomike.ted.JSON;
 import gr.geomike.ted.Views;
+import gr.geomike.ted.XML;
 import gr.geomike.ted.api.db.EntityDao;
 import gr.geomike.ted.api.db.entity.Item;
 
@@ -44,5 +45,16 @@ public class ItemService {
         System.err.println(item);
 
         return  Response.status(201).build();
+    }
+
+    @RolesAllowed("ADMIN")
+    @Path("{id}/xml")
+    @GET
+    @Produces(MediaType.APPLICATION_XML)
+    public String getItemXML(@PathParam("id") int id){
+
+        Item item = (Item)EntityDao.Find("Item.findById", "id", id).get(0);
+
+        return XML.marshalItem(item);
     }
 }

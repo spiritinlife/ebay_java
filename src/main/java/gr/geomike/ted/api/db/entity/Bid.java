@@ -101,6 +101,7 @@ public class Bid implements Serializable {
     @JoinColumn(name = "ITEM_ID", referencedColumnName="id", nullable = false, insertable = false, updatable = false)
     @JsonView(Views.BidInternal.class)
     @JsonProperty("item")
+    @XmlTransient
     public Item getItem() {
         return item;
     }

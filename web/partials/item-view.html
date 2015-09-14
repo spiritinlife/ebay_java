@@ -27,15 +27,23 @@
                     </p>
 
                     <br><br><br>
-                    <div class = "row" ng-if="role() == 'USER'" >
-                        <div class="col-md-6">
+                    <div class = "row">
+                        <div class="col-md-6" ng-if="role() == 'USER'" >
                             <form name = "bidForm" ng-submit="bidForm.$valid && createBid()" class="input-group input-group-lg">
                                 <input type="number" class="form-control" ng-model="bid.amount" value="{{bid.amount}}" min="{{bid.amount}}" required>
                                 <span class="input-group-btn"><button class="btn btn-default" type="submit">Bid</button></span>
                             </form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" ng-if="role() == 'USER'" >
                             <button class="btn btn-lg" type="button" ng-click="bid.amount = item.buyPrice; createBid();">Buy Now! ${{item.buyPrice}}</button>
+                        </div>
+                        <div ng-if="role() == 'ADMIN'" class="col-md-12">
+                            <button class="btn btn-lg" type="button" ng-click="getXML(item.id)">Get XML for this auction</button>
+                        </div>
+                    </div>
+                    <div ng-if="role() == 'ADMIN'" class = "row">
+                        <div class="col-md-12">
+                            <p ng-bind="xmlData"></p>
                         </div>
                     </div>
 

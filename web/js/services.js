@@ -20,6 +20,9 @@ angular.module('ebay')
             }
         );
     })
+    .factory('ItemXML', function ($resource){
+        return $resource('/api/items/:id/xml', {id: "@id"});
+    })
 
     //SELLER-BIDDER ROLE SERVICE===========
     .factory('Seller', function ($resource) {
